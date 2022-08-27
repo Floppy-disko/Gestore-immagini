@@ -3,54 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.HelloController">
+<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-
-    <Label fx:id="welcomeText" />
-   <GridPane prefHeight="618.0" prefWidth="980.0">
-     <columnConstraints>
-       <ColumnConstraints hgrow="SOMETIMES" maxWidth="502.0" minWidth="10.0" prefWidth="502.0" />
-       <ColumnConstraints hgrow="SOMETIMES" maxWidth="484.0" minWidth="10.0" prefWidth="478.0" />
-     </columnConstraints>
-     <rowConstraints>
-       <RowConstraints maxHeight="561.0" minHeight="10.0" prefHeight="370.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="436.0" minHeight="0.0" prefHeight="140.0" vgrow="SOMETIMES" />
-       <RowConstraints maxHeight="212.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
-         <RowConstraints maxHeight="212.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
-     </rowConstraints>
+   <AnchorPane prefHeight="375.0" prefWidth="980.0">
       <children>
-         <SplitPane dividerPositions="0.805327868852459" prefHeight="160.0" prefWidth="200.0" GridPane.rowIndex="3">
+         <SplitPane dividerPositions="0.5" prefHeight="294.0" prefWidth="980.0">
            <items>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="400.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="486.0">
                   <children>
-                     <TextField layoutX="16.0" layoutY="18.0" prefHeight="24.0" prefWidth="368.0" />
+                     <TextField fx:id="tagTextField" layoutX="35.0" layoutY="61.0" prefHeight="24.0" prefWidth="368.0" />
+                     <Button fx:id="tagButton" layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
                   </children>
                </AnchorPane>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="376.0">
                   <children>
-                     <Button layoutX="9.0" layoutY="18.0" mnemonicParsing="false" onKeyPressed="#onHelloButtonClick" text="Aggiungi" />
+                     <ListView fx:id="lstTags" layoutX="129.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" />
                   </children>
                </AnchorPane>
            </items>
          </SplitPane>
-         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="385.0" text="Aggiungi Tag" textAlignment="CENTER" GridPane.rowIndex="2">
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="59.0" prefWidth="385.0" text="Aggiungi Tag" textAlignment="CENTER">
             <font>
                <Font size="30.0" />
             </font>
          </Label>
-         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
       </children>
-   </GridPane>
+   </AnchorPane>
 </VBox>

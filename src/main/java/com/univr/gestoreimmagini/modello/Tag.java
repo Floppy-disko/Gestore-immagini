@@ -1,4 +1,4 @@
-package com.univr.gestoreimmagini;
+package com.univr.gestoreimmagini.modello;
 
 public class Tag{
     private String nome;
@@ -12,6 +12,11 @@ public class Tag{
     }
 
     public String getTag() {
+        return nome;
+    }
+
+    @Override
+    public String toString() {
         return nome;
     }
 }

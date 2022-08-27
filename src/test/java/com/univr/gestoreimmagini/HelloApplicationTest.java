@@ -32,9 +32,9 @@ class HelloApplicationTest {
     @Test
     void should_contain_button_with_text(FxRobot robot) {
         // or (lookup by css id):
-        FxAssert.verifyThat("#helloButton", LabeledMatchers.hasText("Hello!"));
+        FxAssert.verifyThat("#helloButton", LabeledMatchers.hasText("ciao"));
         // or (lookup by css class):
-        FxAssert.verifyThat(".button", LabeledMatchers.hasText("Hello!"));
+        FxAssert.verifyThat(".button", LabeledMatchers.hasText("ciao"));
     }
 
     @BeforeAll

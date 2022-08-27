@@ -1,22 +1,29 @@
 package com.univr.gestoreimmagini.modello;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Tag{
-    private String nome;
+    private StringProperty nome = new SimpleStringProperty();
 
     public Tag(String nome) {
-        this.nome = nome;
+        this.nome.set(nome);
     }
 
-    public void setTag(String nome) {
-        this.nome = nome;
+    public String getNome() {
+        return nome.get();
     }
 
-    public String getTag() {
+    public StringProperty nomeProperty() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome.set(nome);
     }
 
     @Override
     public String toString() {
-        return nome;
+        return nome.get();
     }
 }

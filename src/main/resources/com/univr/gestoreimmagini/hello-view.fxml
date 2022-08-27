@@ -21,12 +21,13 @@
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="486.0">
                   <children>
                      <TextField fx:id="tagTextField" layoutX="35.0" layoutY="61.0" prefHeight="24.0" prefWidth="368.0" />
-                     <Button fx:id="tagButton" layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
+                     <Button fx:id="aggiungiTag" layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
+                     <Button fx:id="eliminaTag" layoutX="35.0" layoutY="104.0" mnemonicParsing="false" onAction="#removeTag" text="Elimina" />
                   </children>
                </AnchorPane>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="376.0">
                   <children>
-                     <ListView fx:id="lstTags" layoutX="129.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" />
+                     <ListView fx:id="tagsList" layoutX="92.0" layoutY="27.0" prefHeight="238.0" prefWidth="264.0" />
                   </children>
                </AnchorPane>
            </items>

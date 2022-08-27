@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ContenitoreRisorse<T> {
 
-    private ObservableList<T> risorse;
+    private final ObservableList<T> risorse;
 
     protected ContenitoreRisorse(){
         risorse = FXCollections.observableArrayList();
@@ -22,6 +22,10 @@ public class ContenitoreRisorse<T> {
 
     public void addRisorsa(T r){
         risorse.add(r);
+    }
+
+    public void removeRisorsa(T r){
+        risorse.remove(r);
     }
 
     public ObservableList<T> getRisorse(){

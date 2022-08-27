@@ -1,6 +1,6 @@
 package com.univr.gestoreimmagini;
 
-public class Tag {
+public class Tag{
     private String nome;
 
     public Tag(String nome) {

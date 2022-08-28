@@ -3,7 +3,7 @@ package com.univr.gestoreimmagini.modello;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Tag{
+public class Tag extends Risorsa {
     private StringProperty nome = new SimpleStringProperty();
 
     public Tag(String nome) {

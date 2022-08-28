@@ -32,11 +32,16 @@ public class HelloController implements Initializable {
                 return cell;
             }
         });
+
     }
 
     @FXML
     private void addTag(ActionEvent actionEvent) {
-        modello.getTags().addRisorsa(new Tag(tagTextField.getText()));  //aggiungo il valore del textfield alla lista di tag nel modello
+        String nome = tagTextField.getText();
+        if(modello.getTags().nomeInLista(nome))  //Non puoi due tag uguali
+            return;
+
+        modello.getTags().addRisorsa(new Tag(nome));  //aggiungo il valore del textfield alla lista di tag nel modello
     }
 
     private void removeTag(Tag t){

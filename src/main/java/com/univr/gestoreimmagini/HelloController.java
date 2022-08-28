@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 
 import javafx.util.Callback;
 import java.net.URL;
@@ -30,7 +28,8 @@ public class HelloController implements Initializable {
         tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
-                return new CustomListCell();
+                TagListCell cell = new TagListCell(HelloController.this.modello.getTags()); //creo una custoListCell con un bottone che ha come eventHadler removeTag
+                return cell;
             }
         });
     }
@@ -40,9 +39,4 @@ public class HelloController implements Initializable {
         modello.getTags().addRisorsa(new Tag(tagTextField.getText()));  //aggiungo il valore del textfield alla lista di tag nel modello
     }
 
-    @FXML
-    private void removeTag(ActionEvent actionEvent){
-        Tag selezionato = tagsList.getSelectionModel().getSelectedItem();
-        modello.getTags().removeRisorsa(selezionato);
-    }
 }

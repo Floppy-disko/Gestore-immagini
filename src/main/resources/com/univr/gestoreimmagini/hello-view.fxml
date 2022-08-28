@@ -21,8 +21,7 @@
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="486.0">
                   <children>
                      <TextField fx:id="tagTextField" layoutX="35.0" layoutY="61.0" prefHeight="24.0" prefWidth="368.0" />
-                     <Button fx:id="aggiungiTag" layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
-                     <Button fx:id="eliminaTag" layoutX="35.0" layoutY="104.0" mnemonicParsing="false" onAction="#removeTag" text="Elimina" />
+                     <Button layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
                   </children>
                </AnchorPane>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="376.0">

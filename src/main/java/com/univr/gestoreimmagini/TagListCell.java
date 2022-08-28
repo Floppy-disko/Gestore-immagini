@@ -1,24 +1,26 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.ContenitoreTag;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
-public class CustomListCell extends ListCell<Tag> {
+public class TagListCell extends ListCell<Tag> {
     private HBox content;
     private Label nome;
+    private Button button;
+    private ContenitoreTag tags;
 
-    public CustomListCell() {  //la cella sarà formata da un label ed un bottone per eliminarla
+    public TagListCell(ContenitoreTag tags) {  //la cella sarà formata da un label ed un bottone per eliminarla
         super();
+        this.tags = tags;
         nome = new Label();
-        Button deleteButton = new Button("X");
-        content = new HBox(deleteButton, nome);
+        Button button = new Button("X");
+        button.setOnAction(this::removeTag);  //Quando clicco il bottone chiama remove tag che rimuove il tag dal modello
+        content = new HBox(button, nome);
         content.setSpacing(10);
     }
 
@@ -32,4 +34,9 @@ public class CustomListCell extends ListCell<Tag> {
             setGraphic(null);
         }
     }
+
+    private void removeTag(ActionEvent e){
+        tags.removeRisorsa(getItem());
+    }
+
 }

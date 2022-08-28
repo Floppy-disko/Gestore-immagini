@@ -28,7 +28,7 @@ public class HelloController implements Initializable {
         tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
-                TagListCell cell = new TagListCell(HelloController.this.modello.getTags()); //creo una custoListCell con un bottone che ha come eventHadler removeTag
+                TagListCell cell = new TagListCell(HelloController.this::removeTag); //creo una custoListCell con un bottone che ha come eventHadler removeTag
                 return cell;
             }
         });
@@ -39,4 +39,7 @@ public class HelloController implements Initializable {
         modello.getTags().addRisorsa(new Tag(tagTextField.getText()));  //aggiungo il valore del textfield alla lista di tag nel modello
     }
 
+    private void removeTag(Tag t){
+        modello.getTags().removeRisorsa(t);
+    }
 }

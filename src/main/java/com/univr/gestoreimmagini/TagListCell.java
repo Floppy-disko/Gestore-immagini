@@ -3,23 +3,26 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.ContenitoreTag;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 
+import java.util.function.Consumer;
+
 public class TagListCell extends ListCell<Tag> {
     private HBox content;
     private Label nome;
     private Button button;
-    private ContenitoreTag tags;
+    private Consumer<Tag> buttonHandler;
 
-    public TagListCell(ContenitoreTag tags) {  //la cella sarà formata da un label ed un bottone per eliminarla
+    public TagListCell(Consumer<Tag> handler) {  //la cella sarà formata da un label ed un bottone per eliminarla
         super();
-        this.tags = tags;
+        buttonHandler = handler;
         nome = new Label();
         Button button = new Button("X");
-        button.setOnAction(this::removeTag);  //Quando clicco il bottone chiama remove tag che rimuove il tag dal modello
+        button.setOnAction(this::buttonAction);  //Quando clicco il bottone chiama remove tag che rimuove il tag dal modello
         content = new HBox(button, nome);
         content.setSpacing(10);
     }
@@ -35,8 +38,8 @@ public class TagListCell extends ListCell<Tag> {
         }
     }
 
-    private void removeTag(ActionEvent e){
-        tags.removeRisorsa(getItem());
+    private void buttonAction(ActionEvent e){
+        buttonHandler.accept(getItem());
     }
 
 }

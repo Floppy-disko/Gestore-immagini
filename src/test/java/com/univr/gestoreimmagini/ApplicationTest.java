@@ -1,8 +1,13 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.ContenitoreTag;
+import com.univr.gestoreimmagini.modello.Model;
+import com.univr.gestoreimmagini.modello.Tag;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,12 +15,12 @@ import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-import org.testfx.matcher.control.LabeledMatchers;
-import org.testfx.service.query.NodeQuery;
-import org.testfx.service.query.impl.NodeQueryImpl;
-import org.testfx.util.NodeQueryUtils;
+
+import com.univr.gestoreimmagini.modello.*;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 // usare testfx non funziona con i moduli di java, ho risolto mettendo una riga nel pom.xml
 @ExtendWith(ApplicationExtension.class)
@@ -41,13 +46,25 @@ class ApplicationTest {
 //        FxAssert.verifyThat(".button", LabeledMatchers.hasText("ciao"));
 //    }
 
-    final String tagTextFieldID = "#tagTextField";
     @Test
     void testAddTag(FxRobot robot) {
-        robot.clickOn(tagTextFieldID); //posso cercare tramite fx:id
+        Model modello = Model.getModel();
+        ContenitoreTag tags = modello.getTags();
+
+        robot.interact(()->{ //per modificare la scena devo per forza passare l'azione a robot.interact
+            tags.removeRisorsa("Elemento"); //elimino "Elemento" (se esiste già) prima di aggiungerlo
+        });
+        robot.clickOn("#tagTextField"); //posso cercare tramite fx:id
         robot.write("Elemento");
         robot.clickOn("Aggiungi"); //o tramite il la proprietà text
+        ObservableList<Tag> itemsList = ((ListView)robot.lookup("#tagsList").query()).getItems();
 
+        assertTrue(() -> {  //controllo che ora la view mostri l'item "Elemento"
+            for(Tag t: itemsList)
+                if(t.getNome().equals("Elemento"))
+                    return true;
+            return false;
+        });
     }
 
     @BeforeAll

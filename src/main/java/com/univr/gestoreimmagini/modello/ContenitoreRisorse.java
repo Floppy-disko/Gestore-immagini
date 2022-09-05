@@ -24,6 +24,21 @@ public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializa
         return risorse.get(index);
     }
 
+    /**
+     * Cerca la risorsa per nome
+     * @param nome
+     * @return La risorsa se la trova se no ritorna null
+     */
+    public T getRisorsa(String nome){
+        for(T r: risorse){
+            if(r.getNome().equals(nome)){
+                return r;
+            }
+        }
+
+        return null;
+    }
+
     public void addRisorsa(T r){
 
         nomiRisorse.add(r.getNome()); //aggiungo nome a lista ausiliaria
@@ -32,7 +47,21 @@ public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializa
         updateMemory();
     }
 
+    /**
+     * Cerca per nome se una risorsa è contenuta e se la trova la elimina
+     * @param nome
+     * @return 1 se trova la risorsa con quel nome, 0 se non la trova
+     */
+    public int removeRisorsa(String nome){
 
+        T r = getRisorsa(nome);
+        if(r!=null){
+            removeRisorsa(r);
+            return 1;
+        }
+
+        return 0;
+    }
     public void removeRisorsa(T r){
 
         nomiRisorse.remove(risorse.indexOf(r));  //rimuovi l'entry allo stesso index di r

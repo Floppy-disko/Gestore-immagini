@@ -1,6 +1,7 @@
 package com.univr.gestoreimmagini;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.*;
@@ -10,17 +11,20 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.service.query.NodeQuery;
+import org.testfx.service.query.impl.NodeQueryImpl;
+import org.testfx.util.NodeQueryUtils;
 
 import java.io.IOException;
 
-// usare testfx non funziona con i moduli
+// usare testfx non funziona con i moduli di java, ho risolto mettendo una riga nel pom.xml
 @ExtendWith(ApplicationExtension.class)
-class HelloApplicationTest {
+class ApplicationTest {
 
     @Start
     public void Start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1020, 730);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
@@ -29,12 +33,21 @@ class HelloApplicationTest {
     /**
      * @param robot - Will be injected by the test runner.
      */
+//    @Test
+//    void should_contain_button_with_text(FxRobot robot) {
+//        // or (lookup by css id):
+//        FxAssert.verifyThat("#helloButton", LabeledMatchers.hasText("ciao"));
+//        // or (lookup by css class):
+//        FxAssert.verifyThat(".button", LabeledMatchers.hasText("ciao"));
+//    }
+
+    final String tagTextFieldID = "#tagTextField";
     @Test
-    void should_contain_button_with_text(FxRobot robot) {
-        // or (lookup by css id):
-        FxAssert.verifyThat("#helloButton", LabeledMatchers.hasText("ciao"));
-        // or (lookup by css class):
-        FxAssert.verifyThat(".button", LabeledMatchers.hasText("ciao"));
+    void testAddTag(FxRobot robot) {
+        robot.clickOn(tagTextFieldID); //posso cercare tramite fx:id
+        robot.write("Elemento");
+        robot.clickOn("Aggiungi"); //o tramite il la proprietà text
+
     }
 
     @BeforeAll
@@ -68,4 +81,5 @@ class HelloApplicationTest {
     static void done() {
         System.out.println("@AfterAll - executed after all test methods.");
     }
+
 }

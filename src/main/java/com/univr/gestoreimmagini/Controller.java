@@ -11,7 +11,7 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class Controller implements Initializable {
 
     @FXML
     private ListView<Tag> tagsList;
@@ -28,7 +28,7 @@ public class HelloController implements Initializable {
         tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
-                TagListCell cell = new TagListCell(HelloController.this::removeTag); //creo una custoListCell con un bottone che ha come eventHadler removeTag
+                TagListCell cell = new TagListCell(Controller.this::removeTag); //creo una custoListCell con un bottone che ha come eventHadler removeTag
                 return cell;
             }
         });

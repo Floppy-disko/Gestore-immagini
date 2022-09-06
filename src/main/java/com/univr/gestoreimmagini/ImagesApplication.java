@@ -1,15 +1,16 @@
 package com.univr.gestoreimmagini;
 
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Application extends javafx.application.Application {
+public class ImagesApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1020, 730);
         stage.setTitle("Annotatore di immagini");
         stage.setScene(scene);

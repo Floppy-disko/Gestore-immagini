@@ -5,18 +5,14 @@ import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-
-import com.univr.gestoreimmagini.modello.*;
 
 import java.io.IOException;
 
@@ -24,11 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // usare testfx non funziona con i moduli di java, ho risolto mettendo una riga nel pom.xml
 @ExtendWith(ApplicationExtension.class)
-class ApplicationTest {
+class ImagesApplicationTest {
 
     @Start
     public void Start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1020, 730);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -65,6 +61,7 @@ class ApplicationTest {
                     return true;
             return false;
         });
+
     }
 
     @BeforeAll

@@ -9,7 +9,7 @@ import javafx.collections.ObservableMap;
 import java.io.*;
 import java.util.*;
 
-public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializable {
+public abstract class ContenitoreRisorse<T> implements Serializable {
 
     private final ObservableList<T> risorse = FXCollections.observableArrayList();
 
@@ -31,7 +31,7 @@ public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializa
      */
     public T getRisorsa(String nome){
         for(T r: risorse){
-            if(r.getNome().equals(nome)){
+            if(r.toString().equals(nome)){
                 return r;
             }
         }
@@ -41,7 +41,7 @@ public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializa
 
     public void addRisorsa(T r){
 
-        nomiRisorse.add(r.getNome()); //aggiungo nome a lista ausiliaria
+        nomiRisorse.add(r.toString()); //aggiungo nome a lista ausiliaria
         risorse.add(r); //aggiungo tag con quel nome alla lista principale
 
         updateMemory();
@@ -75,6 +75,10 @@ public abstract class ContenitoreRisorse<T extends Risorsa> implements Serializa
     }
     public ArrayList<String> getNomiRisorse() {
         return nomiRisorse;
+    }
+
+    public int getIndex(String nome){
+        return nomiRisorse.indexOf(nome);
     }
 
     public boolean nomeInLista(String nome){

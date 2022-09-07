@@ -17,12 +17,10 @@ public class TagListCell extends ListCell<Tag> {
     private Button button;
     private Consumer<Tag> buttonHandler; //Il metodo onAction per il bottone chiamerà il metodo passato al costruttore della cella con come parametro l'elemento rappresentato dalla cella
 
-    public TagListCell(Consumer<Tag> handler) {  //la cella sarà formata da un label ed un bottone per eliminarla
+    public TagListCell(Button button) {  //la cella sarà formata da un label ed un bottone per eliminarla
         super();
-        buttonHandler = handler;
         nome = new Label();
-        Button button = new Button("X");
-        button.setOnAction(this::buttonAction);  //Quando clicco il bottone chiama remove tag che rimuove il tag dal modello
+        this.button = button;
         content = new HBox(button, nome);
         content.setSpacing(10);
     }
@@ -31,15 +29,12 @@ public class TagListCell extends ListCell<Tag> {
     protected void updateItem(Tag item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
-            nome.setText(item.getNome());
+            nome.setText(item.toString());
+            button.setId(item.toString() + "Button"); //setto un id al bottone così lo posso identificare
             setGraphic(content);
         } else {
             setGraphic(null);
         }
-    }
-
-    private void buttonAction(ActionEvent e){
-        buttonHandler.accept(getItem());
     }
 
 }

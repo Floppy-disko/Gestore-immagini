@@ -53,15 +53,35 @@ class ImagesApplicationTest {
         robot.clickOn("#tagTextField"); //posso cercare tramite fx:id
         robot.write("Elemento");
         robot.clickOn("Aggiungi"); //o tramite il la proprietà text
-        ObservableList<Tag> itemsList = ((ListView)robot.lookup("#tagsList").query()).getItems();
+        ObservableList<Tag> itemsList = ((ListView)robot.lookup("#tagsList").query()).getItems(); //potrei controllare da modello ma preferisco controllare dalla view per essere sicuro che siano mostrati
 
         assertTrue(() -> {  //controllo che ora la view mostri l'item "Elemento"
             for(Tag t: itemsList)
-                if(t.getNome().equals("Elemento"))
+                if(t.toString().equals("Elemento"))
                     return true;
             return false;
         });
 
+    }
+
+    @Test
+    void testRemoveTag(FxRobot robot){
+        Model modello = Model.getModel();
+        ContenitoreTag tags = modello.getTags();
+
+        robot.interact(()->{ //per modificare la scena devo per forza passare l'azione a robot.interact
+            tags.addRisorsa("Elemento2"); //elimino "Elemento" (se esiste già) prima di aggiungerlo
+        });
+
+        robot.clickOn("#Elemento2Button"); //clicco sul bottone che elimina l'elemento della lista
+
+        ObservableList<Tag> itemsList = ((ListView)robot.lookup("#tagsList").query()).getItems();
+        assertTrue(() -> {  //controllo che ora la view mostri l'item "Elemento"
+            for(Tag t: itemsList)
+                if(t.toString().equals("Elemento2"))
+                    return false;
+            return true;
+        });
     }
 
     @BeforeAll

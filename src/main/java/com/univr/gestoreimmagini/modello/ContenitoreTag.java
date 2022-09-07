@@ -29,6 +29,10 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
             }
     }
 
+    public void addRisorsa(String nome){  //così posso creare un Tag usando solo la stringa del nome
+        addRisorsa(new Tag(nome));
+    }
+
     protected void updateMemory(){
         try{
             FileOutputStream fos = new FileOutputStream(tagFile);

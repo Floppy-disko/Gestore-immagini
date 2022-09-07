@@ -28,7 +28,10 @@ public class Controller implements Initializable {
         tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
-                TagListCell cell = new TagListCell(Controller.this::removeTag); //creo una custoListCell con un bottone che ha come eventHadler removeTag
+                Button button = new Button();
+                TagListCell cell = new TagListCell(button); //creo una custoListCell con un bottone che ha come eventHadler removeTag
+                button.setText("X");  //inizializzo il bottone che ho passato alla cella
+                button.setOnAction((actionEvent)->removeTag(cell.getItem())); //quando premo il bottone elimina l'item della cella
                 return cell;
             }
         });

@@ -3,15 +3,11 @@ package com.univr.gestoreimmagini.modello;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Tag extends Risorsa {
+public class Tag {
     private StringProperty nome = new SimpleStringProperty();
 
     public Tag(String nome) {
         this.nome.set(nome);
-    }
-
-    public String getNome() {
-        return nome.get();
     }
 
     public StringProperty nomeProperty() {

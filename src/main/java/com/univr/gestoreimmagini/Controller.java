@@ -45,7 +45,6 @@ public class Controller implements Initializable {
             return;
 
         modello.getTags().addRisorsa(nome);  //aggiungo il valore del textfield alla lista di tag nel modello
-        modello.getTags().getRisorse().get(0).setNome("Ciao");
     }
 
     private void removeTag(Tag t){

@@ -6,21 +6,45 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.Controller">
+<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <AnchorPane prefHeight="375.0" prefWidth="980.0">
+   <AnchorPane prefHeight="322.0" prefWidth="980.0">
+      <children>
+         <SplitPane dividerPositions="0.6614881439084219" layoutX="1.0" layoutY="-3.0" prefHeight="322.0" prefWidth="980.0">
+           <items>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="321.0" prefWidth="346.0">
+                  <children>
+                     <VBox alignment="CENTER" layoutX="45.0" layoutY="54.0" prefHeight="201.0" prefWidth="147.0">
+                        <children>
+                           <ImageView fitHeight="186.0" fitWidth="190.0" onDragDropped="#addImage" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@Simo.jpg" />
+                              </image>
+                           </ImageView>
+                        </children>
+                     </VBox>
+                  </children>
+               </AnchorPane>
+           </items>
+         </SplitPane>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="306.0" prefWidth="980.0">
       <children>
          <SplitPane dividerPositions="0.5" prefHeight="294.0" prefWidth="980.0">
            <items>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="486.0">
                   <children>
-                     <TextField fx:id="tagTextField" layoutX="35.0" layoutY="61.0" prefHeight="24.0" prefWidth="368.0" />
+                     <TextField fx:id="tagTextField" layoutX="35.0" layoutY="61.0" prefHeight="24.0" prefWidth="368.0" promptText="Aggiungi un tag" />
                      <Button layoutX="407.0" layoutY="61.0" mnemonicParsing="false" onAction="#addTag" text="Aggiungi" />
                   </children>
                </AnchorPane>

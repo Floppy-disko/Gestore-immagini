@@ -1,5 +1,6 @@
 package com.univr.gestoreimmagini.modello;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

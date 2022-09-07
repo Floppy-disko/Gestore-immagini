@@ -43,7 +43,6 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
         nomiRisorse.add(r.toString()); //aggiungo nome a lista ausiliaria
         risorse.add(r); //aggiungo tag con quel nome alla lista principale
-
         updateMemory();
     }
 

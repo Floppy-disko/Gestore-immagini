@@ -44,10 +44,16 @@ public class Controller implements Initializable {
         if(modello.getTags().nomeInLista(nome))  //Non puoi due tag uguali
             return;
 
-        modello.getTags().addRisorsa(new Tag(nome));  //aggiungo il valore del textfield alla lista di tag nel modello
+        modello.getTags().addRisorsa(nome);  //aggiungo il valore del textfield alla lista di tag nel modello
+        modello.getTags().getRisorse().get(0).setNome("Ciao");
     }
 
     private void removeTag(Tag t){
         modello.getTags().removeRisorsa(t);
+    }
+
+    @FXML
+    private void addImage(ActionEvent actionEvent){
+        System.out.println("Simo");
     }
 }

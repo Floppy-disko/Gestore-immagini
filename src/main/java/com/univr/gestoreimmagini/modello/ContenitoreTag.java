@@ -65,6 +65,7 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
             for(String nome: getNomiRisorse())  //creo un tag nella lista principale per ogni nome letto da memoria
                 getRisorse().add(new Tag(nome));
 
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

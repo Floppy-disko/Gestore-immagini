@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.Controller">
+<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -25,7 +25,7 @@
                   <children>
                      <VBox alignment="CENTER" layoutX="45.0" layoutY="54.0" prefHeight="201.0" prefWidth="147.0">
                         <children>
-                           <ImageView fitHeight="186.0" fitWidth="190.0" onDragDropped="#addImage" pickOnBounds="true" preserveRatio="true">
+                           <ImageView fx:id="imageDnD" fitHeight="186.0" fitWidth="190.0" onDragDropped="#addImage" onDragOver="#acceptImage" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@Simo.jpg" />
                               </image>

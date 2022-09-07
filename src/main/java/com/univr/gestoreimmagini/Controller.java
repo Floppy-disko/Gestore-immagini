@@ -7,8 +7,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.util.Callback;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -18,6 +28,9 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField tagTextField;
+
+    @FXML
+    private ImageView imageDnD;
 
     private Model modello = Model.getModel();
 
@@ -52,7 +65,23 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void addImage(ActionEvent actionEvent){
-        System.out.println("Simo");
+    private void acceptImage(DragEvent event){
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.ANY);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void addImage(DragEvent event) {
+        List<File> files = event.getDragboard().getFiles();
+        System.out.println("Got " + files.size() + " files");
+        try {
+            imageDnD.setImage(new Image(new FileInputStream(files.get(0))));
+        } catch(FileNotFoundException e) {
+            System.err.printf("File %s not found", files.get(0).toString());
+        }
+
+        event.consume();
     }
 }

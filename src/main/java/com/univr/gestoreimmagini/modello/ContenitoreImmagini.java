@@ -1,10 +1,13 @@
 package com.univr.gestoreimmagini.modello;
 
+import com.univr.gestoreimmagini.ImagesApplication;
 import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.nio.file.Paths;
+import javax.imageio.ImageIO;
 
 public class ContenitoreImmagini extends ContenitoreRisorse<Immagine> {
 
@@ -19,7 +22,8 @@ public class ContenitoreImmagini extends ContenitoreRisorse<Immagine> {
     }
     @Override
     protected void updateMemory() {
-        System.out.println(Paths.get(this.getClass().getResource("/").getPath()));
+        URL path = ContenitoreImmagini.class.getResource("test.txt");  //la slash da usare è "/"
+        //ImageIO.write(placedImage, "jpg", new File(path.toString()));  //Image di javafx non sappiamo come scriverla
     }
 
     @Override

@@ -30,9 +30,13 @@ public class Controller implements Initializable {
     private TextField tagTextField;
 
     @FXML
+    private TextField immagineTextField;
+
+    @FXML
     private ImageView imageDnD;
 
     private Model modello = Model.getModel();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
@@ -73,15 +77,29 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void addImage(DragEvent event) {
+    private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
         System.out.println("Got " + files.size() + " files");
         try {
-            imageDnD.setImage(new Image(new FileInputStream(files.get(0))));
+            Image image = new Image(new FileInputStream(files.get(0)));
+            modello.getImages().setPlacedImage(image);
+            imageDnD.setImage(image);
+
         } catch(FileNotFoundException e) {
             System.err.printf("File %s not found", files.get(0).toString());
         }
 
         event.consume();
+    }
+
+    @FXML
+    private void addImage(){
+        //System.out.println(imageDnD.getImage());
+        //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
+        String nome = immagineTextField.getText();
+        if(modello.getImages().nomeInLista(nome))  //Non puoi due tag uguali
+            return;
+
+        modello.getImages().addPlacedImage(nome);
     }
 }

@@ -7,9 +7,11 @@ public class Model {
     private final static Model modello = new Model(); //contiene l'unica istanza del singleton
     private final ContenitoreTag tags;
 
-    private Model() {
+    private final ContenitoreImmagini immagini;
 
+    private Model() {
         tags = new ContenitoreTag();
+        immagini = new ContenitoreImmagini();
     }
 
     public static Model getModel() {
@@ -18,5 +20,9 @@ public class Model {
 
     public ContenitoreTag getTags(){
         return tags;
+    }
+
+    public ContenitoreImmagini getImages() {
+        return immagini;
     }
 }

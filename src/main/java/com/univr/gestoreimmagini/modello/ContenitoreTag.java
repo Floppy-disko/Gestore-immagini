@@ -22,11 +22,8 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
         }
 
         if(tagFile.length()>0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag
-            try{
-                loadFromMemory();
-            } catch(FileNotFoundException e) {
-                System.err.println("File di tag non trovato");
-            }
+            loadFromMemory();
+
     }
 
     public void addRisorsa(String nome){  //così posso creare un Tag usando solo la stringa del nome
@@ -50,7 +47,7 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
     }
 
     @Override
-    protected void loadFromMemory() throws FileNotFoundException {
+    protected void loadFromMemory(){
 
         try{
 
@@ -71,7 +68,12 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            new PrintWriter(tagFile).close(); //Se c'è un eccezzione che non è IO o ClassNotFound prbabimente il file è illeggibile quindi pulisci il file
+            try {
+                new PrintWriter(tagFile).close(); //Se c'è un eccezzione che non è IO o ClassNotFound prbabimente il file è illeggibile quindi pulisci il file
+
+            } catch(FileNotFoundException e2) {
+                System.err.printf("File %s non trovato", tagFile);
+            }
         }
 
     }

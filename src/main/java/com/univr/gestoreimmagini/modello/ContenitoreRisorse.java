@@ -91,5 +91,5 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
     protected abstract void updateMemory();
 
-    protected abstract void loadFromMemory() throws FileNotFoundException;
+    protected abstract void loadFromMemory();
 }

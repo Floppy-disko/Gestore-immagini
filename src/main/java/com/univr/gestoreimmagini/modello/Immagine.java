@@ -11,4 +11,8 @@ public class Immagine {
         this.immagine = immagine;
         this.nome = nome;
     }
+
+    public String toString(){
+        return this.nome;
+    }
 }

@@ -4,14 +4,27 @@ import com.univr.gestoreimmagini.modello.ContenitoreRisorse;
 import com.univr.gestoreimmagini.modello.Tag;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
-    private File tagFile = new File("tags.txt");
+    private File tagFile;
 
     protected ContenitoreTag() {
         super();
+
+        URL url = ContenitoreTag.class.getResource("");
+        String path = url.getPath() + "/tags";  //path della cartella tagss
+        File tagDir = new File(path);
+
+        if(!tagDir.exists()) { //se la cartella non esiste lo creo
+                tagDir.mkdir();
+        }
+
+        path = path + "/tags.txt";  //path del file su cui salvare il tag
+        tagFile = new File(path);
+
         if(!tagFile.exists()) { //se il file non esiste lo creo
             try {
                 tagFile.createNewFile();
@@ -30,6 +43,19 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
         addRisorsa(new Tag(nome));
     }
 
+    @Override
+    protected void addToMemory(String nome) {
+        updateMemory();
+    }
+
+    @Override
+    protected void removeFromMemory() {
+        updateMemory(); //aggiungere e cancellare dalla memoria significa sovrascrivere tags.txt
+    }
+
+    /**
+     * Sovrascrive tags.txt con la lista ausiliaria contenente i nomi dei tags
+     */
     protected void updateMemory(){
         try{
             FileOutputStream fos = new FileOutputStream(tagFile);

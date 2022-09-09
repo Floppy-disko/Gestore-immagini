@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import java.io.File;
@@ -33,7 +34,10 @@ public class Controller implements Initializable {
     private TextField immagineTextField;
 
     @FXML
-    private ImageView imageDnD;
+    private StackPane imageDnD;
+
+    @FXML
+    private ImageView placedImage;
 
     private Model modello = Model.getModel();
 
@@ -83,7 +87,7 @@ public class Controller implements Initializable {
         try {
             Image image = new Image(new FileInputStream(files.get(0)));
             modello.getImages().setPlacedImage(image);
-            imageDnD.setImage(image);
+            placedImage.setImage(image);
 
         } catch(FileNotFoundException e) {
             System.err.printf("File %s not found", files.get(0).toString());
@@ -96,6 +100,9 @@ public class Controller implements Initializable {
     private void addImage(){
         //System.out.println(imageDnD.getImage());
         //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
+        if(modello.getImages().isPlacedImageSet()==false)  //Salvo solo se l'immagine è stata settata
+            return;
+
         String nome = immagineTextField.getText();
         if(modello.getImages().nomeInLista(nome))  //Non puoi due tag uguali
             return;

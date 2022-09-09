@@ -43,7 +43,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
         nomiRisorse.add(r.toString()); //aggiungo nome a lista ausiliaria
         risorse.add(r); //aggiungo tag con quel nome alla lista principale
-        updateMemory();
+        addToMemory(r.toString());
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         nomiRisorse.remove(risorse.indexOf(r));  //rimuovi l'entry allo stesso index di r
         risorse.remove(r);
 
-        updateMemory();
+        removeFromMemory();
     }
 
     public ObservableList<T> getRisorse(){
@@ -89,7 +89,9 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return false;
     }
 
-    protected abstract void updateMemory();
+    protected abstract void addToMemory(String nome);
+
+    protected abstract void removeFromMemory();
 
     protected abstract void loadFromMemory();
 }

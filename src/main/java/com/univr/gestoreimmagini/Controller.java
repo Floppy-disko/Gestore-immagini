@@ -1,5 +1,6 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.Immagine;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
@@ -12,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
@@ -39,8 +42,10 @@ public class Controller implements Initializable {
     @FXML
     private ImageView placedImage;
 
-    private Model modello = Model.getModel();
+    @FXML
+    private FlowPane imageGrid;
 
+    private Model modello = Model.getModel();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
@@ -56,6 +61,10 @@ public class Controller implements Initializable {
                 return cell;
             }
         });
+
+//        for(Immagine immagine: modello.getImages().getRisorse()){
+//            imageGrid.getChildren().add(new ImageView(immagine.getImmagine()));
+//        }
 
     }
 

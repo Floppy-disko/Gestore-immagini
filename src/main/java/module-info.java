@@ -3,6 +3,7 @@ module com.univr.gestoreimmagini {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.swing;
+    requires org.apache.commons.io;
 
 
     opens com.univr.gestoreimmagini to javafx.fxml;

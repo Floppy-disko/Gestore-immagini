@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -26,18 +27,18 @@
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                   <children>
                      <ScrollPane layoutX="5.0" layoutY="8.0" prefHeight="306.0" prefWidth="570.0">
-                       <content>
-                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                       </content>
+                        <content>
+                           <FlowPane fx:id="imageGrid" prefHeight="308.0" prefWidth="554.0" />
+                        </content>
                      </ScrollPane>
                   </children></AnchorPane>
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="321.0" prefWidth="346.0">
                   <children>
-                     <VBox alignment="CENTER" layoutX="37.0" layoutY="30.0" prefHeight="254.0" prefWidth="205.0">
+                     <VBox alignment="CENTER" layoutX="40.0" layoutY="33.0" prefHeight="254.0" prefWidth="264.0">
                         <children>
-                           <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="150.0" prefWidth="200.0">
+                           <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="202.0" prefWidth="265.0">
                               <children>
-                                 <ImageView fx:id="placedImage" fitHeight="186.0" fitWidth="217.0" pickOnBounds="true" preserveRatio="true">
+                                 <ImageView fx:id="placedImage" fitHeight="190.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                        <Image url="@Simo.jpg" />
                                     </image>
@@ -48,7 +49,7 @@
                               <children>
                                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                     <children>
-                                       <TextField fx:id="immagineTextField" layoutY="7.0" promptText="Inserisci nome immagine" />
+                                       <TextField fx:id="immagineTextField" layoutY="7.0" prefHeight="26.0" prefWidth="197.0" promptText="Inserisci nome immagine" />
                                     </children>
                                  </AnchorPane>
                                  <AnchorPane prefHeight="200.0" prefWidth="200.0">

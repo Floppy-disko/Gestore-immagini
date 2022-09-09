@@ -12,6 +12,10 @@ public class Immagine {
         this.nome = nome;
     }
 
+    public Image getImmagine(){
+        return this.immagine;
+    }
+
     public String toString(){
         return this.nome;
     }

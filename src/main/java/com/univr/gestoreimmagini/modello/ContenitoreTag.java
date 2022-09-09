@@ -49,7 +49,7 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
     }
 
     @Override
-    protected void removeFromMemory() {
+    protected void removeFromMemory(String nome) {
         updateMemory(); //aggiungere e cancellare dalla memoria significa sovrascrivere tags.txt
     }
 

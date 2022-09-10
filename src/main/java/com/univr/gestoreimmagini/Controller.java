@@ -116,7 +116,11 @@ public class Controller implements Initializable {
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
         System.out.println("Got " + files.size() + " files");
-        //System.out.println(FilenameUtils.getExtension(files.get(0).getPath()));
+        String extension = FilenameUtils.getExtension(files.get(0).getPath());
+
+        if(!(extension.equals("png") || extension.equals("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
+            return;
+
         Image image = new Image(files.get(0).getPath());
         //System.out.println(FilenameUtils.getExtension(image.getUrl()));
         placedImage.setImage(image);

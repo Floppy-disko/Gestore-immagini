@@ -1,17 +1,15 @@
 package com.univr.gestoreimmagini.modello;
 
-import java.io.*;
-
 public class Model {
 
     private final static Model modello = new Model(); //contiene l'unica istanza del singleton
     private final ContenitoreTag tags;
 
-    private final ContenitoreImmagini images;
+    private final ContenitoreImmaginiAnnotate images;
 
     private Model() {
         tags = new ContenitoreTag();
-        images = new ContenitoreImmagini();
+        images = new ContenitoreImmaginiAnnotate();
     }
 
     public static Model getModel() {
@@ -22,7 +20,7 @@ public class Model {
         return tags;
     }
 
-    public ContenitoreImmagini getImages() {
+    public ContenitoreImmaginiAnnotate getImages() {
         return images;
     }
 }

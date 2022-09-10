@@ -43,7 +43,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
         nomiRisorse.add(r.toString()); //aggiungo nome a lista ausiliaria
         risorse.add(r); //aggiungo tag con quel nome alla lista principale
-        addToMemory(r.toString());
+        addToMemory(r);
     }
 
     /**
@@ -89,7 +89,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return false;
     }
 
-    protected abstract void addToMemory(String nome);
+    protected abstract void addToMemory(T r);
 
     protected abstract void removeFromMemory(String nome);
 

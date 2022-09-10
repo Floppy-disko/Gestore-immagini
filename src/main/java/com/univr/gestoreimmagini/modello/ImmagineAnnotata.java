@@ -1,13 +1,16 @@
 package com.univr.gestoreimmagini.modello;
 
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-public class Immagine {
+public class ImmagineAnnotata {
 
     private Image immagine;
     private String nome;
 
-    public Immagine(Image immagine, String nome) {
+    private ObservableList<Annotazione> annotazioni;
+
+    public ImmagineAnnotata(Image immagine, String nome) {
         this.immagine = immagine;
         this.nome = nome;
     }

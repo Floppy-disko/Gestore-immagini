@@ -1,26 +1,22 @@
 package com.univr.gestoreimmagini.modello;
 
-import com.univr.gestoreimmagini.ImagesApplication;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FilenameUtils;
 
 
-public class ContenitoreImmagini extends ContenitoreRisorse<Immagine> {
+public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnnotata> {
 
-    private Image placedImage;
     private File cartellaImmagini;
 
-    protected ContenitoreImmagini() {
+    protected ContenitoreImmaginiAnnotate() {
         super();
-        URL url = ContenitoreImmagini.class.getResource("");  //la slash da usare è "/"
+        URL url = ContenitoreImmaginiAnnotate.class.getResource("");  //la slash da usare è "/"
         String path = url.getPath() + "/immagini";
         cartellaImmagini = new File(path);
 
@@ -32,15 +28,15 @@ public class ContenitoreImmagini extends ContenitoreRisorse<Immagine> {
     }
 
     public void addRisorsa(Image immagine, String nome){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new Immagine(immagine, nome));
+        addRisorsa(new ImmagineAnnotata(immagine, nome));
     }
 
     @Override
-    protected void addToMemory(String nome) {
+    protected void addToMemory(ImmagineAnnotata r) {
 
-        String imagePath = cartellaImmagini.getPath() + "/" + nome + ".jpg";
+        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + ".jpg";
 
-        BufferedImage convertedImage = SwingFXUtils.fromFXImage(placedImage, null);
+        BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImmagine(), null);
         try {
             ImageIO.write(convertedImage, "jpg", new File(imagePath));  //Image di javafx non sappiamo come scriverla
         } catch(Exception e) {
@@ -71,26 +67,19 @@ public class ContenitoreImmagini extends ContenitoreRisorse<Immagine> {
             Image immagine = null;
             String nome =  FilenameUtils.getBaseName(imageFile.getPath());
 
-            try {
-                immagine = new Image(new FileInputStream(imageFile));
-            } catch (FileNotFoundException e) {
+            try(FileInputStream stream = new FileInputStream(imageFile)) {
+                immagine = new Image(stream);
+            } catch (IOException e) {
                 System.err.printf("\nCouldn't read from %s\n", imageFile.getPath());
                 throw new RuntimeException();
             }
 
-            getRisorse().add(new Immagine(immagine, nome));
+            getNomiRisorse().add(nome);
+            getRisorse().add(new ImmagineAnnotata(immagine, nome));
         }
     }
 
-    public void setPlacedImage(Image image) {
-        placedImage = image;
-    }
-
-    public void addPlacedImage(String nome) {
-        addRisorsa(placedImage, nome);
-    }
-
-    public boolean isPlacedImageSet() {
-        return placedImage!=null;
+    public void addImage(Image immagine, String nome) {
+        addRisorsa(immagine, nome);
     }
 }

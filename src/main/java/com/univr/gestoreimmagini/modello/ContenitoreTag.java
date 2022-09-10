@@ -44,7 +44,7 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
     }
 
     @Override
-    protected void addToMemory(String nome) {
+    protected void addToMemory(Tag r) {
         updateMemory();
     }
 
@@ -62,10 +62,12 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            oos.writeObject(getNomiRisorse());  //salvo questo oggetto in memoria con tutta la lista di tag
-
-            oos.flush();
-            oos.close();
+            try{
+                oos.writeObject(getNomiRisorse());  //salvo questo oggetto in memoria con tutta la lista di tag
+            } finally {
+                oos.flush();
+                oos.close();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,9 +83,11 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            getNomiRisorse().addAll((ArrayList<String>) ois.readObject()); //aggiungo gli elementi copiati alla lista ausiliaria
-
-            ois.close();
+            try {
+                getNomiRisorse().addAll((ArrayList<String>) ois.readObject()); //aggiungo gli elementi copiati alla lista ausiliaria
+            } finally {
+                ois.close();
+            }
 
             for(String nome: getNomiRisorse())  //creo un tag nella lista principale per ogni nome letto da memoria
                 getRisorse().add(new Tag(nome));

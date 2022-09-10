@@ -1,6 +1,6 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.Immagine;
+import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
@@ -11,17 +11,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.util.Callback;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,15 +36,15 @@ public class Controller implements Initializable {
     private TextField immagineTextField;
 
     @FXML
-    private StackPane imageDnD;
-
-    @FXML
     private ImageView placedImage;
 
     @FXML
     private FlowPane imageGrid;
 
+
     private Model modello = Model.getModel();
+
+    private boolean placedImageSet=false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
@@ -62,16 +61,39 @@ public class Controller implements Initializable {
             }
         });
 
-//        for(Immagine immagine: modello.getImages().getRisorse()){
-//            imageGrid.getChildren().add(new ImageView(immagine.getImmagine()));
-//        }
+        displayImages(modello.getImages().getRisorse());
+    }
 
+    private void displayImages(List<ImmagineAnnotata> listaImmagini){
+        for(ImmagineAnnotata immagineAnnotata : listaImmagini){
+            displayImage(immagineAnnotata);
+        }
+    }
+
+    private void displayImage(ImmagineAnnotata immagineAnnotata){
+        ImageView imageView = new ImageView(immagineAnnotata.getImmagine());
+        double width = 180;
+        double height = width*9/16;
+//        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        imageView.setPreserveRatio(true);
+        Label label = new Label(immagineAnnotata.toString());
+        Button button = new Button("x");
+        HBox hBox = new HBox(label, button);
+        VBox vBox = new VBox(imageView, hBox);
+        vBox.setMaxWidth(width);
+        vBox.setMinWidth(width);
+        button.setOnAction((actionEvent) -> {
+            imageGrid.getChildren().remove(vBox);
+            modello.getImages().removeRisorsa(immagineAnnotata.toString());
+        });
+        imageGrid.getChildren().add(vBox);
     }
 
     @FXML
     private void addTag(ActionEvent actionEvent) {
         String nome = tagTextField.getText();
-        if(modello.getTags().nomeInLista(nome))  //Non puoi due tag uguali
+        if(modello.getTags().nomeInLista(nome))  //Non puoi aggiungere due tag uguali
             return;
 
         modello.getTags().addRisorsa(nome);  //aggiungo il valore del textfield alla lista di tag nel modello
@@ -93,10 +115,11 @@ public class Controller implements Initializable {
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
         System.out.println("Got " + files.size() + " files");
+        System.out.println(FilenameUtils.getExtension(files.get(0).getPath()));
         try {
             Image image = new Image(new FileInputStream(files.get(0)));
-            modello.getImages().setPlacedImage(image);
             placedImage.setImage(image);
+            placedImageSet=true;
 
         } catch(FileNotFoundException e) {
             System.err.printf("File %s not found", files.get(0).toString());
@@ -109,13 +132,15 @@ public class Controller implements Initializable {
     private void addImage(){
         //System.out.println(imageDnD.getImage());
         //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
-        if(modello.getImages().isPlacedImageSet()==false)  //Salvo solo se l'immagine è stata settata
+        if(placedImageSet==false)  //Salvo solo se l'immagine è stata settata
             return;
 
         String nome = immagineTextField.getText();
-        if(modello.getImages().nomeInLista(nome))  //Non puoi due tag uguali
+        if(modello.getImages().nomeInLista(nome))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
-        modello.getImages().addPlacedImage(nome);
+        modello.getImages().addImage(placedImage.getImage(), nome);
+        displayImage(modello.getImages().getRisorsa(nome));
     }
+
 }

@@ -13,7 +13,6 @@ import org.apache.commons.io.FilenameUtils;
 public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnnotata> {
 
     private File cartellaImmagini;
-    private File cartellaTmp;
 
     protected ContenitoreImmaginiAnnotate() {
         super();
@@ -23,13 +22,6 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         if(!cartellaImmagini.exists()){
             cartellaImmagini.mkdir();
-        }
-
-        path = path + "/tmp";
-        cartellaTmp = new File(path);
-
-        if(!cartellaTmp.exists()){
-            cartellaTmp.mkdir();
         }
 
         loadFromMemory();
@@ -42,13 +34,15 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
     @Override
     protected void addToMemory(ImmagineAnnotata r) {
 
-        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + ".jpg";
+        String extension = FilenameUtils.getExtension(r.getImmagine().getUrl());
+
+        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + "." + extension;
 
         BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImmagine(), null);
         try {
-            ImageIO.write(convertedImage, "jpg", new File(imagePath));  //Image di javafx non sappiamo come scriverla
+            ImageIO.write(convertedImage, extension, new File(imagePath));  //Image di javafx non sappiamo come scriverla
         } catch(Exception e) {
-            System.err.println("Error saving placedImage as file");
+            System.err.printf("\nError saving %s as file\n", imagePath);
         }
     }
 
@@ -87,7 +81,4 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         }
     }
 
-    public void addImage(Image immagine, String nome) {
-        addRisorsa(immagine, nome);
-    }
 }

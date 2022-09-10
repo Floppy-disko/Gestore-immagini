@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,15 +116,11 @@ public class Controller implements Initializable {
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
         System.out.println("Got " + files.size() + " files");
-        System.out.println(FilenameUtils.getExtension(files.get(0).getPath()));
-        try {
-            Image image = new Image(new FileInputStream(files.get(0)));
-            placedImage.setImage(image);
-            placedImageSet=true;
-
-        } catch(FileNotFoundException e) {
-            System.err.printf("File %s not found", files.get(0).toString());
-        }
+        //System.out.println(FilenameUtils.getExtension(files.get(0).getPath()));
+        Image image = new Image(files.get(0).getPath());
+        //System.out.println(FilenameUtils.getExtension(image.getUrl()));
+        placedImage.setImage(image);
+        placedImageSet=true;
 
         event.consume();
     }
@@ -139,7 +136,7 @@ public class Controller implements Initializable {
         if(modello.getImages().nomeInLista(nome))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
-        modello.getImages().addImage(placedImage.getImage(), nome);
+        modello.getImages().addRisorsa(placedImage.getImage(), nome);
         displayImage(modello.getImages().getRisorsa(nome));
     }
 

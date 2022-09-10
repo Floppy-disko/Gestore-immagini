@@ -13,6 +13,7 @@ import org.apache.commons.io.FilenameUtils;
 public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnnotata> {
 
     private File cartellaImmagini;
+    private File cartellaTmp;
 
     protected ContenitoreImmaginiAnnotate() {
         super();
@@ -22,6 +23,13 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         if(!cartellaImmagini.exists()){
             cartellaImmagini.mkdir();
+        }
+
+        path = path + "/tmp";
+        cartellaTmp = new File(path);
+
+        if(!cartellaTmp.exists()){
+            cartellaTmp.mkdir();
         }
 
         loadFromMemory();

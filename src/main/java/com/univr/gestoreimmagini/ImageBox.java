@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class ImageBox extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
     }
 
     public void setNameLabelText(String text){
@@ -42,5 +44,9 @@ public class ImageBox extends VBox {
 
     public void setDisplayedImage(Image image){
         imageView.setImage(image);
+    }
+
+    public void setImageOnClick(EventHandler<MouseEvent> handler){
+        imageView.setOnMouseClicked(handler);
     }
 }

@@ -7,14 +7,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.commons.io.FilenameUtils;
 
@@ -72,8 +76,6 @@ public class Controller implements Initializable {
     }
 
     private void displayImage(ImmagineAnnotata immagineAnnotata){
-
-        //In questo blocco di codice carico in image-box per ogni immagine
         ImageBox imageBox = new ImageBox();
         imageBox.setDisplayedImage(immagineAnnotata.getImmagine());
         imageBox.setNameLabelText(immagineAnnotata.toString());
@@ -81,6 +83,8 @@ public class Controller implements Initializable {
             imageGrid.getChildren().remove(imageBox);
             modello.getImages().removeRisorsa(immagineAnnotata.toString());
         });
+
+        imageBox.setImageOnClick(this::switchToView2);
 
         imageGrid.getChildren().add(imageBox);
     }
@@ -136,6 +140,20 @@ public class Controller implements Initializable {
 
         modello.getImages().addRisorsa(placedImage.getImage(), nome);
         displayImage(modello.getImages().getRisorsa(nome));
+    }
+
+    private void switchToView2(MouseEvent mouseEvent) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("view2.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Annotatore di immagini");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

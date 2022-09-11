@@ -24,7 +24,7 @@ class ImagesApplicationTest {
 
     @Start
     public void Start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("view1.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1020, 730);
         stage.setTitle("Hello!");
         stage.setScene(scene);

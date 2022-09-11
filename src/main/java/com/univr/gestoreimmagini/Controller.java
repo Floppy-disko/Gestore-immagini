@@ -5,7 +5,9 @@ import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
@@ -16,10 +18,7 @@ import javafx.scene.layout.*;
 import javafx.util.Callback;
 import org.apache.commons.io.FilenameUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,6 @@ public class Controller implements Initializable {
     @FXML
     private FlowPane imageGrid;
 
-
     private Model modello = Model.getModel();
 
     private boolean placedImageSet=false;
@@ -62,6 +60,8 @@ public class Controller implements Initializable {
             }
         });
 
+        //button.setText("Ciao");
+
         displayImages(modello.getImages().getRisorse());
     }
 
@@ -72,23 +72,17 @@ public class Controller implements Initializable {
     }
 
     private void displayImage(ImmagineAnnotata immagineAnnotata){
-        ImageView imageView = new ImageView(immagineAnnotata.getImmagine());
-        double width = 180;
-        double height = width*9/16;
-//        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        imageView.setPreserveRatio(true);
-        Label label = new Label(immagineAnnotata.toString());
-        Button button = new Button("x");
-        HBox hBox = new HBox(label, button);
-        VBox vBox = new VBox(imageView, hBox);
-        vBox.setMaxWidth(width);
-        vBox.setMinWidth(width);
-        button.setOnAction((actionEvent) -> {
-            imageGrid.getChildren().remove(vBox);
+
+        //In questo blocco di codice carico in image-box per ogni immagine
+        ImageBox imageBox = new ImageBox();
+        imageBox.setDisplayedImage(immagineAnnotata.getImmagine());
+        imageBox.setNameLabelText(immagineAnnotata.toString());
+        imageBox.setRemoveButtonOnAction((actionEvent) -> {
+            imageGrid.getChildren().remove(imageBox);
             modello.getImages().removeRisorsa(immagineAnnotata.toString());
         });
-        imageGrid.getChildren().add(vBox);
+
+        imageGrid.getChildren().add(imageBox);
     }
 
     @FXML
@@ -115,10 +109,10 @@ public class Controller implements Initializable {
     @FXML
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
-        System.out.println("Got " + files.size() + " files");
         String extension = FilenameUtils.getExtension(files.get(0).getPath());
+        System.out.printf("\nGot %s file", extension);
 
-        if(!(extension.equals("png") || extension.equals("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
+        if(!(extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
             return;
 
         Image image = new Image(files.get(0).getPath());

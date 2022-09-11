@@ -10,7 +10,7 @@ import java.io.IOException;
 public class ImagesApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ImagesApplication.class.getResource("view1.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1020, 730);
         stage.setTitle("Annotatore di immagini");
         stage.setScene(scene);

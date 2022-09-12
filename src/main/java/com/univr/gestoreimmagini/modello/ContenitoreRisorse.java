@@ -63,7 +63,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
     }
     public void removeRisorsa(T r){
 
-        nomiRisorse.remove(risorse.indexOf(r));  //rimuovi l'entry allo stesso index di r
+        nomiRisorse.remove(r.toString());  //rimuovi l'entry allo stesso index di r
         risorse.remove(r);
 
         removeFromMemory(r.toString());

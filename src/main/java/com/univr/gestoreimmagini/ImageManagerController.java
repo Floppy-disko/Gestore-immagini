@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class ImageManagerController implements Initializable {
 
     @FXML
     private ListView<Tag> tagsList;
@@ -98,7 +98,7 @@ public class Controller implements Initializable {
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
             modello.getImages().removeRisorsa(immagineAnnotata.toString()); //sarebbe il metodo removeImage
         });
-        imageBox.setImageOnClick(this::switchToView2);
+        imageBox.setImageOnClick(this::switchToWorkingImageView);
         imageBox.setId(immagineAnnotata.toString() + "Image");
         imageGrid.getChildren().add(imageBox);
     }
@@ -155,16 +155,16 @@ public class Controller implements Initializable {
         modello.getImages().addRisorsa(placedImage.getImage(), nome);
     }
 
-    private void switchToView2(MouseEvent mouseEvent) {
+    private void switchToWorkingImageView(MouseEvent mouseEvent) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("view2.fxml"));
+            root = FXMLLoader.load(getClass().getResource("WorkingInmageView.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Annotatore di immagini");
+        stage.setTitle("Working Image");
         stage.setScene(scene);
         stage.show();
     }

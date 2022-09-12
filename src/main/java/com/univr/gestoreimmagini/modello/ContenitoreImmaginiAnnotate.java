@@ -64,7 +64,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         FilenameFilter filter = new FilenameFilter() {
             @Override
             public boolean accept(File f, String name) {
-                return name.endsWith(".jpg") || name.endsWith(".png");
+                return name.endsWith(".jpg") || name.endsWith(".png") || name.endsWith(".JPG") || name.endsWith(".PNG");
             }
         };
 

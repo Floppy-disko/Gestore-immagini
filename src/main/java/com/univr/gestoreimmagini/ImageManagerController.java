@@ -49,6 +49,8 @@ public class ImageManagerController implements Initializable {
 
     private boolean placedImageSet=false;
 
+    private String placedImageExtension;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
         tagsList.setItems(modello.getTags().getRisorse()); //linka la lista di tag nella view alla lista di tag nel modello
@@ -127,14 +129,18 @@ public class ImageManagerController implements Initializable {
     @FXML
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
-        String extension = FilenameUtils.getExtension(files.get(0).getPath());
-        System.out.printf("\nGot %s file", extension);
+        placedImageExtension = FilenameUtils.getExtension(files.get(0).getPath());
+        System.out.printf("\nGot %s file", placedImageExtension);
 
-        if(!(extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
+        if(!(placedImageExtension.equalsIgnoreCase("png") || placedImageExtension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
             return;
 
-        Image image = new Image(files.get(0).getPath());
-        System.out.println(image.getUrl());
+        Image image = null;
+        try(FileInputStream stream = new FileInputStream(files.get(0).getPath())) {
+            image = new Image(stream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         //System.out.println(FilenameUtils.getExtension(image.getUrl()));
         placedImage.setImage(image);
         placedImageSet=true;
@@ -153,9 +159,10 @@ public class ImageManagerController implements Initializable {
         if(modello.getImages().nomeInLista(nome))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
-        modello.getImages().addRisorsa(placedImage.getImage(), nome);
+        modello.getImages().addRisorsa(placedImage.getImage(), nome, placedImageExtension);
 
         placedImageSet=false; //Comunico che non ho più immagini settate
+        placedImage.setImage(null);
     }
 
     private void switchToWorkingImageView(MouseEvent mouseEvent) {

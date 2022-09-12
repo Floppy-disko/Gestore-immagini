@@ -31,20 +31,18 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         loadFromMemory();
     }
 
-    public void addRisorsa(Image immagine, String nome){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new ImmagineAnnotata(immagine, nome));
+    public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
+        addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
     }
 
     @Override
     protected void addToMemory(ImmagineAnnotata r) {
 
-        String extension = FilenameUtils.getExtension(r.getImmagine().getUrl());
-
-        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + "." + extension;
+        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + "." + r.getExtension();
 
         BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImmagine(), null);
         try {
-            ImageIO.write(convertedImage, extension, new File(imagePath));  //Image di javafx non sappiamo come scriverla
+            ImageIO.write(convertedImage, r.getExtension(), new File(imagePath));  //Image di javafx non sappiamo come scriverla
         } catch(Exception e) {
             System.err.printf("\nError saving %s as file\n", imagePath);
         }
@@ -70,13 +68,21 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         for(File imageFile: cartellaImmagini.listFiles(filter)){
 
-            Image immagine = null;
             String nome =  FilenameUtils.getBaseName(imageFile.getPath());
+            String extension = FilenameUtils.getExtension(imageFile.getPath());
 
-            immagine = new Image(imageFile.getPath());
+            Image immagine = null;
+
+            try(FileInputStream stream = new FileInputStream(imageFile.getPath())) {
+                immagine = new Image(stream);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             getNomiRisorse().add(nome);
-            getRisorse().add(new ImmagineAnnotata(immagine, nome));
+            getRisorse().add(new ImmagineAnnotata(immagine, nome, extension));
         }
     }
 

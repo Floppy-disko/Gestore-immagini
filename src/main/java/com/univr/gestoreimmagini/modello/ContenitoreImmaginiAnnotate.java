@@ -53,7 +53,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
     @Override
     protected void removeFromMemory(String nome) {
 
-        File imageFile = new File(cartellaImmagini.getPath() + "/" + nome + ".jpg");
+        File imageFile = new File(cartellaImmagini.getPath() + "/" + nome + "." + getRisorsa(nome).getExtension());
 
         imageFile.delete();
     }
@@ -73,12 +73,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
             Image immagine = null;
             String nome =  FilenameUtils.getBaseName(imageFile.getPath());
 
-            try(FileInputStream stream = new FileInputStream(imageFile)) {
-                immagine = new Image(stream);
-            } catch (IOException e) {
-                System.err.printf("\nCouldn't read from %s\n", imageFile.getPath());
-                throw new RuntimeException();
-            }
+            immagine = new Image(imageFile.getPath());
 
             getNomiRisorse().add(nome);
             getRisorse().add(new ImmagineAnnotata(immagine, nome));

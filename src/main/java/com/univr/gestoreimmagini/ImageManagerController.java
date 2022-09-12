@@ -96,7 +96,7 @@ public class ImageManagerController implements Initializable {
         imageBox.setDisplayedImage(immagineAnnotata.getImmagine());
         imageBox.setNameLabelText(immagineAnnotata.toString());
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
-            modello.getImages().removeRisorsa(immagineAnnotata.toString()); //sarebbe il metodo removeImage
+            modello.getImages().removeRisorsa(immagineAnnotata); //sarebbe il metodo removeImage
         });
         imageBox.setImageOnClick(this::switchToWorkingImageView);
         imageBox.setId(immagineAnnotata.toString() + "Image");
@@ -134,6 +134,7 @@ public class ImageManagerController implements Initializable {
             return;
 
         Image image = new Image(files.get(0).getPath());
+        System.out.println(image.getUrl());
         //System.out.println(FilenameUtils.getExtension(image.getUrl()));
         placedImage.setImage(image);
         placedImageSet=true;

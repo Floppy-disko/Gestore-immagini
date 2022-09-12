@@ -2,15 +2,19 @@ package com.univr.gestoreimmagini.modello;
 
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import org.apache.commons.io.FilenameUtils;
 
 public class ImmagineAnnotata {
 
     private Image immagine;
     private String nome;
 
+    private String extension;
+
     private ObservableList<Annotazione> annotazioni;
 
     public ImmagineAnnotata(Image immagine, String nome) {
+        extension = FilenameUtils.getExtension(immagine.getUrl());
         this.immagine = immagine;
         this.nome = nome;
     }
@@ -21,5 +25,9 @@ public class ImmagineAnnotata {
 
     public String toString(){
         return this.nome;
+    }
+
+    public String getExtension() {
+        return extension;
     }
 }

@@ -37,7 +37,7 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
         }
 
-        if(tagFile.length()>0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag
+        if(tagFile.length()>0 && getNomiRisorse().size()==0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
             loadFromMemory();
     }
 

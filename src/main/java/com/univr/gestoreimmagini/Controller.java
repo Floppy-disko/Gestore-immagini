@@ -3,6 +3,7 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -64,15 +64,31 @@ public class Controller implements Initializable {
             }
         });
 
-        //button.setText("Ciao");
+        modello.getImages().getRisorse().addListener((ListChangeListener<ImmagineAnnotata>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    for (int i = c.getFrom(); i < c.getTo(); ++i) {
+                        //permutate
+                    }
+                } else if (c.wasUpdated()) {
+                    //update item
+                } else {
+                    for (ImmagineAnnotata remitem : c.getRemoved()) {
+                        imageGrid.getChildren().remove(imageGrid.lookup("#" + remitem.toString() + "Image"));
+                    }
+                    for (ImmagineAnnotata additem : c.getAddedSubList()) {
+                        displayImage(additem);
+                    }
+                }
+            }
+        });
 
-        displayImages(modello.getImages().getRisorse());
+        populateLists();
     }
 
-    private void displayImages(List<ImmagineAnnotata> listaImmagini){
-        for(ImmagineAnnotata immagineAnnotata : listaImmagini){
-            displayImage(immagineAnnotata);
-        }
+    private void populateLists() {
+        modello.getTags().populateList();
+        modello.getImages().populateList();
     }
 
     private void displayImage(ImmagineAnnotata immagineAnnotata){
@@ -80,12 +96,10 @@ public class Controller implements Initializable {
         imageBox.setDisplayedImage(immagineAnnotata.getImmagine());
         imageBox.setNameLabelText(immagineAnnotata.toString());
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
-            imageGrid.getChildren().remove(imageBox);
-            modello.getImages().removeRisorsa(immagineAnnotata.toString());
+            modello.getImages().removeRisorsa(immagineAnnotata.toString()); //sarebbe il metodo removeImage
         });
-
         imageBox.setImageOnClick(this::switchToView2);
-
+        imageBox.setId(immagineAnnotata.toString() + "Image");
         imageGrid.getChildren().add(imageBox);
     }
 
@@ -139,7 +153,6 @@ public class Controller implements Initializable {
             return;
 
         modello.getImages().addRisorsa(placedImage.getImage(), nome);
-        displayImage(modello.getImages().getRisorsa(nome));
     }
 
     private void switchToView2(MouseEvent mouseEvent) {

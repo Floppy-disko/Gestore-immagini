@@ -89,6 +89,8 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return false;
     }
 
+    public abstract void populateList();
+
     protected abstract void addToMemory(T r);
 
     protected abstract void removeFromMemory(String nome);

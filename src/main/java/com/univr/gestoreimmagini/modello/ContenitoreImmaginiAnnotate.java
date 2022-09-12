@@ -16,6 +16,10 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
     protected ContenitoreImmaginiAnnotate() {
         super();
+    }
+
+    @Override
+    public void populateList() {
         URL url = ContenitoreImmaginiAnnotate.class.getResource("");  //la slash da usare è "/"
         String path = url.getPath() + "/immagini";
         cartellaImmagini = new File(path);

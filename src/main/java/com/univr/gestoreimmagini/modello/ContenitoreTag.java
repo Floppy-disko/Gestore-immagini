@@ -13,13 +13,16 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
     protected ContenitoreTag() {
         super();
+    }
 
+    @Override
+    public void populateList() {
         URL url = ContenitoreTag.class.getResource("");
         String path = url.getPath() + "/tags";  //path della cartella tagss
         File tagDir = new File(path);
 
         if(!tagDir.exists()) { //se la cartella non esiste lo creo
-                tagDir.mkdir();
+            tagDir.mkdir();
         }
 
         path = path + "/tags.txt";  //path del file su cui salvare il tag
@@ -36,7 +39,6 @@ public class ContenitoreTag extends ContenitoreRisorse<Tag> {
 
         if(tagFile.length()>0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag
             loadFromMemory();
-
     }
 
     public void addRisorsa(String nome){  //così posso creare un Tag usando solo la stringa del nome

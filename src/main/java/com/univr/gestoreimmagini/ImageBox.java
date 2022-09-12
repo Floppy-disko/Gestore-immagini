@@ -38,6 +38,10 @@ public class ImageBox extends VBox {
         nameLabel.setText(text);
     }
 
+    public String getNameLabelText() {
+        return nameLabel.getText();
+    }
+
     public void setRemoveButtonOnAction(EventHandler<ActionEvent> handler){
         removeButton.setOnAction(handler);
     }

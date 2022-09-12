@@ -154,6 +154,8 @@ public class ImageManagerController implements Initializable {
             return;
 
         modello.getImages().addRisorsa(placedImage.getImage(), nome);
+
+        placedImageSet=false; //Comunico che non ho più immagini settate
     }
 
     private void switchToWorkingImageView(MouseEvent mouseEvent) {

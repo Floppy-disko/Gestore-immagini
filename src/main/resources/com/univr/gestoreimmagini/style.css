@@ -1,3 +1,7 @@
 Button {
     -fx-background-color: red;
 }
+
+#imageDnD {
+    -fx-background-image: url("DnD.png");
+}

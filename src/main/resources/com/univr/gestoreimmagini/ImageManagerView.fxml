@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -39,11 +38,7 @@
                         <children>
                            <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="202.0" prefWidth="265.0">
                               <children>
-                                 <ImageView fx:id="placedImage" fitHeight="190.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                       <Image url="@Simo.jpg" />
-                                    </image>
-                                 </ImageView>
+                                 <ImageView fx:id="placedImage" fitHeight="190.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true" />
                               </children>
                            </StackPane>
                            <HBox prefHeight="39.0" prefWidth="206.0">

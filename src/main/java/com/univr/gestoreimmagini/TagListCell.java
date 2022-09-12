@@ -31,6 +31,7 @@ public class TagListCell extends ListCell<Tag> {
         if (item != null && !empty) { // <== test for null item and empty parameter
             nome.setText(item.toString());
             button.setId(item.toString() + "Button"); //setto un id al bottone così lo posso identificare
+            button.getStyleClass().add("tagButton");
             setGraphic(content);
         } else {
             setGraphic(null);

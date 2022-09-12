@@ -1,7 +1,31 @@
+.root{
+    -fx-background-color: orange;
+}
+
 Button {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-background-insets: 0;
+    -fx-cursor: POINTER;
+}
+
+Button:hover {
     -fx-background-color: red;
 }
 
+ScrollPane, ListView{
+    -fx-border-color: black;
+    -fx-border-width: 2.5;
+}
+
+TextField {
+    -fx-border-color: black;
+}
+
+
+
 #imageDnD {
     -fx-background-image: url("DnD.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
 }

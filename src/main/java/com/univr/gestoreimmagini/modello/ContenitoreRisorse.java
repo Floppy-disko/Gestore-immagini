@@ -93,7 +93,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
     public void populateList(String fileName){
         URL url = ContenitoreTag.class.getResource("");
-        String path = url.getPath() + "/" + fileName;  //path della cartella tagss
+        String path = url.getPath() + fileName;  //path della cartella tagss
         resourcesDir = new File(path);
 
         if(!resourcesDir.exists()) { //se la cartella non esiste lo creo
@@ -112,7 +112,10 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
         }
 
-        if(namesFile.length()>0 && getNomiRisorse().size()==0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
+        getNomiRisorse().clear();
+        getRisorse().clear();
+
+        if(namesFile.length()>0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
             loadFromMemory();
     }
 

@@ -15,8 +15,8 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         super();
     }
 
-    public void addRisorsa(Image immagine, String nome){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new ImmagineAnnotata(immagine, nome));
+    public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
+        addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
     }
 
     @Override
@@ -56,7 +56,9 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         for(File imageFile: resourcesDir.listFiles(filter)){
 
-            String nome =  FilenameUtils.getName(imageFile.getPath());
+            String name =  FilenameUtils.getBaseName(imageFile.getPath());
+            String extension = FilenameUtils.getExtension(imageFile.getPath());
+            String fullName = FilenameUtils.getName(imageFile.getPath());
             Image immagine = null;
 
             try(FileInputStream stream = new FileInputStream(imageFile.getPath())) {
@@ -67,8 +69,8 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
                 throw new RuntimeException(e);
             }
 
-            getRisorse().add(new ImmagineAnnotata(immagine, nome)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
-            getNomiRisorse().add(nome);
+            getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
+            getNomiRisorse().add(fullName);
         }
     }
 

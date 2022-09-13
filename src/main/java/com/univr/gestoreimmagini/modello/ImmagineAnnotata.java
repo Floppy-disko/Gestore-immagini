@@ -13,10 +13,10 @@ public class ImmagineAnnotata {
 
     private ObservableList<Annotazione> annotazioni;
 
-    public ImmagineAnnotata(Image image, String fullName) {
+    public ImmagineAnnotata(Image image, String name, String extension) {
         this.image = image;
-        this.name = FilenameUtils.getBaseName(fullName);
-        this.extension = FilenameUtils.getExtension(fullName);
+        this.name = name;
+        this.extension = extension;
     }
 
     public Image getImage(){

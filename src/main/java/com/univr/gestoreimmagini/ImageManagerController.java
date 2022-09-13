@@ -155,13 +155,12 @@ public class ImageManagerController implements Initializable {
         if(placedImageSet==false)  //Salvo solo se l'immagine è stata settata
             return;
 
-        String nome = immagineTextField.getText();
-        if(modello.getImages().nomeInLista(nome))  //Non puoi asseganare lo stesso nome a due immagini diverse
+        String name = immagineTextField.getText();
+        if(modello.getImages().nomeInLista(name))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
-        String fullName = nome + "." + placedImageExtension;
 
-        modello.getImages().addRisorsa(placedImage.getImage(), fullName);
+        modello.getImages().addRisorsa(placedImage.getImage(), name, placedImageExtension);
 
         placedImageSet=false; //Comunico che non ho più immagini settate
         placedImage.setImage(null);

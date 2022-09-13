@@ -66,9 +66,9 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return 0;
     }
     public void removeRisorsa(T r){
-        removeFromMemory(r.toString());
         nomiRisorse.remove(r.toString());  //rimuovi l'entry allo stesso index di r
         risorse.remove(r);
+        removeFromMemory(r.toString());
     }
 
     public ObservableList<T> getRisorse(){

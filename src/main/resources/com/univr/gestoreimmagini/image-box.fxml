@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="257.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -18,16 +19,22 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </StackPane>
-      <HBox prefHeight="28.0" prefWidth="220.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="220.0">
          <children>
             <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="x">
                <HBox.margin>
                   <Insets left="10.0" />
-               </HBox.margin></Button>
-            <Label fx:id="nameLabel" contentDisplay="CENTER" prefHeight="26.0" prefWidth="123.0" text="Label">
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Label fx:id="nameLabel" contentDisplay="CENTER" prefHeight="26.0" prefWidth="123.0" text="Label" wrapText="true">
                <HBox.margin>
                   <Insets left="10.0" />
-               </HBox.margin></Label>
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font></Label>
          </children>
       </HBox>
    </children>

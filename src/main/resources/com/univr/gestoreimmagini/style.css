@@ -19,7 +19,6 @@ Button:hover {
 }
 
 
-
 /*
     Altre modifiche
 */
@@ -48,7 +47,7 @@ ImageBox {
 #imageDnD {
     -fx-background-image: url("DnD.png");
     -fx-background-size: 265 229;
-    -fx-background-color: red;
+    -fx-background-color: orange;
     -fx-background-insets: 0;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center, center;

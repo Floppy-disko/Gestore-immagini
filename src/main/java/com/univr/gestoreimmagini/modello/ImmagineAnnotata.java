@@ -6,25 +6,29 @@ import org.apache.commons.io.FilenameUtils;
 
 public class ImmagineAnnotata {
 
-    private Image immagine;
-    private String nome;
+    private Image image;
+    private String name;
 
     private String extension;
 
     private ObservableList<Annotazione> annotazioni;
 
-    public ImmagineAnnotata(Image immagine, String nome, String extension) {
-        this.extension = extension;
-        this.immagine = immagine;
-        this.nome = nome;
+    public ImmagineAnnotata(Image image, String fullName) {
+        this.image = image;
+        this.name = FilenameUtils.getBaseName(fullName);
+        this.extension = FilenameUtils.getExtension(fullName);
     }
 
-    public Image getImmagine(){
-        return this.immagine;
+    public Image getImage(){
+        return this.image;
     }
 
     public String toString(){
-        return this.nome;
+        return this.name + "." + this.extension;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public String getExtension() {

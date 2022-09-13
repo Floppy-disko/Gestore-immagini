@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URL;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FilenameUtils;
 
@@ -16,16 +15,16 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         super();
     }
 
-    public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
+    public void addRisorsa(Image immagine, String nome){  //così posso creare un Tag usando solo la stringa del nome
+        addRisorsa(new ImmagineAnnotata(immagine, nome));
     }
 
     @Override
     protected void addToMemory(ImmagineAnnotata r) {
 
-        String imagePath = resourcesDir.getPath() + "/" + r.toString() + "." + r.getExtension();
+        String imagePath = resourcesDir.getPath() + "/" + r.toString();
 
-        BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImmagine(), null);
+        BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImage(), null);
         try {
             ImageIO.write(convertedImage, r.getExtension(), new File(imagePath));  //Image di javafx non sappiamo come scriverla
         } catch(Exception e) {
@@ -36,9 +35,9 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
     }
 
     @Override
-    protected void removeFromMemory(String nome) {
+    protected void removeFromMemory(String fullName) {
 
-        File imageFile = new File(resourcesDir.getPath() + "/" + nome + "." + getRisorsa(nome).getExtension());
+        File imageFile = new File(resourcesDir.getPath() + "/" + fullName);
 
         imageFile.delete();
 
@@ -57,9 +56,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         for(File imageFile: resourcesDir.listFiles(filter)){
 
-            String nome =  FilenameUtils.getBaseName(imageFile.getPath());
-            String extension = FilenameUtils.getExtension(imageFile.getPath());
-
+            String nome =  FilenameUtils.getName(imageFile.getPath());
             Image immagine = null;
 
             try(FileInputStream stream = new FileInputStream(imageFile.getPath())) {
@@ -70,9 +67,18 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
                 throw new RuntimeException(e);
             }
 
-            getRisorse().add(new ImmagineAnnotata(immagine, nome, extension));
+            getRisorse().add(new ImmagineAnnotata(immagine, nome)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
             getNomiRisorse().add(nome);
         }
     }
 
+    @Override
+    public boolean nomeInLista(String nome) {
+        for(String nomeRisorsa : getNomiRisorse()){   //cerca se c'è una risorsa con lo stesso nome
+            if(nome.equals(FilenameUtils.getBaseName(nomeRisorsa)))  //Controllo se il nome è uguale togliendo l'estensione
+                return true;
+        }
+
+        return false;
+    }
 }

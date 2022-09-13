@@ -76,7 +76,7 @@ public class ImageManagerController implements Initializable {
                     //update item
                 } else {
                     for (ImmagineAnnotata remitem : c.getRemoved()) {
-                        imageGrid.getChildren().remove(imageGrid.lookup("#" + remitem.toString() + "Image"));
+                        imageGrid.getChildren().remove(imageGrid.lookup("#" + remitem.getName() + "Image"));
                     }
                     for (ImmagineAnnotata additem : c.getAddedSubList()) {
                         displayImage(additem);
@@ -95,13 +95,13 @@ public class ImageManagerController implements Initializable {
 
     private void displayImage(ImmagineAnnotata immagineAnnotata){
         ImageBox imageBox = new ImageBox();
-        imageBox.setDisplayedImage(immagineAnnotata.getImmagine());
-        imageBox.setNameLabelText(immagineAnnotata.toString());
+        imageBox.setDisplayedImage(immagineAnnotata.getImage());
+        imageBox.setNameLabelText(immagineAnnotata.getName());
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
             modello.getImages().removeRisorsa(immagineAnnotata); //sarebbe il metodo removeImage
         });
         imageBox.setImageOnClick(this::switchToWorkingImageView);
-        imageBox.setId(immagineAnnotata.toString() + "Image");
+        imageBox.setId(immagineAnnotata.getName() + "Image");
         imageGrid.getChildren().add(imageBox);
     }
 
@@ -159,7 +159,9 @@ public class ImageManagerController implements Initializable {
         if(modello.getImages().nomeInLista(nome))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
-        modello.getImages().addRisorsa(placedImage.getImage(), nome, placedImageExtension);
+        String fullName = nome + "." + placedImageExtension;
+
+        modello.getImages().addRisorsa(placedImage.getImage(), fullName);
 
         placedImageSet=false; //Comunico che non ho più immagini settate
         placedImage.setImage(null);

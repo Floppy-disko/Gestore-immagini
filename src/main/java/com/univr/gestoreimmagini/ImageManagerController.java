@@ -51,6 +51,8 @@ public class ImageManagerController implements Initializable {
 
     private String placedImageExtension;
 
+    private int selectedImageIndex;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
         tagsList.setItems(modello.getTags().getRisorse()); //linka la lista di tag nella view alla lista di tag nel modello
@@ -100,7 +102,10 @@ public class ImageManagerController implements Initializable {
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
             modello.getImages().removeRisorsa(immagineAnnotata); //sarebbe il metodo removeImage
         });
-        imageBox.setImageOnClick(this::switchToWorkingImageView);
+        imageBox.setImageOnClick((mouseEvent) -> {
+            switchToWorkingImageView(mouseEvent);
+            selectedImageIndex = modello.getImages().getRisorse().indexOf(immagineAnnotata);
+        });
         imageBox.setId(immagineAnnotata.getName() + "Image");
         imageGrid.getChildren().add(imageBox);
     }
@@ -180,6 +185,8 @@ public class ImageManagerController implements Initializable {
         stage.setTitle("Working Image");
         stage.setScene(scene);
         stage.show();
+
+        System.out.println(selectedImageIndex);
     }
 
 }

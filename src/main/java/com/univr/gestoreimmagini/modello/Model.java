@@ -23,4 +23,9 @@ public class Model {
     public ContenitoreImmaginiAnnotate getImages() {
         return images;
     }
+
+    public void updateMemory(){
+        tags.updateMemory();
+        images.updateMemory();
+    }
 }

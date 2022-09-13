@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public abstract class ContenitoreRisorse<T> implements Serializable {
@@ -15,6 +16,9 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
     //lista ausiliaria che tiene solo i nomi, utile perchè serializzabile e più rapida per la ricerca di duplicati tra i tag
     private final ArrayList<String> nomiRisorse = new ArrayList<>();  //ATTENZIONE: ogni volta in cui modifichi una delle due liste devi modificare anche l'altra per evitare inconsistenze
+
+    protected File namesFile;
+    protected File resourcesDir;
 
     protected ContenitoreRisorse(){
 
@@ -63,7 +67,6 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
     }
     public void removeRisorsa(T r){
         removeFromMemory(r.toString());
-
         nomiRisorse.remove(r.toString());  //rimuovi l'entry allo stesso index di r
         risorse.remove(r);
     }
@@ -88,7 +91,48 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return false;
     }
 
-    public abstract void populateList();
+    public void populateList(String fileName){
+        URL url = ContenitoreTag.class.getResource("");
+        String path = url.getPath() + "/" + fileName;  //path della cartella tagss
+        resourcesDir = new File(path);
+
+        if(!resourcesDir.exists()) { //se la cartella non esiste lo creo
+            resourcesDir.mkdir();
+        }
+
+        path = path + "/" + fileName + ".txt";  //path del file su cui salvare il tag
+        namesFile = new File(path);
+
+        if(!namesFile.exists()) { //se il file non esiste lo creo
+            try {
+                namesFile.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Impossibile creare file tag");
+            }
+
+        }
+
+        if(namesFile.length()>0 && getNomiRisorse().size()==0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
+            loadFromMemory();
+    }
+
+    protected void updateMemory(){
+        try{
+            FileOutputStream fos = new FileOutputStream(namesFile);
+
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            try{
+                oos.writeObject(getNomiRisorse());  //salvo questo oggetto in memoria con tutta la lista di tag
+            } finally {
+                oos.flush();
+                oos.close();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected abstract void addToMemory(T r);
 

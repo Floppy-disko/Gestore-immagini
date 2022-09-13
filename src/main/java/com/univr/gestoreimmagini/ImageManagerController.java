@@ -89,8 +89,8 @@ public class ImageManagerController implements Initializable {
     }
 
     private void populateLists() {
-        modello.getTags().populateList();
-        modello.getImages().populateList();
+        modello.getTags().populateList("tags");
+        modello.getImages().populateList("images");
     }
 
     private void displayImage(ImmagineAnnotata immagineAnnotata){

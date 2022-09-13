@@ -12,23 +12,8 @@ import org.apache.commons.io.FilenameUtils;
 
 public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnnotata> {
 
-    private File cartellaImmagini;
-
     protected ContenitoreImmaginiAnnotate() {
         super();
-    }
-
-    @Override
-    public void populateList() {
-        URL url = ContenitoreImmaginiAnnotate.class.getResource("");  //la slash da usare è "/"
-        String path = url.getPath() + "/immagini";
-        cartellaImmagini = new File(path);
-
-        if(!cartellaImmagini.exists()){
-            cartellaImmagini.mkdir();
-        }
-
-        loadFromMemory();
     }
 
     public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
@@ -38,7 +23,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
     @Override
     protected void addToMemory(ImmagineAnnotata r) {
 
-        String imagePath = cartellaImmagini.getPath() + "/" + r.toString() + "." + r.getExtension();
+        String imagePath = resourcesDir.getPath() + "/" + r.toString() + "." + r.getExtension();
 
         BufferedImage convertedImage = SwingFXUtils.fromFXImage(r.getImmagine(), null);
         try {
@@ -46,14 +31,18 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         } catch(Exception e) {
             System.err.printf("\nError saving %s as file\n", imagePath);
         }
+
+        updateMemory();
     }
 
     @Override
     protected void removeFromMemory(String nome) {
 
-        File imageFile = new File(cartellaImmagini.getPath() + "/" + nome + "." + getRisorsa(nome).getExtension());
+        File imageFile = new File(resourcesDir.getPath() + "/" + nome + "." + getRisorsa(nome).getExtension());
 
         imageFile.delete();
+
+        updateMemory();
     }
 
     @Override
@@ -66,7 +55,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
             }
         };
 
-        for(File imageFile: cartellaImmagini.listFiles(filter)){
+        for(File imageFile: resourcesDir.listFiles(filter)){
 
             String nome =  FilenameUtils.getBaseName(imageFile.getPath());
             String extension = FilenameUtils.getExtension(imageFile.getPath());
@@ -81,8 +70,8 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
                 throw new RuntimeException(e);
             }
 
-            getNomiRisorse().add(nome);
             getRisorse().add(new ImmagineAnnotata(immagine, nome, extension));
+            getNomiRisorse().add(nome);
         }
     }
 

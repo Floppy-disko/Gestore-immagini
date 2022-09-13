@@ -47,21 +47,18 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
     @Override
     protected void loadFromMemory(){
 
-        FilenameFilter filter = new FilenameFilter() {
-            @Override
-            public boolean accept(File f, String name) {
-                return name.endsWith(".jpg") || name.endsWith(".png") || name.endsWith(".JPG") || name.endsWith(".PNG");
-            }
-        };
+        super.loadFromMemory();
 
-        for(File imageFile: resourcesDir.listFiles(filter)){
+        for(String fileFullName: getNomiRisorse()){
 
-            String name =  FilenameUtils.getBaseName(imageFile.getPath());
-            String extension = FilenameUtils.getExtension(imageFile.getPath());
-            String fullName = FilenameUtils.getName(imageFile.getPath());
+            String name =  FilenameUtils.getBaseName(fileFullName);
+            String extension = FilenameUtils.getExtension(fileFullName);
+
+            String imagePath = resourcesDir.getPath() + "/" + fileFullName;
+
             Image immagine = null;
 
-            try(FileInputStream stream = new FileInputStream(imageFile.getPath())) {
+            try(FileInputStream stream = new FileInputStream(imagePath)) {
                 immagine = new Image(stream);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -70,7 +67,6 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
             }
 
             getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
-            getNomiRisorse().add(fullName);
         }
     }
 

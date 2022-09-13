@@ -108,6 +108,7 @@ public class ImageManagerController implements Initializable {
     @FXML
     private void addTag(ActionEvent actionEvent) {
         String nome = tagTextField.getText();
+        tagTextField.setText(null);
         if(modello.getTags().nomeInLista(nome))  //Non puoi aggiungere due tag uguali
             return;
 
@@ -156,6 +157,7 @@ public class ImageManagerController implements Initializable {
             return;
 
         String name = immagineTextField.getText();
+        immagineTextField.setText(null);
         if(modello.getImages().nomeInLista(name))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 

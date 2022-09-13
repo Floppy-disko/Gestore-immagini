@@ -100,7 +100,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
             resourcesDir.mkdir();
         }
 
-        path = path + "/" + fileName + ".txt";  //path del file su cui salvare il tag
+        path = path + "/" + fileName + ".dat";  //path del file su cui salvare il tag
         namesFile = new File(path);
 
         if(!namesFile.exists()) { //se il file non esiste lo creo
@@ -141,5 +141,30 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
 
     protected abstract void removeFromMemory(String nome);
 
-    protected abstract void loadFromMemory();
+    protected void loadFromMemory(){
+        try{
+
+            FileInputStream fis = new FileInputStream(namesFile);
+
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            try {
+                getNomiRisorse().addAll((ArrayList<String>) ois.readObject()); //aggiungo gli elementi copiati alla lista ausiliaria
+            } finally {
+                ois.close();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            try {
+                new PrintWriter(namesFile).close(); //Se c'è un eccezzione che non è IO o ClassNotFound prbabimente il file è illeggibile quindi pulisci il file
+
+            } catch(FileNotFoundException e2) {
+                System.err.printf("File %s non trovato", namesFile);
+            }
+        }
+    }
 }

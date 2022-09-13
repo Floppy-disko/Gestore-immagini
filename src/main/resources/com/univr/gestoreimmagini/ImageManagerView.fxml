@@ -12,22 +12,22 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="730.0" prefWidth="1020.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">
+<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <AnchorPane prefHeight="679.0" prefWidth="980.0">
       <children>
-         <ScrollPane focusTraversable="false" prefHeight="679.0" prefWidth="570.0">
+         <ScrollPane focusTraversable="false" prefHeight="679.0" prefWidth="794.0">
             <content>
-               <FlowPane fx:id="imageGrid" focusTraversable="true" prefHeight="671.0" prefWidth="548.0" />
+               <FlowPane fx:id="imageGrid" focusTraversable="true" prefHeight="671.0" prefWidth="785.0" />
             </content>
          </ScrollPane>
-         <TextField fx:id="tagTextField" layoutX="606.0" layoutY="623.0" prefHeight="26.0" prefWidth="275.0" promptText="Aggiungi un tag">
+         <TextField fx:id="tagTextField" layoutX="848.0" layoutY="639.0" prefHeight="26.0" prefWidth="275.0" promptText="Aggiungi un tag">
             <cursor>
                <Cursor fx:constant="TEXT" />
             </cursor></TextField>
-         <StackPane fx:id="imageDnD" layoutX="659.0" layoutY="13.0" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="230.0" prefWidth="261.0">
+         <StackPane fx:id="imageDnD" layoutX="896.0" layoutY="29.0" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="230.0" prefWidth="261.0">
             <children>
                <ImageView fx:id="placedImage" fitHeight="224.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true">
                   <cursor>
@@ -36,17 +36,17 @@
                </ImageView>
             </children>
          </StackPane>
-         <Button layoutX="891.0" layoutY="623.0" mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+         <Button layoutX="1133.0" layoutY="639.0" mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor></Button>
-         <ListView fx:id="tagsList" layoutX="606.0" layoutY="330.0" prefHeight="284.0" prefWidth="367.0" />
-         <TextField fx:id="immagineTextField" layoutX="605.0" layoutY="260.0" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
+         <ListView fx:id="tagsList" layoutX="847.0" layoutY="345.0" prefHeight="284.0" prefWidth="367.0" />
+         <TextField fx:id="immagineTextField" layoutX="849.0" layoutY="270.0" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
             <cursor>
                <Cursor fx:constant="TEXT" />
             </cursor>
          </TextField>
-         <Button layoutX="888.0" layoutY="260.0" mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+         <Button layoutX="1133.0" layoutY="270.0" mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
             <padding>
                <Insets bottom="5.0" />
             </padding>

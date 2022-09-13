@@ -19,6 +19,15 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
     }
 
+    public boolean resourceFileExists(int index){
+        File resourceFile = new File(resourcesDir + "/" + getNomiRisorse().get(index));
+        return resourceFile.exists();
+    }
+
+    public void restoreImage(int index){
+        addToMemory(getRisorse().get(index));
+    }
+
     @Override
     protected void addToMemory(ImmagineAnnotata r) {
 

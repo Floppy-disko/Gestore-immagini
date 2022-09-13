@@ -126,7 +126,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             try{
-                oos.writeObject(getNomiRisorse());  //salvo questo oggetto in memoria con tutta la lista di tag
+                oos.writeObject(getNomiRisorse());  //salvo in memoria la lista ausiliaria
             } finally {
                 oos.flush();
                 oos.close();

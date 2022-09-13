@@ -24,8 +24,4 @@ public class Model {
         return images;
     }
 
-    public void updateMemory(){
-        tags.updateMemory();
-        images.updateMemory();
-    }
 }

@@ -103,8 +103,8 @@ public class ImageManagerController implements Initializable {
             modello.getImages().removeRisorsa(immagineAnnotata); //sarebbe il metodo removeImage
         });
         imageBox.setImageOnClick((mouseEvent) -> {
-            switchToWorkingImageView(mouseEvent);
             selectedImageIndex = modello.getImages().getRisorse().indexOf(immagineAnnotata);
+            switchToWorkingImageView(mouseEvent);
         });
         imageBox.setId(immagineAnnotata.getName() + "Image");
         imageGrid.getChildren().add(imageBox);
@@ -174,19 +174,24 @@ public class ImageManagerController implements Initializable {
     }
 
     private void switchToWorkingImageView(MouseEvent mouseEvent) {
+
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("WorkingInmageView.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.setTitle("Working Image");
         stage.setScene(scene);
         stage.show();
 
-        System.out.println(selectedImageIndex);
+        if(modello.getImages().resourceFileExists(selectedImageIndex) == false)
+            modello.getImages().restoreImage(selectedImageIndex);
+
+        System.out.println(selectedImageIndex + String.valueOf(modello.getImages().resourceFileExists(selectedImageIndex)));
     }
 
 }

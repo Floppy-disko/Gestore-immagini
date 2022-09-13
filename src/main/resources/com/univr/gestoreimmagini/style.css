@@ -2,30 +2,49 @@
     -fx-background-color: orange;
 }
 
+/*
+    Bottoni
+*/
 Button {
     -fx-background-color: white;
     -fx-border-color: black;
-    -fx-background-insets: 0;
-    -fx-cursor: POINTER;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+    -fx-cursor: HAND;
 }
 
 Button:hover {
-    -fx-background-color: red;
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }
 
-ScrollPane, ListView{
+
+
+/*
+    Altre modifiche
+*/
+
+ImageView:hover {
+    -fx-cursor: HAND;
+}
+
+
+ScrollPane, ListView, StackPane {
     -fx-border-color: black;
     -fx-border-width: 2.5;
+    -fx-border-radius: 4;
+    -fx-background-insets: 1;
 }
 
 TextField {
     -fx-border-color: black;
 }
 
-
-
 #imageDnD {
     -fx-background-image: url("DnD.png");
+    -fx-background-size: 265 229;
+    -fx-background-color: red;
+    -fx-background-insets: 0;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center, center;
 }

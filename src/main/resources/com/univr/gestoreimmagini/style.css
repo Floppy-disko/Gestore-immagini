@@ -39,11 +39,6 @@ TextField {
     -fx-border-color: black;
 }
 
-ImageBox {
-
-}
-
-
 #imageDnD {
     -fx-background-image: url("DnD.png");
     -fx-background-size: 265 229;

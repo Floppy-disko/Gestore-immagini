@@ -43,6 +43,10 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
         return null;
     }
 
+    public int getSize(){
+        return nomiRisorse.size();
+    }
+
     public void addRisorsa(T r){
 
         nomiRisorse.add(r.toString()); //aggiungo nome a lista ausiliaria

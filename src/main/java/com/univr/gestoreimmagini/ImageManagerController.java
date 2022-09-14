@@ -4,7 +4,7 @@ import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,9 +15,7 @@ import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -37,7 +35,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     private TextField tagTextField;
 
     @FXML
-    private TextField immagineTextField;
+    private TextField imageTextField;
 
     @FXML
     private ImageView placedImage;
@@ -60,10 +58,8 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
-                Button button = new Button();
-                TagListCell cell = new TagListCell(button); //creo una custoListCell con un bottone che ha come eventHadler removeTag
-                button.setText("X");  //inizializzo il bottone che ho passato alla cella
-                button.setOnAction((actionEvent)->removeTag(cell.getItem())); //quando premo il bottone elimina l'item della cella
+                TagListCell cell = new TagListCell();
+                cell.setButtonOnAction((actionEvent)->removeTag(cell.getItem())); //quando premo il bottone elimina l'item della cella
                 return cell;
             }
         });
@@ -111,9 +107,23 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     }
 
     @FXML
-    private void addTag(ActionEvent actionEvent) {
+    private void keyListener(KeyEvent keyEvent){
+        if(keyEvent.getCode() == KeyCode.ENTER) {
+            if(tagTextField.equals(keyEvent.getSource()))
+                addTag(keyEvent);
+
+            else if (imageTextField.equals(keyEvent.getSource())) {
+                addImage(keyEvent);
+            }
+
+            keyEvent.consume();
+        }
+    }
+
+    @FXML
+    private void addTag(Event event) {
         String nome = tagTextField.getText();
-        tagTextField.setText(null);
+        tagTextField.clear();
         if(modello.getTags().nomeInLista(nome))  //Non puoi aggiungere due tag uguali
             return;
 
@@ -155,14 +165,14 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     }
 
     @FXML
-    private void addImage(){
+    private void addImage(Event event){
         //System.out.println(imageDnD.getImage());
         //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
         if(placedImageSet==false)  //Salvo solo se l'immagine è stata settata
             return;
 
-        String name = immagineTextField.getText();
-        immagineTextField.setText(null);
+        String name = imageTextField.getText();
+        imageTextField.clear();
         if(modello.getImages().nomeInLista(name))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 

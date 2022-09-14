@@ -58,6 +58,8 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         super.loadFromMemory();
 
+        boolean namesFileConsistent = true;
+
         for(String fileFullName: getNomiRisorse()){
 
             String name =  FilenameUtils.getBaseName(fileFullName);
@@ -69,14 +71,25 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
             try(FileInputStream stream = new FileInputStream(imagePath)) {
                 immagine = new Image(stream);
+                getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
             } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+                System.err.printf("\nImage %s not found\n", fileFullName);
+                namesFileConsistent = false; //Non ho trovato un file riportato in namesFile
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-            getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
         }
+
+        if(namesFileConsistent==false){
+            getNomiRisorse().clear(); //Sovrascrivo la lista ausiliaria con quella principale perchè non c'è consistenza tra questa e la lista principale
+            for(ImmagineAnnotata immagineAnnotata: getRisorse()){
+                getNomiRisorse().add(immagineAnnotata.toString());
+            }
+
+            updateMemory();
+        }
+
     }
 
     @Override

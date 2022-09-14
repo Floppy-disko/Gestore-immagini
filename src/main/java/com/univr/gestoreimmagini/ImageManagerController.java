@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ImageManagerController implements Initializable {
+public class ImageManagerController implements Initializable, AutoCloseable {
 
     @FXML
     private ListView<Tag> tagsList;
@@ -192,6 +192,17 @@ public class ImageManagerController implements Initializable {
             modello.getImages().restoreImage(selectedImageIndex);
 
         System.out.println(selectedImageIndex + String.valueOf(modello.getImages().resourceFileExists(selectedImageIndex)));
+
+        try {
+            close();
+        } catch (Exception e) {
+            System.err.println("Non è stato possibile chiudere il Controller");
+        }
     }
 
+    @Override
+    public void close() throws Exception {
+        System.out.println("close");
+        modello.updateMemory();
+    }
 }

@@ -1,5 +1,6 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.Model;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,11 @@ public class ImagesApplication extends Application {
         stage.setTitle("Image Manager");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop(){
+        Model.getModel().updateMemory();
     }
 
     public static void main(String[] args) {

@@ -22,6 +22,7 @@ public class ImageBox extends VBox {
     private ImageView imageView;
 
     public ImageBox() {
+        super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("imageBox.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

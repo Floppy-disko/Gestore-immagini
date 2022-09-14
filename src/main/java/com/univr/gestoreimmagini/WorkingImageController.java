@@ -59,24 +59,6 @@ public class WorkingImageController implements Initializable {
     }
 
     @FXML
-    private void switchToImageEditorView(ActionEvent actionEvent) {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("ImageManagerView.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Scene scene = new Scene(root);
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Image editor");
-        stage.setScene(scene);
-        stage.show();
-
-        if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
-            modello.getImages().restoreImage(getSelectedImageIndex());
-    }
-
-    @FXML
     private void scrollRight(ActionEvent actionEvent) {
 
         int size = modello.getImages().getSize();
@@ -94,5 +76,23 @@ public class WorkingImageController implements Initializable {
         int newIndex = (getSelectedImageIndex()-1+size) % size;  //per evitare di avere resto negativo sommo sempre il valore del numero di immagini (size), così da rendere l'operazione modulo e non resto
 
         setSelectedImageIndex(newIndex);
+    }
+
+    @FXML
+    private void switchToImageEditorView(ActionEvent actionEvent) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("ImageManagerView.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root, 1280, 720);
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Image editor");
+        stage.setScene(scene);
+        stage.show();
+
+        if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
+            modello.getImages().restoreImage(getSelectedImageIndex());
     }
 }

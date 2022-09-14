@@ -176,11 +176,16 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     private void switchToWorkingImageView(MouseEvent mouseEvent) {
 
         Parent root = null;
+        FXMLLoader loader = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("WorkingInmageView.fxml"));
+            loader = new FXMLLoader(getClass().getResource("WorkingImageView.fxml"));
+            root = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        WorkingImageController controller = loader.getController();
+        controller.setSelectedImageIndex(selectedImageIndex); //Comunico al secondo controller che immagine è stata selezionata
 
         Scene scene = new Scene(root);
         Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
@@ -191,7 +196,10 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         if(modello.getImages().resourceFileExists(selectedImageIndex) == false)
             modello.getImages().restoreImage(selectedImageIndex);
 
+
+
         System.out.println(selectedImageIndex + String.valueOf(modello.getImages().resourceFileExists(selectedImageIndex)));
+
 
         try {
             close();

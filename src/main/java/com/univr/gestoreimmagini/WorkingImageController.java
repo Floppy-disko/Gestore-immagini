@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,10 +34,24 @@ public class WorkingImageController implements Initializable {
     private ImageView leftImage;
     @FXML
     private ImageView rightImage;
+    @FXML
+    private Button leftButton;
+    @FXML
+    private Button rightButton;
 
     private Model modello = Model.getModel();
 
     private SimpleIntegerProperty selectedImageIndex = new SimpleIntegerProperty();
+
+    private Image voidImage;
+
+    public WorkingImageController(){
+        try {
+            voidImage = new Image(getClass().getResource("void.png").openStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,29 +59,45 @@ public class WorkingImageController implements Initializable {
 
         mainImage.setImage(modello.getImages().getRisorsa(getSelectedImageIndex()).getImage());  //Inizializzo mainImage con l'immagine 0
 
+        updateImages(0);
+
         selectedImageIndex.addListener(this::changed);
     }
 
-    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-        Image nextMainImage = getNextImage(newValue.intValue());
-        Image nextLeftImage = getNextImage(getLeftIndex(newValue.intValue()));
-        Image nextRightImage = getNextImage(getRightIndex(newValue.intValue()));
+    private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+        updateImages(newValue.intValue());
+    }
+
+    private void updateImages(int newValue){
+        Image nextMainImage = getNextImage(newValue);
+        Image nextLeftImage = getNextImage(getLeftIndex(newValue));
+        Image nextRightImage = getNextImage(getRightIndex(newValue));
 
         mainImage.setImage(nextMainImage);
 
         int size = modello.getImages().getSize();
 
-        if(size==1)  //Se ho solo un immagine mostro solo quella al centro
-            return;
+        if(size==1) {  //Se ho solo un immagine mostro solo quella al centro
+            leftButton.setOnAction(null);  //disattivo entrambi i bottoni
+            leftButton.getStyleClass().add("deactivatedButton");
+            rightButton.setOnAction(null);
+            rightButton.getStyleClass().add("deactivatedButton");
+        }
 
         else if(size==2){
-            if(newValue.intValue()==1){  //se l'immagini principale è l'ultima della lista mostro solo l'immagine alal sua sinistra
+            if(newValue==1){  //se l'immagini principale è l'ultima della lista mostro solo l'immagine alla sua sinistra
+                leftButton.setOnAction(this::scrollLeft);
                 leftImage.setImage(nextLeftImage);
-                rightImage.setImage(null);
+                rightButton.setOnAction(null);
+                rightButton.getStyleClass().add("deactivatedButton");
+                rightImage.setImage(voidImage);
             }
 
             else{  //se invece è la prima della lista mostro solo quella alla sua destra
-                leftImage.setImage(null);
+                leftButton.setOnAction(null);
+                leftButton.getStyleClass().add("deactivatedButton");
+                leftImage.setImage(voidImage);
+                rightButton.setOnAction(this::scrollRight);
                 rightImage.setImage(nextRightImage);
             }
         }

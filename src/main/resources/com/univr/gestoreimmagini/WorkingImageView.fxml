@@ -14,7 +14,7 @@
       <Button fx:id="button" layoutX="34.0" layoutY="32.0" mnemonicParsing="false" onAction="#switchToImageEditorView" text="Go back" />
       <HBox id="slideshow" alignment="CENTER" layoutX="290.0" layoutY="711.0" prefHeight="175.0" prefWidth="700.0">
          <children>
-            <Button id="sinistra" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scrollLeft" prefHeight="40.0" prefWidth="40.0" styleClass="scorri">
+            <Button id="sinistra" fx:id="leftButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scrollLeft" prefHeight="40.0" prefWidth="40.0" styleClass="scorri">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -39,7 +39,7 @@
                   <ImageView fx:id="rightImage" fitHeight="115.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </StackPane>
-            <Button id="destra" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scrollRight" prefHeight="40.0" prefWidth="40.0" styleClass="scorri">
+            <Button id="destra" fx:id="rightButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scrollRight" prefHeight="40.0" prefWidth="40.0" styleClass="scorri">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

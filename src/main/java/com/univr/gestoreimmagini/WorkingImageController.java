@@ -86,7 +86,7 @@ public class WorkingImageController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root, 1280, 900);
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("Image editor");
         stage.setScene(scene);

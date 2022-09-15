@@ -3,12 +3,25 @@
 }
 
 
-HBox{
+.contenitore {
     -fx-background-color: white;
     -fx-border-color: black;
     -fx-border-width: 2;
     -fx-background-insets: 1;
     -fx-border-radius: 4;
+}
+
+
+#slideshow, ListView {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+Button {
+    -fx-cursor: HAND;
 }
 
 .scorri {
@@ -17,7 +30,6 @@ HBox{
     -fx-border-width: 2;
     -fx-background-insets: 1;
     -fx-border-radius: 4;
-    -fx-cursor: HAND;
 }
 
 #destra {
@@ -35,5 +47,67 @@ HBox{
 }
 
 .scorri:hover {
+    -fx-background-color: yellow;
+}
+
+#up {
+    -fx-background-image: url("up.png");
+    -fx-background-size: 40 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+}
+
+#down {
+    -fx-background-image: url("down.png");
+    -fx-background-size: 40 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+}
+
+#left {
+    -fx-background-image: url("left.png");
+    -fx-background-size: 36 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+}
+
+#right {
+    -fx-background-image: url("right.png");
+    -fx-background-size: 36 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+}
+
+.zoom {
+    -fx-background-color: white;
+}
+
+
+
+#zoomin {
+    -fx-background-image: url("zoomin.png");
+    -fx-background-size: 25 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: white;
+}
+
+#zoomin:hover {
+    -fx-background-color: yellow;
+}
+
+#zoomout {
+    -fx-background-image: url("zoomout.png");
+    -fx-background-size: 25 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: white;
+}
+
+#zoomout:hover {
     -fx-background-color: yellow;
 }

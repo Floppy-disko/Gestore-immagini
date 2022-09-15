@@ -2,16 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="workImage" stylesheets="@work.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.WorkingImageController">
+<AnchorPane prefHeight="900.0" prefWidth="1280.0" styleClass="workImage" stylesheets="@work.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.WorkingImageController">
    <children>
       <Button fx:id="button" layoutX="34.0" layoutY="32.0" mnemonicParsing="false" onAction="#switchToImageEditorView" text="Go back" />
-      <HBox alignment="CENTER" layoutX="287.0" layoutY="529.0" prefHeight="175.0" prefWidth="700.0">
+      <HBox id="slideshow" alignment="CENTER" layoutX="290.0" layoutY="711.0" prefHeight="175.0" prefWidth="700.0">
          <children>
             <Button id="sinistra" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#scrollLeft" prefHeight="40.0" prefWidth="40.0" styleClass="scorri">
                <font>
@@ -48,5 +49,34 @@
             </Button>
          </children>
       </HBox>
+      <StackPane layoutX="120.0" layoutY="105.0" prefHeight="500.0" prefWidth="520.0" styleClass="contenitore">
+         <children>
+            <ImageView fitHeight="485.0" fitWidth="505.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <Button id="left" layoutX="61.0" layoutY="336.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+      <Button id="up" layoutX="360.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+      <Button id="right" layoutX="660.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+      <Button id="down" layoutX="360.0" layoutY="625.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
+      <ListView focusTraversable="false" layoutX="815.0" layoutY="324.0" prefHeight="320.0" prefWidth="350.0" />
+      <AnchorPane layoutX="839.0" layoutY="29.0" prefHeight="284.0" prefWidth="300.0" styleClass="contenitore">
+         <children>
+            <StackPane layoutX="10.0" layoutY="38.0" prefHeight="240.0" prefWidth="275.0">
+               <children>
+                  <ImageView fitHeight="220.0" fitWidth="255.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <HBox layoutX="8.0" layoutY="5.0" prefHeight="30.0" prefWidth="64.0">
+               <children>
+                  <Button id="zoomout" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="zoom">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="zoomin" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="zoom" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

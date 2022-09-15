@@ -197,7 +197,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         WorkingImageController controller = loader.getController();
         controller.setSelectedImageIndex(selectedImageIndex); //Comunico al secondo controller che immagine è stata selezionata
 
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root, 1280, 900);
         Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
         stage.setTitle("Working Image");
         stage.setScene(scene);

@@ -8,6 +8,7 @@
 Button {
     -fx-background-color: white;
     -fx-border-color: black;
+    -fx-border-width: 2;
     -fx-background-insets: 1;
     -fx-border-radius: 4;
     -fx-cursor: HAND;
@@ -28,9 +29,9 @@ ImageView:hover {
 }
 
 
-ScrollPane, ListView, StackPane {
+ScrollPane, ListView, StackPane, TextField {
     -fx-border-color: black;
-    -fx-border-width: 2.5;
+    -fx-border-width: 2;
     -fx-border-radius: 4;
     -fx-background-insets: 1;
 }
@@ -41,9 +42,10 @@ TextField {
 
 #imageDnD {
     -fx-background-image: url("DnD.png");
-    -fx-background-size: 265 229;
+    -fx-background-size: 300 265;
     -fx-background-color: orange;
     -fx-background-insets: 0;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center, center;
 }
+

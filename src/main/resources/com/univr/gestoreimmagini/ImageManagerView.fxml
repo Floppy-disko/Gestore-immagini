@@ -25,21 +25,21 @@
                <FlowPane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="671.0" prefWidth="801.0" />
             </content>
          </ScrollPane>
-         <StackPane fx:id="imageDnD" layoutX="896.0" layoutY="29.0" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="230.0" prefWidth="261.0">
+         <StackPane fx:id="imageDnD" layoutX="876.0" layoutY="5.0" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0">
             <children>
-               <ImageView fx:id="placedImage" fitHeight="224.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="placedImage" fitHeight="265.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                   <cursor>
                      <Cursor fx:constant="DEFAULT" />
                   </cursor>
                </ImageView>
             </children>
          </StackPane>
-         <ListView fx:id="tagsList" layoutX="847.0" layoutY="345.0" prefHeight="284.0" prefWidth="367.0">
+         <ListView fx:id="tagsList" layoutX="843.0" layoutY="351.0" prefHeight="284.0" prefWidth="367.0">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor>
          </ListView>
-         <HBox alignment="CENTER" layoutX="843.0" layoutY="266.0" prefHeight="32.0" prefWidth="367.0">
+         <HBox alignment="CENTER" layoutX="840.0" layoutY="282.0" prefHeight="32.0" prefWidth="367.0">
             <children>
                <TextField fx:id="imageTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
                   <cursor>
@@ -59,7 +59,7 @@
                </Button>
             </children>
          </HBox>
-         <HBox alignment="CENTER" layoutX="847.0" layoutY="636.0" prefHeight="32.0" prefWidth="367.0">
+         <HBox alignment="CENTER" layoutX="844.0" layoutY="643.0" prefHeight="32.0" prefWidth="367.0">
             <children>
                <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="284.0" promptText="Aggiungi un tag">
                   <cursor>

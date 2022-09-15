@@ -58,8 +58,8 @@
       <Button id="up" layoutX="360.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
       <Button id="right" layoutX="660.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
       <Button id="down" layoutX="360.0" layoutY="625.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
-      <ListView focusTraversable="false" layoutX="815.0" layoutY="324.0" prefHeight="320.0" prefWidth="350.0" />
-      <AnchorPane layoutX="839.0" layoutY="29.0" prefHeight="284.0" prefWidth="300.0" styleClass="contenitore">
+      <ListView focusTraversable="false" layoutX="812.0" layoutY="345.0" prefHeight="320.0" prefWidth="350.0" />
+      <AnchorPane layoutX="836.0" layoutY="50.0" prefHeight="284.0" prefWidth="300.0" styleClass="contenitore">
          <children>
             <StackPane layoutX="10.0" layoutY="38.0" prefHeight="240.0" prefWidth="275.0">
                <children>

@@ -51,7 +51,7 @@
       </HBox>
       <StackPane layoutX="120.0" layoutY="105.0" prefHeight="500.0" prefWidth="520.0" styleClass="contenitore">
          <children>
-            <ImageView fitHeight="485.0" fitWidth="505.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="zoomImage" fitHeight="485.0" fitWidth="505.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
       <Button id="left" layoutX="61.0" layoutY="336.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" />
@@ -63,7 +63,7 @@
          <children>
             <StackPane layoutX="10.0" layoutY="38.0" prefHeight="240.0" prefWidth="275.0">
                <children>
-                  <ImageView fitHeight="220.0" fitWidth="255.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="fullImage" fitHeight="220.0" fitWidth="255.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </StackPane>
             <HBox layoutX="8.0" layoutY="5.0" prefHeight="30.0" prefWidth="64.0">

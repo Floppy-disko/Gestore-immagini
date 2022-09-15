@@ -38,6 +38,10 @@ public class WorkingImageController implements Initializable {
     private Button leftButton;
     @FXML
     private Button rightButton;
+    @FXML
+    private ImageView fullImage;
+    @FXML
+    private ImageView zoomImage;
 
     private Model modello = Model.getModel();
 
@@ -55,9 +59,8 @@ public class WorkingImageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        button.textProperty().bindBidirectional(selectedImageIndex, new NumberStringConverter());
-
-        mainImage.setImage(modello.getImages().getRisorsa(getSelectedImageIndex()).getImage());  //Inizializzo mainImage con l'immagine 0
+        fullImage.imageProperty().bind(mainImage.imageProperty());
+        zoomImage.imageProperty().bind(mainImage.imageProperty());
 
         updateImages(0);
 
@@ -79,8 +82,10 @@ public class WorkingImageController implements Initializable {
 
         if(size==1) {  //Se ho solo un immagine mostro solo quella al centro
             leftButton.setOnAction(null);  //disattivo entrambi i bottoni
+            leftImage.setImage(voidImage);
             leftButton.getStyleClass().add("deactivatedButton");
             rightButton.setOnAction(null);
+            rightImage.setImage(voidImage);
             rightButton.getStyleClass().add("deactivatedButton");
         }
 

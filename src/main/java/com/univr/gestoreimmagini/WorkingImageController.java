@@ -29,6 +29,10 @@ public class WorkingImageController implements Initializable {
 
     @FXML
     private ImageView mainImage;
+    @FXML
+    private ImageView leftImage;
+    @FXML
+    private ImageView rightImage;
 
     private Model modello = Model.getModel();
 
@@ -40,10 +44,42 @@ public class WorkingImageController implements Initializable {
 
         mainImage.setImage(modello.getImages().getRisorsa(getSelectedImageIndex()).getImage());  //Inizializzo mainImage con l'immagine 0
 
-        selectedImageIndex.addListener((observableValue, oldValue, newValue) -> {
-            Image nextImage = modello.getImages().getRisorsa(newValue.intValue()).getImage();
-            mainImage.setImage(nextImage);
-        });
+        selectedImageIndex.addListener(this::changed);
+    }
+
+    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+        Image nextMainImage = getNextImage(newValue.intValue());
+        Image nextLeftImage = getNextImage(getLeftIndex(newValue.intValue()));
+        Image nextRightImage = getNextImage(getRightIndex(newValue.intValue()));
+
+        mainImage.setImage(nextMainImage);
+
+        int size = modello.getImages().getSize();
+
+        if(size==1)  //Se ho solo un immagine mostro solo quella al centro
+            return;
+
+        else if(size==2){
+            if(newValue.intValue()==1){  //se l'immagini principale è l'ultima della lista mostro solo l'immagine alal sua sinistra
+                leftImage.setImage(nextLeftImage);
+                rightImage.setImage(null);
+            }
+
+            else{  //se invece è la prima della lista mostro solo quella alla sua destra
+                leftImage.setImage(null);
+                rightImage.setImage(nextRightImage);
+            }
+        }
+
+        else{
+            leftImage.setImage(nextLeftImage);
+            rightImage.setImage(nextRightImage);
+        }
+
+    }
+
+    private Image getNextImage(int newValue){
+        return modello.getImages().getRisorsa(newValue).getImage();
     }
 
     public int getSelectedImageIndex() {
@@ -60,23 +96,30 @@ public class WorkingImageController implements Initializable {
 
     @FXML
     private void scrollRight(ActionEvent actionEvent) {
-
-        int size = modello.getImages().getSize();
-
-        int newIndex = (getSelectedImageIndex()+1) % size; //Aumento di uno ma se arrivo alla fine riparto dall'inizio (effetto PacMan)
-
-        setSelectedImageIndex(newIndex);
+        setSelectedImageIndex(getRightIndex(getSelectedImageIndex()));
     }
 
     @FXML
     private void scrollLeft(ActionEvent actionEvent) {
+        setSelectedImageIndex(getLeftIndex(getSelectedImageIndex()));
+    }
 
+    private int getRightIndex(int index){
         int size = modello.getImages().getSize();
 
-        int newIndex = (getSelectedImageIndex()-1+size) % size;  //per evitare di avere resto negativo sommo sempre il valore del numero di immagini (size), così da rendere l'operazione modulo e non resto
+        int rightIndex = (getSelectedImageIndex()+1) % size; //Aumento di uno ma se arrivo alla fine riparto dall'inizio (effetto PacMan)
 
-        setSelectedImageIndex(newIndex);
+        return rightIndex;
     }
+
+    private int getLeftIndex(int index){
+        int size = modello.getImages().getSize();
+
+        int leftIndex = (index-1+size) % size;  //per evitare di avere resto negativo sommo sempre il valore del numero di immagini (size), così da rendere l'operazione modulo e non resto
+
+        return leftIndex;
+    }
+
 
     @FXML
     private void switchToImageEditorView(ActionEvent actionEvent) {
@@ -86,7 +129,7 @@ public class WorkingImageController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(root, 1280, 900);
+        Scene scene = new Scene(root, 1280, 720);
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         stage.setTitle("Image editor");
         stage.setScene(scene);

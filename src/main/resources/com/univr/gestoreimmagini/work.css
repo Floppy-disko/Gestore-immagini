@@ -1,0 +1,39 @@
+.workImage{
+    -fx-background-color: orange;
+}
+
+
+HBox{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+.scorri {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+    -fx-cursor: HAND;
+}
+
+#destra {
+    -fx-background-image: url("dx.png");
+    -fx-background-size: 28 28;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+#sinistra {
+    -fx-background-image: url("sx.png");
+    -fx-background-size: 28 28;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+.scorri:hover {
+    -fx-background-color: yellow;
+}

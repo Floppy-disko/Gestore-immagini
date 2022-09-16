@@ -154,6 +154,7 @@ Button {
 
 .deactivatedButton:hover {
     -fx-cursor: default;
+    -fx-background-color: red;
 }
 
 #indietro {

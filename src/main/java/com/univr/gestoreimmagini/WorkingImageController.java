@@ -81,29 +81,27 @@ public class WorkingImageController implements Initializable {
         int size = modello.getImages().getSize();
 
         if(size==1) {  //Se ho solo un immagine mostro solo quella al centro
-            leftButton.setOnAction(null);  //disattivo entrambi i bottoni
+            leftButton.setDisable(true);
             leftImage.setImage(voidImage);
-            leftButton.getStyleClass().add("deactivatedButton");
-            rightButton.setOnAction(null);
+
+            rightButton.setDisable(true);
             rightImage.setImage(voidImage);
-            rightButton.getStyleClass().add("deactivatedButton");
         }
 
         else if(size==2){
             if(newValue==1){  //se l'immagini principale è l'ultima della lista mostro solo l'immagine alla sua sinistra
-                leftButton.setOnAction(this::scrollLeft);
+                leftButton.setDisable(false);
                 leftImage.setImage(nextLeftImage);
-                rightButton.setOnAction(null);
-                rightButton.getStyleClass().add("deactivatedButton");
+
+                rightButton.setDisable(true);
                 rightImage.setImage(voidImage);
             }
 
             else{  //se invece è la prima della lista mostro solo quella alla sua destra
-                leftButton.setOnAction(null);
-                //leftButton.setDisable(true);
-                leftButton.getStyleClass().add("deactivatedButton");
+                leftButton.setDisable(true);
                 leftImage.setImage(voidImage);
-                rightButton.setOnAction(this::scrollRight);
+
+                rightButton.setDisable(false);
                 rightImage.setImage(nextRightImage);
             }
         }

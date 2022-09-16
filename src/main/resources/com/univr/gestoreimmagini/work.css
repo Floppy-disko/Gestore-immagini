@@ -63,10 +63,6 @@ Button {
 
 #up:pressed {
     -fx-background-image: url("freccia2.png");
-    -fx-background-size: 40 36;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center, center;
-    -fx-background-color: none;
 }
 
 #down {
@@ -80,11 +76,6 @@ Button {
 
 #down:pressed {
     -fx-background-image: url("freccia2.png");
-    -fx-background-size: 40 36;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center, center;
-    -fx-background-color: none;
-    -fx-rotate: 180;
 }
 
 #left {
@@ -98,11 +89,6 @@ Button {
 
 #left:pressed {
     -fx-background-image: url("freccia2.png");
-    -fx-background-size: 36 40;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center, center;
-    -fx-background-color: none;
-    -fx-rotate: -90;
 }
 
 #right {
@@ -116,11 +102,6 @@ Button {
 
 #right:pressed {
     -fx-background-image: url("freccia2.png");
-    -fx-background-size: 36 40;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center, center;
-    -fx-background-color: none;
-    -fx-rotate: 90;
 }
 
 .zoom {
@@ -151,11 +132,6 @@ Button {
     -fx-background-color: yellow;
 }
 
-
-.deactivatedButton:hover {
-    -fx-cursor: default;
-    -fx-background-color: red;
-}
 
 #indietro {
     -fx-background-color: white;

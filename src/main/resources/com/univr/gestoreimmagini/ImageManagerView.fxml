@@ -49,7 +49,7 @@
                      <Insets right="5.0" />
                   </HBox.margin>
                </TextField>
-               <Button mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+               <Button alignment="CENTER" mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
                   <cursor>
                      <Cursor fx:constant="DEFAULT" />
                   </cursor>
@@ -61,7 +61,7 @@
          </HBox>
          <HBox alignment="CENTER" layoutX="844.0" layoutY="643.0" prefHeight="32.0" prefWidth="367.0">
             <children>
-               <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="284.0" promptText="Aggiungi un tag">
+               <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="28.0" prefWidth="282.0" promptText="Aggiungi un tag">
                   <cursor>
                      <Cursor fx:constant="TEXT" />
                   </cursor>
@@ -69,7 +69,7 @@
                      <Insets right="5.0" />
                   </HBox.margin>
                </TextField>
-               <Button mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+               <Button alignment="CENTER" mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
                   <cursor>
                      <Cursor fx:constant="DEFAULT" />
                   </cursor>

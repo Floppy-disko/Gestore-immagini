@@ -45,9 +45,9 @@
                      <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="714.0" prefWidth="801.0" />
                   </content>
                </ScrollPane>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
                <children>
-                     <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="303.0" prefWidth="356.0">
+                     <StackPane fx:id="imageDnD" maxWidth="-Infinity" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0">
                         <children>
                            <ImageView fx:id="placedImage" fitHeight="265.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                               <cursor>
@@ -78,7 +78,7 @@
                      </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <VBox alignment="CENTER" prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                      <ListView fx:id="tagsList" focusTraversable="false" prefHeight="284.0" prefWidth="367.0">
                         <cursor>

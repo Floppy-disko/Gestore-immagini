@@ -151,12 +151,6 @@ Button {
     -fx-background-color: yellow;
 }
 
-
-.deactivatedButton:hover {
-    -fx-cursor: default;
-    -fx-background-color: red;
-}
-
 #indietro {
     -fx-background-color: white;
     -fx-border-color: black;

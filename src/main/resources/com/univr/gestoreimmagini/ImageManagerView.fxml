@@ -7,78 +7,108 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" fillWidth="false" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-   <AnchorPane prefHeight="679.0" prefWidth="980.0">
-      <children>
-         <ScrollPane fitToWidth="true" focusTraversable="false" prefHeight="679.0" prefWidth="810.0">
-            <content>
-               <FlowPane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="671.0" prefWidth="801.0" />
-            </content>
-         </ScrollPane>
-         <StackPane fx:id="imageDnD" layoutX="876.0" layoutY="5.0" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0">
-            <children>
-               <ImageView fx:id="placedImage" fitHeight="265.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-                  <cursor>
-                     <Cursor fx:constant="DEFAULT" />
-                  </cursor>
-               </ImageView>
-            </children>
-         </StackPane>
-         <ListView fx:id="tagsList" focusTraversable="false" layoutX="843.0" layoutY="351.0" prefHeight="284.0" prefWidth="367.0">
-            <cursor>
-               <Cursor fx:constant="DEFAULT" />
-            </cursor>
-         </ListView>
-         <HBox alignment="CENTER" layoutX="840.0" layoutY="282.0" prefHeight="32.0" prefWidth="367.0">
-            <children>
-               <TextField fx:id="imageTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
-                  <cursor>
-                     <Cursor fx:constant="TEXT" />
-                  </cursor>
-                  <HBox.margin>
-                     <Insets right="5.0" />
-                  </HBox.margin>
-               </TextField>
-               <Button mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
-                  <cursor>
-                     <Cursor fx:constant="DEFAULT" />
-                  </cursor>
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Button>
-            </children>
-         </HBox>
-         <HBox alignment="CENTER" layoutX="844.0" layoutY="643.0" prefHeight="32.0" prefWidth="367.0">
-            <children>
-               <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="284.0" promptText="Aggiungi un tag">
-                  <cursor>
-                     <Cursor fx:constant="TEXT" />
-                  </cursor>
-                  <HBox.margin>
-                     <Insets right="5.0" />
-                  </HBox.margin>
-               </TextField>
-               <Button mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
-                  <cursor>
-                     <Cursor fx:constant="DEFAULT" />
-                  </cursor>
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Button>
-            </children>
-         </HBox>
-      </children>
-   </AnchorPane>
-</VBox>
+<!--<VBox alignment="CENTER" fillWidth="false" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">-->
+<!--    <padding>-->
+<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />-->
+<!--    </padding>-->
+<!--</VBox>-->
+<!--<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">-->
+<!--      <padding>-->
+<!--           <Insets bottom="200.0" left="20.0" right="20.0" top="20.0" />-->
+<!--      </padding>-->
+<!--      <children>-->
+<!--      </children>-->
+<!--   </AnchorPane>-->
+
+<GridPane alignment="CENTER" hgap="20.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" vgap="20.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="922.6000366210938" minWidth="10.0" prefWidth="399.933349609375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="701.066650390625" minWidth="10.0" prefWidth="450.466650390625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="466.1999389648438" minWidth="10.0" prefWidth="372.3333496093751" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="367.46669921875" minHeight="10.0" prefHeight="354.66668090820315" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="433.3333221435547" minHeight="10.0" prefHeight="148.5333190917969" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+               <ScrollPane fitToWidth="true" focusTraversable="false" prefHeight="493.0" prefWidth="818.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                  <content>
+                     <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="714.0" prefWidth="801.0" />
+                  </content>
+               </ScrollPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
+               <children>
+                     <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="303.0" prefWidth="356.0">
+                        <children>
+                           <ImageView fx:id="placedImage" fitHeight="265.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="DEFAULT" />
+                              </cursor>
+                           </ImageView>
+                        </children>
+                     </StackPane>
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0">
+                        <children>
+                           <TextField fx:id="imageTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <HBox.margin>
+                                 <Insets right="5.0" />
+                              </HBox.margin>
+                           </TextField>
+                           <Button mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+                              <cursor>
+                                 <Cursor fx:constant="DEFAULT" />
+                              </cursor>
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                     <ListView fx:id="tagsList" focusTraversable="false" prefHeight="284.0" prefWidth="367.0">
+                        <cursor>
+                           <Cursor fx:constant="DEFAULT" />
+                        </cursor>
+                     </ListView>
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0">
+                        <children>
+                           <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="284.0" promptText="Aggiungi un tag">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <HBox.margin>
+                                 <Insets right="5.0" />
+                              </HBox.margin>
+                           </TextField>
+                           <Button mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" text="Aggiungi" textAlignment="CENTER">
+                              <cursor>
+                                 <Cursor fx:constant="DEFAULT" />
+                              </cursor>
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </HBox>
+               </children>
+            </VBox>
+         </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+      </GridPane>

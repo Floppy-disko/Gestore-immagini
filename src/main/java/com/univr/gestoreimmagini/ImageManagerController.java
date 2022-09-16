@@ -41,7 +41,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     private ImageView placedImage;
 
     @FXML
-    private FlowPane imageGrid;
+    private TilePane imageGrid;
 
     private Model modello = Model.getModel();
 

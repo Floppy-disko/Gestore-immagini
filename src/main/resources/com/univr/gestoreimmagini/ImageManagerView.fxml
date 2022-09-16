@@ -31,13 +31,13 @@
 
 <GridPane alignment="CENTER" hgap="20.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" vgap="20.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.ImageManagerController">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="922.6000366210938" minWidth="10.0" prefWidth="399.933349609375" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="701.066650390625" minWidth="10.0" prefWidth="450.466650390625" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="922.6000366210938" minWidth="10.0" prefWidth="418.66668701171875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="701.066650390625" minWidth="10.0" prefWidth="416.5333129882813" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="466.1999389648438" minWidth="10.0" prefWidth="372.3333496093751" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="367.46669921875" minHeight="10.0" prefHeight="354.66668090820315" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="433.3333221435547" minHeight="10.0" prefHeight="148.5333190917969" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="367.46669921875" minHeight="10.0" prefHeight="359.9999938964844" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="433.3333221435547" minHeight="10.0" prefHeight="300.80000610351567" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
                <ScrollPane fitToWidth="true" focusTraversable="false" prefHeight="493.0" prefWidth="818.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
@@ -45,9 +45,9 @@
                      <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="714.0" prefWidth="801.0" />
                   </content>
                </ScrollPane>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
                <children>
-                     <StackPane fx:id="imageDnD" maxWidth="-Infinity" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0">
+                     <StackPane fx:id="imageDnD" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0">
                         <children>
                            <ImageView fx:id="placedImage" fitHeight="265.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                               <cursor>
@@ -56,14 +56,14 @@
                            </ImageView>
                         </children>
                      </StackPane>
-                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0">
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0" spacing="5.0">
                         <children>
                            <TextField fx:id="imageTextField" onKeyPressed="#keyListener" prefHeight="26.0" prefWidth="275.0" promptText="Inserisci nome immagineAnnotata">
                               <cursor>
                                  <Cursor fx:constant="TEXT" />
                               </cursor>
                               <HBox.margin>
-                                 <Insets right="5.0" />
+                                 <Insets />
                               </HBox.margin>
                            </TextField>
                            <Button alignment="CENTER" mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
@@ -77,22 +77,25 @@
                         </children>
                      </HBox>
                </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                      <ListView fx:id="tagsList" focusTraversable="false" prefHeight="284.0" prefWidth="367.0">
                         <cursor>
                            <Cursor fx:constant="DEFAULT" />
                         </cursor>
                      </ListView>
-                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0">
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0" spacing="5.0">
                         <children>
                            <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="28.0" prefWidth="282.0" promptText="Aggiungi un tag">
                               <cursor>
                                  <Cursor fx:constant="TEXT" />
                               </cursor>
                               <HBox.margin>
-                                 <Insets right="5.0" />
+                                 <Insets />
                               </HBox.margin>
                            </TextField>
                            <Button alignment="CENTER" mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
@@ -106,6 +109,9 @@
                         </children>
                      </HBox>
                </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
             </VBox>
          </children>
    <padding>

@@ -100,6 +100,7 @@ public class WorkingImageController implements Initializable {
 
             else{  //se invece è la prima della lista mostro solo quella alla sua destra
                 leftButton.setOnAction(null);
+                //leftButton.setDisable(true);
                 leftButton.getStyleClass().add("deactivatedButton");
                 leftImage.setImage(voidImage);
                 rightButton.setOnAction(this::scrollRight);

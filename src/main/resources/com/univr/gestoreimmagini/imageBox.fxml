@@ -19,9 +19,9 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </StackPane>
-      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="220.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="375.0">
          <children>
-            <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="x">
+            <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="rimuovi">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

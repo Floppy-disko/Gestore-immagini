@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -55,7 +56,8 @@ public class WorkingImageController implements Initializable {
     private Button increaseX;
     @FXML
     private Button decreaseX;
-
+    @FXML
+    private Rectangle redRectangle;
 
     private Model modello = Model.getModel();
 
@@ -122,6 +124,16 @@ public class WorkingImageController implements Initializable {
             double offsetY = centerY.get()-newHeight/2;
             return new Rectangle2D(offsetX, offsetY, newWidth, newHeight);
         }, image, zoomLevel, centerX, centerY));
+
+        redRectangle.heightProperty().bind(Bindings.createDoubleBinding(()->{
+            double portion = viewPort.get().getHeight() / zoomImage.getImage().getHeight();
+            return fullImage.getFitHeight() * portion;
+        }, viewPort));
+
+        redRectangle.widthProperty().bind(Bindings.createDoubleBinding(()->{
+            double portion = viewPort.get().getWidth() / zoomImage.getImage().getWidth();
+            return fullImage.getFitWidth() * portion;
+        }, viewPort));
 
         selectedImageIndex.addListener(this::changed);
     }

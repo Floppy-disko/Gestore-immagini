@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane prefHeight="900.0" prefWidth="1280.0" styleClass="workImage" stylesheets="@work.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.WorkingImageController">
@@ -103,6 +104,7 @@
             <StackPane prefHeight="223.0" prefWidth="255.0">
                <children>
                   <ImageView fx:id="fullImage" fitHeight="194.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" />
+                  <Rectangle fx:id="redRectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="194.0" stroke="#df1111" strokeType="INSIDE" strokeWidth="3.0" width="210.0" />
                </children>
             </StackPane>
          </children>

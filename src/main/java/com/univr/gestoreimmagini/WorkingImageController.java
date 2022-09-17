@@ -87,13 +87,28 @@ public class WorkingImageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        immagineAnnotata.bind(Bindings.createObjectBinding(()-> modello.getImages().getRisorsa(selectedImageIndex.get()), selectedImageIndex));
+        image.bind(Bindings.createObjectBinding(()-> immagineAnnotata.get().getImage(), immagineAnnotata));
+
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
 
         updateImages(0);
         zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
-        increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetY.get()>=image.get().getHeight(), offsetY));
+        increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> {
+            double height = image.get().getHeight();
+            double weightedHeight = height/zoomLevel.get();
+            return offsetY.get()>=height-weightedHeight;
+        }, zoomLevel, offsetY));
+        decreaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetY.get()<=0, offsetY));
+        increaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> {
+            double width = image.get().getWidth();
+            double weightedWidth = width/zoomLevel.get();
+            return offsetX.get()>=width-weightedWidth;
+        }, zoomLevel, offsetX));
+        decreaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetX.get()<=0, offsetX));
 
         zoomImage.viewportProperty().bind(viewPort);
         viewPort.bind(Bindings.createObjectBinding(()-> {  //faccio cambiare la viewPort quando cambiano zoom, offestX e offsetY
@@ -110,9 +125,6 @@ public class WorkingImageController implements Initializable {
     }
 
     private void updateImages(int newValue){
-
-        immagineAnnotata.set(modello.getImages().getRisorsa(newValue));
-        image.set(getNextImage(newValue));
 
         Image nextMainImage = image.get();
         Image nextLeftImage = getNextImage(getLeftIndex(newValue));
@@ -207,32 +219,29 @@ public class WorkingImageController implements Initializable {
 
     @FXML
     private void zoomIn(ActionEvent actionEvent) {
-
         zoomLevel.set(zoomLevel.get()+0.2);
-
     }
 
     @FXML
     private void zoomOut(ActionEvent actionEvent) {
-
-        zoomLevel.set(zoomLevel.get() - 0.2);
-
-    }
-
-    @FXML
-    private void decreaseX(ActionEvent actionEvent) {
-    }
-
-    @FXML
-    private void increaseY(ActionEvent actionEvent) {
+        zoomLevel.set(zoomLevel.get()-0.2);
     }
 
     @FXML
     private void increaseX(ActionEvent actionEvent) {
+        offsetX.set(offsetX.get()+10);
     }
-
+    @FXML
+    private void decreaseX(ActionEvent actionEvent) {
+        offsetX.set(offsetX.get()-10);
+    }
+    @FXML
+    private void increaseY(ActionEvent actionEvent) {
+        offsetY.set(offsetY.get()+10);
+    }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
+        offsetY.set(offsetY.get()-10);
     }
 
     @FXML

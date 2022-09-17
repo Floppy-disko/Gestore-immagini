@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <GridPane prefHeight="900.0" prefWidth="1280.0" styleClass="workImage" stylesheets="@work.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.WorkingImageController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1225.199951171875" minWidth="10.0" prefWidth="723.9999877929688" />
@@ -90,12 +89,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="255.0">
                <children>
-                  <Button id="zoomout" alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="30.0" styleClass="zoom">
+                  <Button fx:id="zoomin" alignment="CENTER" mnemonicParsing="false" onAction="#zoomIn" prefHeight="38.0" prefWidth="30.0" styleClass="zoom">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button id="zoomin" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="zoom" />
+                  <Button fx:id="zoomout" alignment="CENTER" mnemonicParsing="false" onAction="#zoomOut" prefHeight="30.0" prefWidth="30.0" styleClass="zoom" />
                </children>
             </HBox>
             <StackPane prefHeight="223.0" prefWidth="255.0">

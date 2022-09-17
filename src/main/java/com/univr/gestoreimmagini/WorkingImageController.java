@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,12 +43,22 @@ public class WorkingImageController implements Initializable {
     private ImageView fullImage;
     @FXML
     private ImageView zoomImage;
+    @FXML
+    private Button zoomin;
+    @FXML
+    private Button zoomout;
 
     private Model modello = Model.getModel();
 
     private SimpleIntegerProperty selectedImageIndex = new SimpleIntegerProperty();
 
     private Image voidImage;
+
+    private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
+
+    private double zoomLevel = 1;  //quanto sono zoommatop
+    private double offsetX = 0; //di quanto sono spostato a dx
+    private double offsetY = 0; //di quanto sono spostato a sx
 
     public WorkingImageController(){
         try {
@@ -62,9 +73,13 @@ public class WorkingImageController implements Initializable {
         fullImage.imageProperty().bind(mainImage.imageProperty());
         zoomImage.imageProperty().bind(mainImage.imageProperty());
 
+        zoomImage.viewportProperty().bind(viewPort);
+
         updateImages(0);
 
         selectedImageIndex.addListener(this::changed);
+
+        zoomout.setDisable(true); //all'inizio l'immagine non può essere zoommata
     }
 
     private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -77,6 +92,8 @@ public class WorkingImageController implements Initializable {
         Image nextRightImage = getNextImage(getRightIndex(newValue));
 
         mainImage.setImage(nextMainImage);
+
+        resetViewPort();
 
         int size = modello.getImages().getSize();
 
@@ -113,6 +130,12 @@ public class WorkingImageController implements Initializable {
 
     }
 
+    private void resetViewPort(){
+        setViewPort(mainImage.getViewport());  //Resetto il viewPort quando cambio immagine
+        zoomLevel = 1;
+        applyZoom();
+    }
+
     private Image getNextImage(int newValue){
         return modello.getImages().getRisorsa(newValue).getImage();
     }
@@ -127,6 +150,18 @@ public class WorkingImageController implements Initializable {
 
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
+    }
+
+    public Rectangle2D getViewPort() {
+        return viewPort.get();
+    }
+
+    public SimpleObjectProperty<Rectangle2D> viewPortProperty() {
+        return viewPort;
+    }
+
+    public void setViewPort(Rectangle2D viewPort) {
+        this.viewPort.set(viewPort);
     }
 
     @FXML
@@ -155,6 +190,43 @@ public class WorkingImageController implements Initializable {
         return leftIndex;
     }
 
+    @FXML
+    private void zoomIn(ActionEvent actionEvent) {
+
+        if (zoomLevel <= 1) {
+            zoomout.setDisable(false);  //Riattivo la possibilitò di dezoommare se aumento il valore onltre minZoom
+        }
+
+        zoomLevel += 0.2;
+
+        applyZoom();
+
+        if(zoomLevel >= 4)
+            zoomin.setDisable(true);  //Se ho raggiunto maxZoom spengo il bottone
+    }
+
+    @FXML
+    private void zoomOut(ActionEvent actionEvent) {
+
+        if (zoomLevel >= 4) {
+            zoomin.setDisable(false);  //Riattivo la possibilitò di zoommare se diminuisco il valore sotto a mazZoom
+        }
+
+        zoomLevel -= 0.2;
+
+        applyZoom();
+
+        if(zoomLevel <= 1)
+            zoomout.setDisable(true);  //Se ho raggiunto minZoom spengo il bottone
+    }
+
+    private void applyZoom(){
+        double newWidth = mainImage.getImage().getWidth()/zoomLevel;
+        double newHeight = mainImage.getImage().getHeight()/zoomLevel;
+
+        Rectangle2D newViewPort = new Rectangle2D(offsetX, offsetY, newWidth, newHeight);
+        setViewPort(newViewPort);
+    }
 
     @FXML
     private void switchToImageEditorView(ActionEvent actionEvent) {
@@ -173,4 +245,5 @@ public class WorkingImageController implements Initializable {
         if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
             modello.getImages().restoreImage(getSelectedImageIndex());
     }
+
 }

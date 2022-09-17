@@ -15,7 +15,7 @@ public class ImmagineAnnotata {
     private ObservableList<Annotazione> annotazioni;
 
     public ImmagineAnnotata(Image image, String name, String extension) {
-        this.image.set(image);
+        setImage(image);
         this.name = name;
         this.extension = extension;
     }

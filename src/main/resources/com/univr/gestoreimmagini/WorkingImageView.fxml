@@ -43,7 +43,7 @@
             </StackPane>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="160.0">
                <children>
-                  <ImageView fx:id="mainImage" fitHeight="168.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="mainImage" fitHeight="135.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" />
                </children>
                <HBox.margin>
                   <Insets left="25.0" right="25.0" />

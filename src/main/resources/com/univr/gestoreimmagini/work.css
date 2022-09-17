@@ -136,6 +136,7 @@ Button {
 #indietro {
     -fx-background-color: white;
     -fx-border-color: black;
+    -fx-position: relative;
     -fx-border-width: 2;
     -fx-background-insets: 1;
     -fx-border-radius: 4;

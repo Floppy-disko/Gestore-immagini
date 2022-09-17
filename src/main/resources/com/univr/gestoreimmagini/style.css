@@ -66,7 +66,7 @@ TextField {
 
 #imageDnD {
     -fx-background-image: url("DnD.png");
-    -fx-background-size: 300 265;
+    -fx-background-size: 296 261;
     -fx-background-color: orange;
     -fx-background-insets: 0;
     -fx-background-repeat: no-repeat;

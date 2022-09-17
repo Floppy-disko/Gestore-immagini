@@ -1,6 +1,10 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -56,9 +60,13 @@ public class WorkingImageController implements Initializable {
 
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
-    private double zoomLevel = 1;  //quanto sono zoommatop
-    private double offsetX = 0; //di quanto sono spostato a dx
-    private double offsetY = 0; //di quanto sono spostato a sx
+    private SimpleObjectProperty<ImmagineAnnotata> immagineAnnotata = new SimpleObjectProperty<>(this, "immagineAnnotata");
+
+    private SimpleObjectProperty<Image> image = new SimpleObjectProperty<>(this, "image");
+
+    private SimpleDoubleProperty zoomLevel = new SimpleDoubleProperty(1);  //quanto sono zoommatop
+    private SimpleDoubleProperty offsetX = new SimpleDoubleProperty(0); //di quanto sono spostato a dx
+    private SimpleDoubleProperty offsetY = new SimpleDoubleProperty(0); //di quanto sono spostato a sx
 
     public WorkingImageController(){
         try {
@@ -70,12 +78,17 @@ public class WorkingImageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fullImage.imageProperty().bind(mainImage.imageProperty());
-        zoomImage.imageProperty().bind(mainImage.imageProperty());
-
-        zoomImage.viewportProperty().bind(viewPort);
+        fullImage.imageProperty().bind(image);
+        zoomImage.imageProperty().bind(image);
 
         updateImages(0);
+
+        zoomImage.viewportProperty().bind(viewPort);
+        viewPort.bind(Bindings.createObjectBinding(()-> {  //faccio cambiare la viewPort quando cambiano zoom, offestX e offsetY
+            double newWidth = image.get().getWidth() / zoomLevel.get();
+            double newHeight = image.get().getHeight() / zoomLevel.get();
+            return new Rectangle2D(offsetX.get(), offsetY.get(), newWidth, newHeight);
+        }, zoomLevel, offsetX, offsetY));
 
         selectedImageIndex.addListener(this::changed);
 
@@ -87,7 +100,11 @@ public class WorkingImageController implements Initializable {
     }
 
     private void updateImages(int newValue){
-        Image nextMainImage = getNextImage(newValue);
+
+        setImmagineAnnotata(modello.getImages().getRisorsa(newValue));
+        setImage(getNextImage(newValue));
+
+        Image nextMainImage = getImage();
         Image nextLeftImage = getNextImage(getLeftIndex(newValue));
         Image nextRightImage = getNextImage(getRightIndex(newValue));
 
@@ -132,8 +149,7 @@ public class WorkingImageController implements Initializable {
 
     private void resetViewPort(){
         setViewPort(mainImage.getViewport());  //Resetto il viewPort quando cambio immagine
-        zoomLevel = 1;
-        applyZoom();
+        zoomLevel.set(1);
     }
 
     private Image getNextImage(int newValue){
@@ -193,39 +209,27 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void zoomIn(ActionEvent actionEvent) {
 
-        if (zoomLevel <= 1) {
+        if (zoomLevel.get() <= 1) {
             zoomout.setDisable(false);  //Riattivo la possibilitò di dezoommare se aumento il valore onltre minZoom
         }
 
-        zoomLevel += 0.2;
+        zoomLevel.set(zoomLevel.get()+0.2);
 
-        applyZoom();
-
-        if(zoomLevel >= 4)
+        if(zoomLevel.get() >= 4)
             zoomin.setDisable(true);  //Se ho raggiunto maxZoom spengo il bottone
     }
 
     @FXML
     private void zoomOut(ActionEvent actionEvent) {
 
-        if (zoomLevel >= 4) {
+        if (zoomLevel.get() >= 4) {
             zoomin.setDisable(false);  //Riattivo la possibilitò di zoommare se diminuisco il valore sotto a mazZoom
         }
 
-        zoomLevel -= 0.2;
+        zoomLevel.set(zoomLevel.get() - 0.2);
 
-        applyZoom();
-
-        if(zoomLevel <= 1)
+        if(zoomLevel.get() <= 1)
             zoomout.setDisable(true);  //Se ho raggiunto minZoom spengo il bottone
-    }
-
-    private void applyZoom(){
-        double newWidth = mainImage.getImage().getWidth()/zoomLevel;
-        double newHeight = mainImage.getImage().getHeight()/zoomLevel;
-
-        Rectangle2D newViewPort = new Rectangle2D(offsetX, offsetY, newWidth, newHeight);
-        setViewPort(newViewPort);
     }
 
     @FXML
@@ -244,6 +248,30 @@ public class WorkingImageController implements Initializable {
 
         if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
             modello.getImages().restoreImage(getSelectedImageIndex());
+    }
+
+    public Image getImage() {
+        return image.get();
+    }
+
+    public SimpleObjectProperty<Image> imageProperty() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image.set(image);
+    }
+
+    public ImmagineAnnotata getImmagineAnnotata() {
+        return immagineAnnotata.get();
+    }
+
+    public SimpleObjectProperty<ImmagineAnnotata> immagineAnnotataProperty() {
+        return immagineAnnotata;
+    }
+
+    public void setImmagineAnnotata(ImmagineAnnotata immagineAnnotata) {
+        this.immagineAnnotata.set(immagineAnnotata);
     }
 
 }

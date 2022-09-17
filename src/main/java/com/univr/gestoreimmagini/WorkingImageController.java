@@ -3,11 +3,9 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,9 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,8 +70,8 @@ public class WorkingImageController implements Initializable {
     private SimpleObjectProperty<Image> image = new SimpleObjectProperty<>(this, "image");
 
     private SimpleDoubleProperty zoomLevel = new SimpleDoubleProperty(1);  //quanto sono zoommatop
-    private SimpleDoubleProperty offsetX = new SimpleDoubleProperty(0); //di quanto sono spostato a dx
-    private SimpleDoubleProperty offsetY = new SimpleDoubleProperty(0); //di quanto sono spostato a sx
+    private SimpleDoubleProperty centerX = new SimpleDoubleProperty(0); //di quanto sono spostato a dx
+    private SimpleDoubleProperty centerY = new SimpleDoubleProperty(0); //di quanto sono spostato a sx
 
     public WorkingImageController(){
         try {
@@ -100,22 +96,24 @@ public class WorkingImageController implements Initializable {
         increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> {
             double height = image.get().getHeight();
             double weightedHeight = height/zoomLevel.get();
-            return offsetY.get()>=height-weightedHeight;
-        }, zoomLevel, offsetY));
-        decreaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetY.get()<=0, offsetY));
+            return centerY.get()>=height-weightedHeight;
+        }, zoomLevel, centerY));
+        decreaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> centerY.get()<=0, centerY));
         increaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> {
             double width = image.get().getWidth();
             double weightedWidth = width/zoomLevel.get();
-            return offsetX.get()>=width-weightedWidth;
-        }, zoomLevel, offsetX));
-        decreaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetX.get()<=0, offsetX));
+            return centerX.get()>=width-weightedWidth;
+        }, zoomLevel, centerX));
+        decreaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> centerX.get()<=0, centerX));
 
         zoomImage.viewportProperty().bind(viewPort);
         viewPort.bind(Bindings.createObjectBinding(()-> {  //faccio cambiare la viewPort quando cambiano zoom, offestX e offsetY
             double newWidth = image.get().getWidth() / zoomLevel.get();
             double newHeight = image.get().getHeight() / zoomLevel.get();
-            return new Rectangle2D(offsetX.get(), offsetY.get(), newWidth, newHeight);
-        }, image, zoomLevel, offsetX, offsetY));
+            double offsetX = centerX.get()-newWidth/2;     //offsetX è lo spigolo in alto a sx quindi è il centro meno metà della lunghezza
+            double offsetY = centerY.get()-newHeight/2;
+            return new Rectangle2D(offsetX, offsetY, newWidth, newHeight);
+        }, image, zoomLevel, centerX, centerY));
 
         selectedImageIndex.addListener(this::changed);
     }
@@ -171,8 +169,8 @@ public class WorkingImageController implements Initializable {
 
     private void resetViewPort(){
         zoomLevel.set(1);
-        offsetX.set(0);
-        offsetY.set(0);
+        centerX.set(image.get().getWidth()/2);
+        centerY.set(image.get().getHeight()/2);
     }
 
     private Image getNextImage(int newValue){
@@ -219,29 +217,39 @@ public class WorkingImageController implements Initializable {
 
     @FXML
     private void zoomIn(ActionEvent actionEvent) {
-        zoomLevel.set(zoomLevel.get()+0.2);
+        double newZoomLevel = zoomLevel.get() + 0.2;
+//        double newOffsetX = offsetX.get() + (image.get().getWidth()/zoomLevel.get() - image.get().getWidth()/newZoomLevel);
+//        double newOffsetY = offsetX.get() + (image.get().getHeight()/zoomLevel.get() - image.get().getHeight()/newZoomLevel);
+//        offsetX.set(newOffsetX);
+//        offsetY.set(newOffsetY);
+        zoomLevel.set(newZoomLevel);
     }
 
     @FXML
     private void zoomOut(ActionEvent actionEvent) {
-        zoomLevel.set(zoomLevel.get()-0.2);
+        double newZoomLevel = zoomLevel.get() - 0.2;
+//        double newOffsetX = offsetX.get() + (image.get().getWidth()/zoomLevel.get() - image.get().getWidth()/newZoomLevel);
+//        double newOffsetY = offsetX.get() + (image.get().getHeight()/zoomLevel.get() - image.get().getHeight()/newZoomLevel);
+//        offsetX.set(newOffsetX);
+//        offsetY.set(newOffsetY);
+        zoomLevel.set(newZoomLevel);
     }
 
     @FXML
     private void increaseX(ActionEvent actionEvent) {
-        offsetX.set(offsetX.get()+10);
+        centerX.set(centerX.get()+15);
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {
-        offsetX.set(offsetX.get()-10);
+        centerX.set(centerX.get()-15);
     }
     @FXML
     private void increaseY(ActionEvent actionEvent) {
-        offsetY.set(offsetY.get()+10);
+        centerY.set(centerY.get()+15);
     }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
-        offsetY.set(offsetY.get()-10);
+        centerY.set(centerY.get()-15);
     }
 
     @FXML

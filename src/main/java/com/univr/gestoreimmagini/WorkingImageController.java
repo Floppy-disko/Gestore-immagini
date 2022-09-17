@@ -51,6 +51,15 @@ public class WorkingImageController implements Initializable {
     private Button zoomin;
     @FXML
     private Button zoomout;
+    @FXML
+    private Button increaseY;
+    @FXML
+    private Button decreaseY;
+    @FXML
+    private Button increaseX;
+    @FXML
+    private Button decreaseX;
+
 
     private Model modello = Model.getModel();
 
@@ -82,17 +91,18 @@ public class WorkingImageController implements Initializable {
         zoomImage.imageProperty().bind(image);
 
         updateImages(0);
+        zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
+        zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
+        increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> offsetY.get()>=image.get().getHeight(), offsetY));
 
         zoomImage.viewportProperty().bind(viewPort);
         viewPort.bind(Bindings.createObjectBinding(()-> {  //faccio cambiare la viewPort quando cambiano zoom, offestX e offsetY
             double newWidth = image.get().getWidth() / zoomLevel.get();
             double newHeight = image.get().getHeight() / zoomLevel.get();
             return new Rectangle2D(offsetX.get(), offsetY.get(), newWidth, newHeight);
-        }, zoomLevel, offsetX, offsetY));
+        }, image, zoomLevel, offsetX, offsetY));
 
         selectedImageIndex.addListener(this::changed);
-
-        zoomout.setDisable(true); //all'inizio l'immagine non può essere zoommata
     }
 
     private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -101,10 +111,10 @@ public class WorkingImageController implements Initializable {
 
     private void updateImages(int newValue){
 
-        setImmagineAnnotata(modello.getImages().getRisorsa(newValue));
-        setImage(getNextImage(newValue));
+        immagineAnnotata.set(modello.getImages().getRisorsa(newValue));
+        image.set(getNextImage(newValue));
 
-        Image nextMainImage = getImage();
+        Image nextMainImage = image.get();
         Image nextLeftImage = getNextImage(getLeftIndex(newValue));
         Image nextRightImage = getNextImage(getRightIndex(newValue));
 
@@ -148,8 +158,9 @@ public class WorkingImageController implements Initializable {
     }
 
     private void resetViewPort(){
-        setViewPort(mainImage.getViewport());  //Resetto il viewPort quando cambio immagine
         zoomLevel.set(1);
+        offsetX.set(0);
+        offsetY.set(0);
     }
 
     private Image getNextImage(int newValue){
@@ -166,18 +177,6 @@ public class WorkingImageController implements Initializable {
 
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
-    }
-
-    public Rectangle2D getViewPort() {
-        return viewPort.get();
-    }
-
-    public SimpleObjectProperty<Rectangle2D> viewPortProperty() {
-        return viewPort;
-    }
-
-    public void setViewPort(Rectangle2D viewPort) {
-        this.viewPort.set(viewPort);
     }
 
     @FXML
@@ -209,27 +208,31 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void zoomIn(ActionEvent actionEvent) {
 
-        if (zoomLevel.get() <= 1) {
-            zoomout.setDisable(false);  //Riattivo la possibilitò di dezoommare se aumento il valore onltre minZoom
-        }
-
         zoomLevel.set(zoomLevel.get()+0.2);
 
-        if(zoomLevel.get() >= 4)
-            zoomin.setDisable(true);  //Se ho raggiunto maxZoom spengo il bottone
     }
 
     @FXML
     private void zoomOut(ActionEvent actionEvent) {
 
-        if (zoomLevel.get() >= 4) {
-            zoomin.setDisable(false);  //Riattivo la possibilitò di zoommare se diminuisco il valore sotto a mazZoom
-        }
-
         zoomLevel.set(zoomLevel.get() - 0.2);
 
-        if(zoomLevel.get() <= 1)
-            zoomout.setDisable(true);  //Se ho raggiunto minZoom spengo il bottone
+    }
+
+    @FXML
+    private void decreaseX(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void increaseY(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void increaseX(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void decreaseY(ActionEvent actionEvent) {
     }
 
     @FXML
@@ -248,30 +251,6 @@ public class WorkingImageController implements Initializable {
 
         if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
             modello.getImages().restoreImage(getSelectedImageIndex());
-    }
-
-    public Image getImage() {
-        return image.get();
-    }
-
-    public SimpleObjectProperty<Image> imageProperty() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image.set(image);
-    }
-
-    public ImmagineAnnotata getImmagineAnnotata() {
-        return immagineAnnotata.get();
-    }
-
-    public SimpleObjectProperty<ImmagineAnnotata> immagineAnnotataProperty() {
-        return immagineAnnotata;
-    }
-
-    public void setImmagineAnnotata(ImmagineAnnotata immagineAnnotata) {
-        this.immagineAnnotata.set(immagineAnnotata);
     }
 
 }

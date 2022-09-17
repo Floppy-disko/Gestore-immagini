@@ -72,16 +72,16 @@
             </StackPane>
          </center>
          <left>
-            <Button id="left" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+            <Button id="left" fx:id="decreaseX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#decreaseX" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
          </left>
          <top>
-            <Button id="up" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+            <Button id="up" fx:id="decreaseY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#decreaseY" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
          </top>
          <right>
-            <Button id="right" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+            <Button id="right" fx:id="increaseX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#increaseX" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
          </right>
          <bottom>
-            <Button id="down" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+            <Button id="down" fx:id="increaseY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#increaseY" prefHeight="40.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
          </bottom>
          <GridPane.margin>
             <Insets bottom="5.0" left="40.0" />

@@ -95,16 +95,24 @@ public class WorkingImageController implements Initializable {
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
         increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> {
             double height = image.get().getHeight();
-            double weightedHeight = height/zoomLevel.get();
-            return centerY.get()>=height-weightedHeight;
+            double weightedHeight = height/zoomLevel.get();  //altezza pesata con il livello di zoom
+            return centerY.get()+weightedHeight/2 >= height;  //prendo la y del centro più quanto è continua l'immagine dopo al centro e verifico che non superi l'altezza
         }, zoomLevel, centerY));
-        decreaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> centerY.get()<=0, centerY));
+        decreaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> {
+            double height = image.get().getHeight();
+            double weightedHeight = height/zoomLevel.get();
+            return centerY.get()-weightedHeight/2 <= 0;
+        }, zoomLevel, centerY));
         increaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> {
             double width = image.get().getWidth();
             double weightedWidth = width/zoomLevel.get();
-            return centerX.get()>=width-weightedWidth;
+            return centerX.get()+weightedWidth/2 >= width;
         }, zoomLevel, centerX));
-        decreaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> centerX.get()<=0, centerX));
+        decreaseX.disableProperty().bind(Bindings.createBooleanBinding(()-> {
+            double width = image.get().getWidth();
+            double weightedWidth = width/zoomLevel.get();
+            return centerX.get()-weightedWidth/2 <= 0;
+        }, zoomLevel, centerX));
 
         zoomImage.viewportProperty().bind(viewPort);
         viewPort.bind(Bindings.createObjectBinding(()-> {  //faccio cambiare la viewPort quando cambiano zoom, offestX e offsetY

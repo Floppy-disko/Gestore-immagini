@@ -241,6 +241,26 @@ public class WorkingImageController implements Initializable {
 //        offsetX.set(newOffsetX);
 //        offsetY.set(newOffsetY);
         zoomLevel.set(newZoomLevel);
+
+        correctCenter(); //Se faccio zoomout posso avere l'immagine fuori dal bordo quindi devo correggere la posizione del centro
+    }
+
+    private void correctCenter(){
+        //Correggo la y
+        double height = image.get().getHeight();
+        double weightedHeight = height/zoomLevel.get();
+        if(centerY.get()+weightedHeight/2 >= height)  //Se sborda in basso (y centro troppo alta)
+            centerY.set(height - weightedHeight/2); //Se sbordo tolgo la differenza che c'è tra la larghezza della viewPort e lo spazio disponibile
+        else if(centerY.get()-weightedHeight/2 <= 0)  //Se sbordo in alto
+            centerY.set(weightedHeight/2);
+
+        //Correggo la x
+        double width = image.get().getWidth();
+        double weightedWidth = width/zoomLevel.get();
+        if(centerX.get()+weightedWidth/2 >= width)
+            centerX.set(width - weightedWidth/2); //Se sbordo tolgo la differenza che c'è tra la larghezza della viewPort e lo spazio disponibile
+        else if(centerX.get()-weightedWidth/2 <= 0)
+            centerX.set(weightedWidth/2);
     }
 
     @FXML

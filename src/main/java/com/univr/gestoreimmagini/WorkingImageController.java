@@ -294,18 +294,22 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void increaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()+movementX());
+        correctCenter();
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()-movementX());
+        correctCenter();
     }
     @FXML
     private void increaseY(ActionEvent actionEvent) {
         centerY.set(centerY.get()+movementY());
+        correctCenter();
     }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
         centerY.set(centerY.get()-movementY());
+        correctCenter();
     }
 
     private double movementX(){

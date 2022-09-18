@@ -3,6 +3,7 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
+import javafx.animation.Transition;
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
@@ -42,6 +44,9 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
     @FXML
     private TilePane imageGrid;
+
+    @FXML
+    private StackPane imageDnD;
 
     private Model modello = Model.getModel();
 
@@ -160,7 +165,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         //System.out.println(FilenameUtils.getExtension(image.getUrl()));
         placedImage.setImage(image);
         placedImageSet=true;
-
+        imageDnD.getStyleClass().remove("imgDnD");  // Rimuove l'immagine di sfondo rimuovendo la classe che gliela assegna
         event.consume();
     }
 
@@ -181,6 +186,8 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
         placedImageSet=false; //Comunico che non ho più immagini settate
         placedImage.setImage(null);
+        imageDnD.getStyleClass().add("imgDnD");     // Riassegna la classe per lo sfondo dell'immagine
+        imageTextField.getParent().requestFocus();  // Sposta il focus dal text field
     }
 
     private void switchToWorkingImageView(MouseEvent mouseEvent) {

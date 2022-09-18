@@ -294,7 +294,7 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void increaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()+movementX());
-        correctCenter();
+        correctCenter();  //Ogni volta che sposto l'immagine potrei sbordare, quindi se sbordo correggo
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {

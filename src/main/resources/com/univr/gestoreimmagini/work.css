@@ -6,7 +6,7 @@
 
 
 .contenitore {
-    -fx-background-color: white;
+    -fx-background-color: rgb(212, 214, 213);
     -fx-border-color: black;
     -fx-border-width: 2;
     -fx-background-insets: 1;
@@ -105,7 +105,7 @@ Button {
 }
 
 .zoom {
-    -fx-background-color: white;
+    -fx-background-color: rgb(212, 214, 213);
 }
 
 #zoomin {
@@ -113,7 +113,6 @@ Button {
     -fx-background-size: 30 29;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center, center;
-    -fx-background-color: white;
 }
 
 #zoomin:hover {
@@ -125,7 +124,6 @@ Button {
     -fx-background-size: 30 29;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center, center;
-    -fx-background-color: white;
 }
 
 #zoomout:hover {

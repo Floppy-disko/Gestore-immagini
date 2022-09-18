@@ -138,14 +138,14 @@ public class WorkingImageController implements Initializable {
         }, viewPort));
 
         redRectangle.translateXProperty().bind(Bindings.createDoubleBinding(()->{
-            double ratio = fullImage.getFitWidth() / fullImage.getImage().getWidth(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
+            double ratio = fullImage.getBoundsInParent().getWidth() / fullImage.getImage().getWidth(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
             double imageCenterX = fullImage.getImage().getWidth() / 2;
             double offsetX = centerX.get()-imageCenterX;  //quanto è spostato il displayPort rispetto al centro dell'immagine
             return offsetX * ratio;
         }, centerX));
 
         redRectangle.translateYProperty().bind(Bindings.createDoubleBinding(()->{
-            double ratio = fullImage.getFitHeight() / fullImage.getImage().getHeight(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
+            double ratio = fullImage.getBoundsInParent().getHeight() / fullImage.getImage().getHeight(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
             double imageCenterY = fullImage.getImage().getHeight() / 2;
             double offsetY = centerY.get()-imageCenterY;  //quanto è spostato il displayPort rispetto al centro dell'immagine
             return offsetY * ratio;

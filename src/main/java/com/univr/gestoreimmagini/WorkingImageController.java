@@ -65,6 +65,8 @@ public class WorkingImageController implements Initializable {
 
     private Image voidImage;
 
+    private static double movementPercentage = 0.10; //Ad ogni passo scorro il 10 percento dell'immagine
+
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
     private SimpleObjectProperty<ImmagineAnnotata> immagineAnnotata = new SimpleObjectProperty<>(this, "immagineAnnotata");
@@ -126,14 +128,28 @@ public class WorkingImageController implements Initializable {
         }, image, zoomLevel, centerX, centerY));
 
         redRectangle.heightProperty().bind(Bindings.createDoubleBinding(()->{
-            double portion = viewPort.get().getHeight() / zoomImage.getImage().getHeight();
+            double portion = viewPort.get().getHeight() / fullImage.getImage().getHeight();
             return fullImage.getFitHeight() * portion;
         }, viewPort));
 
         redRectangle.widthProperty().bind(Bindings.createDoubleBinding(()->{
-            double portion = viewPort.get().getWidth() / zoomImage.getImage().getWidth();
+            double portion = viewPort.get().getWidth() / fullImage.getImage().getWidth();
             return fullImage.getFitWidth() * portion;
         }, viewPort));
+
+        redRectangle.translateXProperty().bind(Bindings.createDoubleBinding(()->{
+            double ratio = fullImage.getFitWidth() / fullImage.getImage().getWidth(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
+            double imageCenterX = fullImage.getImage().getWidth() / 2;
+            double offsetX = centerX.get()-imageCenterX;  //quanto è spostato il displayPort rispetto al centro dell'immagine
+            return offsetX * ratio;
+        }, centerX));
+
+        redRectangle.translateYProperty().bind(Bindings.createDoubleBinding(()->{
+            double ratio = fullImage.getFitHeight() / fullImage.getImage().getHeight(); //Calcolo quanto è grande fullImage rispetto al numero di pixel dell'immagine
+            double imageCenterY = fullImage.getImage().getHeight() / 2;
+            double offsetY = centerY.get()-imageCenterY;  //quanto è spostato il displayPort rispetto al centro dell'immagine
+            return offsetY * ratio;
+        }, centerY));
 
         selectedImageIndex.addListener(this::changed);
     }
@@ -277,19 +293,27 @@ public class WorkingImageController implements Initializable {
 
     @FXML
     private void increaseX(ActionEvent actionEvent) {
-        centerX.set(centerX.get()+15);
+        centerX.set(centerX.get()+movementX());
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {
-        centerX.set(centerX.get()-15);
+        centerX.set(centerX.get()-movementX());
     }
     @FXML
     private void increaseY(ActionEvent actionEvent) {
-        centerY.set(centerY.get()+15);
+        centerY.set(centerY.get()+movementY());
     }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
-        centerY.set(centerY.get()-15);
+        centerY.set(centerY.get()-movementY());
+    }
+
+    private double movementX(){
+        return viewPort.get().getWidth() * movementPercentage;
+    }
+
+    private double movementY(){
+        return viewPort.get().getHeight() * movementPercentage;
     }
 
     @FXML

@@ -129,12 +129,12 @@ public class WorkingImageController implements Initializable {
 
         redRectangle.heightProperty().bind(Bindings.createDoubleBinding(()->{
             double portion = viewPort.get().getHeight() / fullImage.getImage().getHeight();
-            return fullImage.getFitHeight() * portion;
+            return fullImage.getBoundsInParent().getHeight() * portion;
         }, viewPort));
 
         redRectangle.widthProperty().bind(Bindings.createDoubleBinding(()->{
             double portion = viewPort.get().getWidth() / fullImage.getImage().getWidth();
-            return fullImage.getFitWidth() * portion;
+            return fullImage.getBoundsInParent().getWidth() * portion;
         }, viewPort));
 
         redRectangle.translateXProperty().bind(Bindings.createDoubleBinding(()->{

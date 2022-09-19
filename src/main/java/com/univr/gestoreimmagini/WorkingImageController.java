@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -65,6 +68,8 @@ public class WorkingImageController implements Initializable {
 
     private Model modello = Model.getModel();
 
+    private ObservableList<ResizableRectangle> annotationRectangles;
+
     private SimpleIntegerProperty selectedImageIndex = new SimpleIntegerProperty();
 
     private Image voidImage;
@@ -97,6 +102,17 @@ public class WorkingImageController implements Initializable {
 
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
+
+        rectanglesContainer.clipProperty().bind(Bindings.createObjectBinding(()->{
+            Rectangle limit = new Rectangle();
+            limit.setWidth(zoomImage.getBoundsInParent().getWidth());
+            limit.setHeight(zoomImage.getBoundsInParent().getHeight());
+//            Rectangle limit2 = new Rectangle();
+//            limit2.setWidth(zoomImage.getBoundsInParent().getWidth());
+//            limit2.setHeight(zoomImage.getBoundsInParent().getHeight());
+//            rectanglesContainer.getChildren().add(limit2);
+            return limit;
+        }, mainImage.imageProperty()));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
 
         zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
@@ -156,19 +172,6 @@ public class WorkingImageController implements Initializable {
 
         selectedImageIndex.addListener(this::changed);
 
-        ResizableRectangle r1 = new ResizableRectangle();
-        rectanglesContainer.getChildren().add(r1);
-        //r1.setTranslateX(0);
-//        Rectangle rec = new Rectangle();
-//        rec.setWidth(100);
-//        rec.setHeight(100);
-//        rec.setX(-1);
-//        rec.setY(-2);
-//        rectanglesContainer.setClip(rec);
-        Scale scale = new Scale(1, 1, rectanglesContainer.prefWidth(0)/2, rectanglesContainer.prefHeight(0)/2);
-        rectanglesContainer.getTransforms().add(scale);
-        System.out.println(rectanglesContainer.prefWidth(0));
-        //rectanglesContainer.setLayoutX();
     }
 
     private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -240,6 +243,22 @@ public class WorkingImageController implements Initializable {
 
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
+
+        ResizableRectangle r1 = new ResizableRectangle();
+        //r1.setTranslateX(0);
+//        Rectangle rec = new Rectangle();
+//        rec.setWidth(100);
+//        rec.setHeight(100);
+//        rec.setX(-1);
+//        rec.setY(-2);
+//        rectanglesContainer.setClip(rec);
+        Scale scale = new Scale(2, 2, zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
+//        Translate translate = new Translate(zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
+        Translate translate = new Translate(-5, -5);
+        r1.getTransforms().add(translate);
+        rectanglesContainer.getChildren().add(r1);
+        System.out.println(rectanglesContainer.prefWidth(0));
+        //rectanglesContainer.setLayoutX();
     }
 
     @FXML

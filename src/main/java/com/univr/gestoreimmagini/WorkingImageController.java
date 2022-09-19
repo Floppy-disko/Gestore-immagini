@@ -81,9 +81,6 @@ public class WorkingImageController implements Initializable {
     private SimpleDoubleProperty centerX = new SimpleDoubleProperty(0); //di quanto sono spostato a dx
     private SimpleDoubleProperty centerY = new SimpleDoubleProperty(0); //di quanto sono spostato a sx
 
-    private SimpleDoubleProperty widthConversionRatio = new SimpleDoubleProperty(); //il rateo tra la dimensione dell'ImageView e dell'Image
-    private SimpleDoubleProperty heightConversionRatio = new SimpleDoubleProperty();
-
     public WorkingImageController(){
         try {
             voidImage = new Image(getClass().getResource("void.png").openStream());
@@ -100,12 +97,6 @@ public class WorkingImageController implements Initializable {
 
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
-//        widthConversionRatio.bind(Bindings.createDoubleBinding(()-> {
-//            return image.get().getWidth() / zoomImage.getBoundsInParent().getWidth();
-//        }, zoomImage.imageProperty()));
-//        heightConversionRatio.bind(Bindings.createDoubleBinding(()-> {
-//            return image.get().getHeight() / zoomImage.getBoundsInParent().getHeight();
-//        }, zoomImage.imageProperty()));
 
         zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));

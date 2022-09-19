@@ -34,6 +34,5 @@ public class ResizableRectangle extends Group {
             throw new RuntimeException(exception);
         }
 
-        rectangle.setWidth(200);
     }
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -58,6 +60,8 @@ public class WorkingImageController implements Initializable {
     private Button decreaseX;
     @FXML
     private Rectangle redRectangle;
+    @FXML
+    private Group rectanglesContainer;
 
     private Model modello = Model.getModel();
 
@@ -77,6 +81,9 @@ public class WorkingImageController implements Initializable {
     private SimpleDoubleProperty centerX = new SimpleDoubleProperty(0); //di quanto sono spostato a dx
     private SimpleDoubleProperty centerY = new SimpleDoubleProperty(0); //di quanto sono spostato a sx
 
+    private SimpleDoubleProperty widthConversionRatio = new SimpleDoubleProperty(); //il rateo tra la dimensione dell'ImageView e dell'Image
+    private SimpleDoubleProperty heightConversionRatio = new SimpleDoubleProperty();
+
     public WorkingImageController(){
         try {
             voidImage = new Image(getClass().getResource("void.png").openStream());
@@ -93,8 +100,13 @@ public class WorkingImageController implements Initializable {
 
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
+//        widthConversionRatio.bind(Bindings.createDoubleBinding(()-> {
+//            return image.get().getWidth() / zoomImage.getBoundsInParent().getWidth();
+//        }, zoomImage.imageProperty()));
+//        heightConversionRatio.bind(Bindings.createDoubleBinding(()-> {
+//            return image.get().getHeight() / zoomImage.getBoundsInParent().getHeight();
+//        }, zoomImage.imageProperty()));
 
-        updateImages(0);
         zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
         increaseY.disableProperty().bind(Bindings.createBooleanBinding(()-> {
@@ -152,6 +164,20 @@ public class WorkingImageController implements Initializable {
         }, centerY));
 
         selectedImageIndex.addListener(this::changed);
+
+        ResizableRectangle r1 = new ResizableRectangle();
+        rectanglesContainer.getChildren().add(r1);
+        //r1.setTranslateX(0);
+//        Rectangle rec = new Rectangle();
+//        rec.setWidth(100);
+//        rec.setHeight(100);
+//        rec.setX(-1);
+//        rec.setY(-2);
+//        rectanglesContainer.setClip(rec);
+        Scale scale = new Scale(1, 1, rectanglesContainer.prefWidth(0)/2, rectanglesContainer.prefHeight(0)/2);
+        rectanglesContainer.getTransforms().add(scale);
+        System.out.println(rectanglesContainer.prefWidth(0));
+        //rectanglesContainer.setLayoutX();
     }
 
     private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {

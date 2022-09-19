@@ -21,7 +21,6 @@ public class TagListCell extends ListCell<Tag> {
     private Label label;
     @FXML
     private Button button;
-    private Consumer<Tag> buttonHandler; //Il metodo onAction per il bottone chiamerà il metodo passato al costruttore della cella con come parametro l'elemento rappresentato dalla cella
 
     public TagListCell() {  //la cella sarà formata da un label ed un bottone per eliminarla
         super();

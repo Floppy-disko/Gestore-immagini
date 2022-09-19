@@ -43,4 +43,12 @@ public class ImmagineAnnotata {
     public String getExtension() {
         return extension;
     }
+
+    public ObservableList<Annotazione> getAnnotazioni() {
+        return annotazioni;
+    }
+
+    public void setAnnotazioni(ObservableList<Annotazione> annotazioni) {
+        this.annotazioni = annotazioni;
+    }
 }

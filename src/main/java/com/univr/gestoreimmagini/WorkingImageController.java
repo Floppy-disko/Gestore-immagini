@@ -1,12 +1,15 @@
 package com.univr.gestoreimmagini;
 
+import com.univr.gestoreimmagini.modello.Annotazione;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +31,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class WorkingImageController implements Initializable {
@@ -68,13 +72,13 @@ public class WorkingImageController implements Initializable {
 
     private Model modello = Model.getModel();
 
-    private ObservableList<ResizableRectangle> annotationRectangles;
-
     private SimpleIntegerProperty selectedImageIndex = new SimpleIntegerProperty();
 
     private Image voidImage;
 
     private static double movementPercentage = 0.10; //Ad ogni passo scorro il 10 percento dell'immagine
+
+    ArrayList<Annotazione> annotationList;
 
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
@@ -113,6 +117,14 @@ public class WorkingImageController implements Initializable {
 //            rectanglesContainer.getChildren().add(limit2);
             return limit;
         }, mainImage.imageProperty()));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
+
+        immagineAnnotata.addListener(new ChangeListener<ImmagineAnnotata>() {
+            @Override
+            public void changed(ObservableValue<? extends ImmagineAnnotata> observableValue, ImmagineAnnotata oldValue, ImmagineAnnotata newValue) {
+                oldValue.getAnnotazioni().removeListener(annotationListener);
+                newValue.getAnnotazioni().addListener(annotationListener);
+            }
+        });
 
         zoomin.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()>=4, zoomLevel));
         zoomout.disableProperty().bind(Bindings.createBooleanBinding(()-> zoomLevel.get()<=1, zoomLevel));
@@ -229,6 +241,24 @@ public class WorkingImageController implements Initializable {
         centerY.set(image.get().getHeight()/2);
     }
 
+    private ListChangeListener<Annotazione> annotationListener = new ListChangeListener<Annotazione>() {
+        @Override
+        public void onChanged(Change<? extends Annotazione> c) {
+            while (c.next()) {
+                for (Annotazione additem : c.getAddedSubList()) {
+                    ResizableRectangle r = new ResizableRectangle(additem, immagineAnnotata.get());
+                    rectanglesContainer.getChildren().add(r);
+                    annotationList.add(additem);
+                }
+
+                for(Annotazione remitem : c.getRemoved()){
+                    rectanglesContainer.getChildren().remove(annotationList.indexOf(remitem));
+                    annotationList.remove(remitem);
+                }
+            }
+        }
+    };
+
     private Image getNextImage(int newValue){
         return modello.getImages().getRisorsa(newValue).getImage();
     }
@@ -244,21 +274,21 @@ public class WorkingImageController implements Initializable {
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
 
-        ResizableRectangle r1 = new ResizableRectangle();
-        //r1.setTranslateX(0);
-//        Rectangle rec = new Rectangle();
-//        rec.setWidth(100);
-//        rec.setHeight(100);
-//        rec.setX(-1);
-//        rec.setY(-2);
-//        rectanglesContainer.setClip(rec);
-        Scale scale = new Scale(2, 2, zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
-//        Translate translate = new Translate(zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
-        Translate translate = new Translate(-5, -5);
-        r1.getTransforms().add(translate);
-        rectanglesContainer.getChildren().add(r1);
-        System.out.println(rectanglesContainer.prefWidth(0));
-        //rectanglesContainer.setLayoutX();
+//        ResizableRectangle r1 = new ResizableRectangle();
+//        //r1.setTranslateX(0);
+////        Rectangle rec = new Rectangle();
+////        rec.setWidth(100);
+////        rec.setHeight(100);
+////        rec.setX(-1);
+////        rec.setY(-2);
+////        rectanglesContainer.setClip(rec);
+//        Scale scale = new Scale(2, 2, zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
+////        Translate translate = new Translate(zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
+//        Translate translate = new Translate(-5, -5);
+//        r1.getTransforms().add(translate);
+//        rectanglesContainer.getChildren().add(r1);
+//        System.out.println(rectanglesContainer.prefWidth(0));
+//        //rectanglesContainer.setLayoutX();
     }
 
     @FXML

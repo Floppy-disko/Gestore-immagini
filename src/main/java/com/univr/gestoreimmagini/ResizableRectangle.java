@@ -1,6 +1,9 @@
 package com.univr.gestoreimmagini;
 
 
+import com.univr.gestoreimmagini.modello.Annotazione;
+import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -22,7 +25,11 @@ public class ResizableRectangle extends Group {
     @FXML
     private Label numberLabel;
 
-    public ResizableRectangle(){
+    private Annotazione annotazione;
+
+    private ImmagineAnnotata immagineAnnotata;
+
+    public ResizableRectangle(Annotazione annotazione, ImmagineAnnotata immagineAnnotata){
         super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResizableRectangle.fxml"));
         fxmlLoader.setRoot(this);
@@ -34,5 +41,9 @@ public class ResizableRectangle extends Group {
             throw new RuntimeException(exception);
         }
 
+        this.annotazione = annotazione;
+        this.immagineAnnotata = immagineAnnotata;
+
+        //numberLabel.textProperty().bind(Bindings.createStringBinding(()-> ))
     }
 }

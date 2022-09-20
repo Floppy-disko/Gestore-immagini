@@ -34,6 +34,9 @@ public class AnnotationCreationController implements Initializable {
 
     @FXML
     private void addAnnotation(ActionEvent actionEvent) {
+        if(tagPicker.getValue()==null) //se non ho selezionato un tag non aggiungere
+            return;
+
         add.accept(tagPicker.getValue(), valueTextField.getText());
         closeWindow(null);
     }

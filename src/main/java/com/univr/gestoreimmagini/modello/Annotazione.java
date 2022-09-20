@@ -2,6 +2,7 @@ package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 
 public class Annotazione {
 
@@ -30,6 +31,10 @@ public class Annotazione {
 
     public int getIndexInList(){
         return immagineAnnotata.getAnnotazioni().indexOf(this);
+    }
+
+    public Image getImage(){
+        return immagineAnnotata.getImage();
     }
 
     public String getValore() {

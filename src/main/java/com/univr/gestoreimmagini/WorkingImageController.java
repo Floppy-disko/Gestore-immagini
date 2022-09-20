@@ -110,22 +110,20 @@ public class WorkingImageController implements Initializable {
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
 
-        rectanglesContainer.clipProperty().bind(Bindings.createObjectBinding(()->{
-            Rectangle limit = new Rectangle();
-            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
-            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
-            limit.setWidth(width);
-            limit.setHeight(height);
+//        rectanglesContainer.clipProperty().bind(Bindings.createObjectBinding(()->{
+//            Rectangle limit = new Rectangle();
+//            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
+//            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
+//            limit.setWidth(width);
+//            limit.setHeight(height);
+//
+//            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
+//            limit.setX(((zoomImage.getBoundsInParent().getWidth() - width)/2) + (centerX.get()-image.get().getWidth()/2)*ratio);
+//            limit.setY(((zoomImage.getBoundsInParent().getHeight() - height)/2) + (centerY.get()-image.get().getHeight()/2)*ratio);
+//            return limit;
+//        }, viewPort));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
 
-            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
-            limit.setX(((zoomImage.getBoundsInParent().getWidth() - width)/2) + (centerX.get()-image.get().getWidth()/2)*ratio);
-            limit.setY(((zoomImage.getBoundsInParent().getHeight() - height)/2) + (centerY.get()-image.get().getHeight()/2)*ratio);
-//            Rectangle limit2 = new Rectangle();
-//            limit2.setWidth(zoomImage.getBoundsInParent().getWidth());
-//            limit2.setHeight(zoomImage.getBoundsInParent().getHeight());
-//            rectanglesContainer.getChildren().add(limit2);
-            return limit;
-        }, mainImage.imageProperty(), viewPort));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
+        viewPort.addListener(transformListener);
 
         //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
         immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
@@ -253,6 +251,35 @@ public class WorkingImageController implements Initializable {
         centerY.set(image.get().getHeight()/2);
     }
 
+    private ChangeListener<Rectangle2D> transformListener = new ChangeListener<Rectangle2D>() {
+        @Override
+        public void changed(ObservableValue<? extends Rectangle2D> observableValue, Rectangle2D oldvalue, Rectangle2D newvalue) {
+            rectanglesContainer.getTransforms().clear();
+            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
+            double translateX = -(centerX.get()-image.get().getWidth()/2)*ratio;
+            double translateY = -(centerY.get()-image.get().getHeight()/2)*ratio;
+            Translate translate = new Translate(translateX, translateY);
+            Scale scale = new Scale(zoomLevel.get(), zoomLevel.get(), zoomImage.getBoundsInParent().getWidth()/2, zoomImage.getBoundsInParent().getHeight()/2);
+
+            rectanglesContainer.getTransforms().add(scale); //devo mettere prima lo scale del translate sennò moltiplica anche lo spostamento
+            rectanglesContainer.getTransforms().add(translate);
+
+            Rectangle limit = new Rectangle();
+            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
+            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
+            double newWidth = image.get().getWidth() / zoomLevel.get();
+            double newHeight = image.get().getHeight() / zoomLevel.get();
+            double offsetX = centerX.get()-newWidth/2;
+            double offsetY = centerY.get()-newHeight/2;
+            limit.setX(offsetX*ratio);
+            limit.setY(offsetY*ratio);
+            limit.setWidth(width);
+            limit.setHeight(height);
+
+            rectanglesContainer.setClip(limit);
+        }
+    };
+
     private ListChangeListener<Annotazione> annotationListener = new ListChangeListener<Annotazione>() {
         @Override
         public void onChanged(Change<? extends Annotazione> c) {
@@ -347,11 +374,6 @@ public class WorkingImageController implements Initializable {
 //        offsetY.set(newOffsetY);
         zoomLevel.set(newZoomLevel);
 
-        double proportion = zoomLevel.get()/(zoomLevel.get()-0.2);
-        double pivotX = zoomImage.getBoundsInParent().getWidth()/2;
-        double pivotY = zoomImage.getBoundsInParent().getHeight()/2;
-        Scale scale = new Scale(proportion, proportion, pivotX, pivotY);
-        rectanglesContainer.getTransforms().add(scale);
     }
 
     @FXML
@@ -365,12 +387,6 @@ public class WorkingImageController implements Initializable {
 
         correctCenter(); //Se faccio zoomout posso avere l'immagine fuori dal bordo quindi devo correggere la posizione del centro
 
-        //immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
-        double proportion = zoomLevel.get()/(zoomLevel.get()+0.2);
-        double pivotX = zoomImage.getBoundsInParent().getWidth()/2;
-        double pivotY = zoomImage.getBoundsInParent().getHeight()/2;
-        Scale scale = new Scale(proportion, proportion, pivotX, pivotY);
-        rectanglesContainer.getTransforms().add(scale);
     }
 
     private void correctCenter(){
@@ -394,28 +410,20 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void increaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()+movementX());
-        Translate translate = new Translate(-zoomImage.getBoundsInParent().getWidth() * movementPercentage, 0);
-        rectanglesContainer.getTransforms().add(translate);
         correctCenter();  //Ogni volta che sposto l'immagine potrei sbordare, quindi se sbordo correggo
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()-movementX());
-        Translate translate = new Translate(zoomImage.getBoundsInParent().getWidth() * movementPercentage, 0);
-        rectanglesContainer.getTransforms().add(translate);
         correctCenter();
     }
     @FXML
     private void increaseY(ActionEvent actionEvent) {
         centerY.set(centerY.get()+movementY());
-        Translate translate = new Translate(0, -zoomImage.getBoundsInParent().getHeight() * movementPercentage);
-        rectanglesContainer.getTransforms().add(translate);
         correctCenter();
     }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
-        Translate translate = new Translate(0, zoomImage.getBoundsInParent().getHeight() * movementPercentage);
-        rectanglesContainer.getTransforms().add(translate);
         centerY.set(centerY.get()-movementY());
         correctCenter();
     }

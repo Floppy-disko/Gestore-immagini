@@ -1,6 +1,7 @@
 package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import org.apache.commons.io.FilenameUtils;
@@ -12,7 +13,8 @@ public class ImmagineAnnotata {
 
     private String extension;
 
-    private ObservableList<Annotazione> annotazioni;
+    //private ObservableList<Annotazione> annotazioni;
+    private ObservableList<Annotazione> annotazioni = FXCollections.observableArrayList();
 
     public ImmagineAnnotata(Image image, String name, String extension) {
         setImage(image);

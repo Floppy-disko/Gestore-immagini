@@ -78,7 +78,7 @@ public class WorkingImageController implements Initializable {
 
     private static double movementPercentage = 0.10; //Ad ogni passo scorro il 10 percento dell'immagine
 
-    ArrayList<Annotazione> annotationList;
+    ArrayList<Annotazione> annotationList = new ArrayList<>();
 
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
@@ -118,9 +118,11 @@ public class WorkingImageController implements Initializable {
             return limit;
         }, mainImage.imageProperty()));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
 
+        //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
         immagineAnnotata.addListener(new ChangeListener<ImmagineAnnotata>() {
             @Override
             public void changed(ObservableValue<? extends ImmagineAnnotata> observableValue, ImmagineAnnotata oldValue, ImmagineAnnotata newValue) {
+                resetLists();
                 oldValue.getAnnotazioni().removeListener(annotationListener);
                 newValue.getAnnotazioni().addListener(annotationListener);
             }
@@ -252,12 +254,21 @@ public class WorkingImageController implements Initializable {
                 }
 
                 for(Annotazione remitem : c.getRemoved()){
-                    rectanglesContainer.getChildren().remove(annotationList.indexOf(remitem));
+                    rectanglesContainer.getChildren().remove(annotationList.indexOf(remitem));  //mantengo la lista solo per sapere l'index dell'element eliminato
                     annotationList.remove(remitem);
                 }
             }
         }
     };
+
+    private void resetLists(){
+        annotationList.clear(); //se immagineAnnotata è cambiata devi ripopolare la lista con le sue annotazioni
+        rectanglesContainer.getChildren().clear(); //se immagineAnnotata cambia devo resettare i figli di rectanglesConteiner e ripopolarli
+        for(Annotazione annotazione : immagineAnnotata.get().getAnnotazioni()){
+            annotationList.add(annotazione);
+            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione, immagineAnnotata.get()));
+        }
+    }
 
     private Image getNextImage(int newValue){
         return modello.getImages().getRisorsa(newValue).getImage();
@@ -325,6 +336,8 @@ public class WorkingImageController implements Initializable {
 //        offsetX.set(newOffsetX);
 //        offsetY.set(newOffsetY);
         zoomLevel.set(newZoomLevel);
+
+        //immagineAnnotata.get().getAnnotazioni().add(new Annotazione()); //
     }
 
     @FXML
@@ -337,6 +350,8 @@ public class WorkingImageController implements Initializable {
         zoomLevel.set(newZoomLevel);
 
         correctCenter(); //Se faccio zoomout posso avere l'immagine fuori dal bordo quindi devo correggere la posizione del centro
+
+        //immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
     }
 
     private void correctCenter(){

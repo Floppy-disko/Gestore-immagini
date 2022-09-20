@@ -9,7 +9,6 @@ public class Annotazione {
     private Model modello = Model.getModel();
 
     private Tag tag;
-    private SimpleStringProperty valore = new SimpleStringProperty();
 
     private SimpleDoubleProperty X = new SimpleDoubleProperty();
 
@@ -20,13 +19,17 @@ public class Annotazione {
     private SimpleDoubleProperty height = new SimpleDoubleProperty();
 
     private ImmagineAnnotata immagineAnnotata;
+    private String value;
 
-    public Annotazione(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height){
+    public Annotazione(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height, Tag tag, String value){
         this.immagineAnnotata = immagineAnnotata;   //mantengo un riferimento a chi annoto
         this.X.set(X);
         this.Y.set(Y);
         this.width.set(width);
         this.height.set(height);
+
+        this.tag = tag;
+        this.value = value;
     }
 
     public int getIndexInList(){
@@ -35,18 +38,6 @@ public class Annotazione {
 
     public Image getImage(){
         return immagineAnnotata.getImage();
-    }
-
-    public String getValore() {
-        return valore.get();
-    }
-
-    public SimpleStringProperty valoreProperty() {
-        return valore;
-    }
-
-    public void setValore(String valore) {
-        this.valore.set(valore);
     }
 
     public double getX() {

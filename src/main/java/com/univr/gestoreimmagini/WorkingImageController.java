@@ -3,6 +3,7 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.Annotazione;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
+import com.univr.gestoreimmagini.modello.Tag;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,7 +11,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
-import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
@@ -439,11 +438,54 @@ public class WorkingImageController implements Initializable {
         stage.setScene(scene);
         stage.show();
 
+        disableInteractions();
+
         if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
             modello.getImages().restoreImage(getSelectedImageIndex());
     }
 
-    public void addRectangle(MouseEvent mouseEvent) {
-        immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10));
+    public void startAnnotation(MouseEvent mouseEvent) {
+        Parent root = null;
+        FXMLLoader loader = null;
+        try {
+            loader = new FXMLLoader(getClass().getResource("AnnotationCreationView.fxml"));
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root, 250, 200);
+        Stage secondStage = new Stage();
+        secondStage.setTitle("Annotation");
+        secondStage.setScene(scene);
+        secondStage.show();
+
+        disableInteractions();
+
+        secondStage.setOnCloseRequest((windowEvent)-> { //riattivo i bottoni quando viene chiusa la nuova finestra
+            enableInteractions();
+        });
+
+        AnnotationCreationController controller = loader.getController();
+        controller.addAnnotationMethod((Tag tag, String value)-> {
+            Annotazione annotazione = new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10, tag, value);
+            immagineAnnotata.get().getAnnotazioni().add(annotazione);
+            enableInteractions();
+        });
+
+        //immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10));
+    }
+
+    private void disableInteractions(){
+        zoomImage.setDisable(true);
+        rightButton.setDisable(true);
+        leftButton.setDisable(true);
+        button.setDisable(true);
+    }
+
+    private void enableInteractions() {
+        zoomImage.setDisable(false);
+        rightButton.setDisable(false);
+        leftButton.setDisable(false);
+        button.setDisable(false);
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:controller="com.univr.gestoreimmagini.AnnotationCreationController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="250.0" spacing="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Scegli un tag" />
+      <ChoiceBox fx:id="tagPicker" prefWidth="150.0" />
+      <Label text="Descrivi l'annotazione" />
+      <TextField fx:id="valueTextField" prefHeight="108.0" prefWidth="246.0" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAnnotation" text="Aggiungi" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeWindow" text="Annulla" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

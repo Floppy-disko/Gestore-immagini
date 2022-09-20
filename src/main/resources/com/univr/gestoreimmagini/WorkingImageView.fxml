@@ -72,7 +72,7 @@
                <children>
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
                      <children>
-                        <ImageView fx:id="zoomImage" fitHeight="485.0" fitWidth="505.0" onMouseClicked="#addRectangle" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="zoomImage" fitHeight="485.0" fitWidth="505.0" onMouseClicked="#startAnnotation" pickOnBounds="true" preserveRatio="true" />
                         <Group fx:id="rectanglesContainer" />
                      </children>
                   </AnchorPane>

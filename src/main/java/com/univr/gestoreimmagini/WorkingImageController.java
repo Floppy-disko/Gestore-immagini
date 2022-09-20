@@ -105,6 +105,8 @@ public class WorkingImageController implements Initializable {
         immagineAnnotata.bind(Bindings.createObjectBinding(()-> modello.getImages().getRisorsa(selectedImageIndex.get()), selectedImageIndex));
         image.bind(Bindings.createObjectBinding(()-> immagineAnnotata.get().getImage(), immagineAnnotata));
 
+        updateImages(0); //non togliere questo sennò se clicchi la prima immagine parte con centro in 0
+
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
 
@@ -114,6 +116,8 @@ public class WorkingImageController implements Initializable {
             double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
             limit.setWidth(width);
             limit.setHeight(height);
+
+            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
             limit.setX((zoomImage.getBoundsInParent().getWidth() - width)/2);
             limit.setY((zoomImage.getBoundsInParent().getHeight() - height)/2);
 //            Rectangle limit2 = new Rectangle();
@@ -124,6 +128,7 @@ public class WorkingImageController implements Initializable {
         }, mainImage.imageProperty(), viewPort));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
 
         //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
+        immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
         immagineAnnotata.addListener(new ChangeListener<ImmagineAnnotata>() {
             @Override
             public void changed(ObservableValue<? extends ImmagineAnnotata> observableValue, ImmagineAnnotata oldValue, ImmagineAnnotata newValue) {
@@ -199,13 +204,13 @@ public class WorkingImageController implements Initializable {
 
     private void updateImages(int newValue){
 
+        resetViewPort();
+
         Image nextMainImage = image.get();
         Image nextLeftImage = getNextImage(getLeftIndex(newValue));
         Image nextRightImage = getNextImage(getRightIndex(newValue));
 
         mainImage.setImage(nextMainImage);
-
-        resetViewPort();
 
         int size = modello.getImages().getSize();
 
@@ -360,7 +365,12 @@ public class WorkingImageController implements Initializable {
 
         correctCenter(); //Se faccio zoomout posso avere l'immagine fuori dal bordo quindi devo correggere la posizione del centro
 
-        immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
+        //immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
+        double proportion = zoomLevel.get()/(zoomLevel.get()+0.2);
+        double pivotX = zoomImage.getBoundsInParent().getWidth()/2;
+        double pivotY = zoomImage.getBoundsInParent().getHeight()/2;
+        Scale scale = new Scale(proportion, proportion, pivotX, pivotY);
+        rectanglesContainer.getTransforms().add(scale);
     }
 
     private void correctCenter(){
@@ -384,20 +394,27 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void increaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()+movementX());
+        Translate translate = new Translate(-zoomImage.getBoundsInParent().getWidth() * movementPercentage, 0);
+        rectanglesContainer.getTransforms().add(translate);
         correctCenter();  //Ogni volta che sposto l'immagine potrei sbordare, quindi se sbordo correggo
     }
     @FXML
     private void decreaseX(ActionEvent actionEvent) {
         centerX.set(centerX.get()-movementX());
+        Translate translate = new Translate(zoomImage.getBoundsInParent().getWidth() * movementPercentage, 0);
+        rectanglesContainer.getTransforms().add(translate);
         correctCenter();
     }
     @FXML
     private void increaseY(ActionEvent actionEvent) {
         centerY.set(centerY.get()+movementY());
+        Translate translate = new Translate(0, -zoomImage.getBoundsInParent().getHeight() * movementPercentage);
+        rectanglesContainer.getTransforms().add(translate);
         correctCenter();
     }
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
+        Translate translate = new Translate(0, zoomImage.getBoundsInParent().getHeight() * movementPercentage);
         centerY.set(centerY.get()-movementY());
         correctCenter();
     }

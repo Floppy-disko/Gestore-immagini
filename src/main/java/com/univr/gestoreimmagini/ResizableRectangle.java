@@ -5,10 +5,12 @@ import com.univr.gestoreimmagini.modello.Annotazione;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
@@ -64,5 +66,16 @@ public class ResizableRectangle extends Group {
 
         numberLabel.layoutXProperty().bind(rectangle.layoutXProperty().add(rectangle.widthProperty()));
         numberLabel.layoutYProperty().bind(rectangle.layoutYProperty());
+
+        centerCircle.setOnMouseDragged(this::modifyCenter);
+        cornerCircle.setOnMouseDragged(this::modifySize);
+    }
+    private void modifyCenter(MouseEvent mouseEvent){
+        annotazione.setX(annotazione.getX() + mouseEvent.getX()*ratio);
+        annotazione.setY(annotazione.getY() + mouseEvent.getY()*ratio);
+    }
+
+    private void modifySize(MouseEvent mouseEvent){
+
     }
 }

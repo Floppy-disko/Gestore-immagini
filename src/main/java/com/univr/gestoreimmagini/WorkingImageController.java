@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
@@ -109,14 +110,18 @@ public class WorkingImageController implements Initializable {
 
         rectanglesContainer.clipProperty().bind(Bindings.createObjectBinding(()->{
             Rectangle limit = new Rectangle();
-            limit.setWidth(zoomImage.getBoundsInParent().getWidth());
-            limit.setHeight(zoomImage.getBoundsInParent().getHeight());
+            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
+            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
+            limit.setWidth(width);
+            limit.setHeight(height);
+            limit.setX((zoomImage.getBoundsInParent().getWidth() - width)/2);
+            limit.setY((zoomImage.getBoundsInParent().getHeight() - height)/2);
 //            Rectangle limit2 = new Rectangle();
 //            limit2.setWidth(zoomImage.getBoundsInParent().getWidth());
 //            limit2.setHeight(zoomImage.getBoundsInParent().getHeight());
 //            rectanglesContainer.getChildren().add(limit2);
             return limit;
-        }, mainImage.imageProperty()));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
+        }, mainImage.imageProperty(), viewPort));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
 
         //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
         immagineAnnotata.addListener(new ChangeListener<ImmagineAnnotata>() {
@@ -248,7 +253,7 @@ public class WorkingImageController implements Initializable {
         public void onChanged(Change<? extends Annotazione> c) {
             while (c.next()) {
                 for (Annotazione additem : c.getAddedSubList()) {
-                    ResizableRectangle r = new ResizableRectangle(additem, immagineAnnotata.get());
+                    ResizableRectangle r = new ResizableRectangle(additem);
                     rectanglesContainer.getChildren().add(r);
                     annotationList.add(additem);
                 }
@@ -266,7 +271,7 @@ public class WorkingImageController implements Initializable {
         rectanglesContainer.getChildren().clear(); //se immagineAnnotata cambia devo resettare i figli di rectanglesConteiner e ripopolarli
         for(Annotazione annotazione : immagineAnnotata.get().getAnnotazioni()){
             annotationList.add(annotazione);
-            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione, immagineAnnotata.get()));
+            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione));
         }
     }
 
@@ -337,7 +342,11 @@ public class WorkingImageController implements Initializable {
 //        offsetY.set(newOffsetY);
         zoomLevel.set(newZoomLevel);
 
-        //immagineAnnotata.get().getAnnotazioni().add(new Annotazione()); //
+        double proportion = zoomLevel.get()/(zoomLevel.get()-0.2);
+        double pivotX = zoomImage.getBoundsInParent().getWidth()/2;
+        double pivotY = zoomImage.getBoundsInParent().getHeight()/2;
+        Scale scale = new Scale(proportion, proportion, pivotX, pivotY);
+        rectanglesContainer.getTransforms().add(scale);
     }
 
     @FXML
@@ -351,7 +360,7 @@ public class WorkingImageController implements Initializable {
 
         correctCenter(); //Se faccio zoomout posso avere l'immagine fuori dal bordo quindi devo correggere la posizione del centro
 
-        //immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
+        immagineAnnotata.get().getAnnotazioni().remove(immagineAnnotata.get().getAnnotazioni().size()-1); //
     }
 
     private void correctCenter(){
@@ -419,4 +428,7 @@ public class WorkingImageController implements Initializable {
             modello.getImages().restoreImage(getSelectedImageIndex());
     }
 
+    public void addRectangle(MouseEvent mouseEvent) {
+        immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get()));
+    }
 }

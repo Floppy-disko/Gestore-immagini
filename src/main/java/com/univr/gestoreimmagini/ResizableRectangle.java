@@ -4,6 +4,7 @@ package com.univr.gestoreimmagini;
 import com.univr.gestoreimmagini.modello.Annotazione;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -27,9 +28,7 @@ public class ResizableRectangle extends Group {
 
     private Annotazione annotazione;
 
-    private ImmagineAnnotata immagineAnnotata;
-
-    public ResizableRectangle(Annotazione annotazione, ImmagineAnnotata immagineAnnotata){
+    public ResizableRectangle(Annotazione annotazione){
         super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResizableRectangle.fxml"));
         fxmlLoader.setRoot(this);
@@ -42,8 +41,16 @@ public class ResizableRectangle extends Group {
         }
 
         this.annotazione = annotazione;
-        this.immagineAnnotata = immagineAnnotata;
 
-        //numberLabel.textProperty().bind(Bindings.createStringBinding(()-> ))
+        numberLabel.textProperty().bind(Bindings.createStringBinding(()-> String.valueOf(annotazione.getIndexInList())));
+
+        centerCircle.centerXProperty().bind(annotazione.xProperty());
+        centerCircle.centerYProperty().bind(annotazione.yProperty());
+        cornerCircle.centerXProperty().bind(Bindings.createDoubleBinding(()->{  //mantengo il cerchio in basso a sinistra
+            return annotazione.getX()- annotazione.getWidth()/2;
+        }));
+        cornerCircle.centerYProperty().bind(Bindings.createDoubleBinding(()->{
+            return annotazione.getY()- annotazione.getHeight()/2;
+        }));
     }
 }

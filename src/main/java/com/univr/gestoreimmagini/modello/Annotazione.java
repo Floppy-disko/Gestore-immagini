@@ -1,9 +1,6 @@
 package com.univr.gestoreimmagini.modello;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Annotazione {
@@ -13,11 +10,23 @@ public class Annotazione {
     private Tag tag;
     private SimpleStringProperty valore = new SimpleStringProperty();
 
-    private SimpleDoubleProperty center = new SimpleDoubleProperty();
+    private SimpleDoubleProperty X = new SimpleDoubleProperty();
+
+    private SimpleDoubleProperty Y = new SimpleDoubleProperty();
 
     private SimpleDoubleProperty width = new SimpleDoubleProperty();
 
     private SimpleDoubleProperty height = new SimpleDoubleProperty();
+
+    private ImmagineAnnotata immagineAnnotata;
+
+    public Annotazione(ImmagineAnnotata immagineAnnotata){
+        this.immagineAnnotata = immagineAnnotata;   //mantengo un riferimento a chi annoto
+    }
+
+    public int getIndexInList(){
+        return immagineAnnotata.getAnnotazioni().indexOf(this);
+    }
 
     public String getValore() {
         return valore.get();
@@ -31,16 +40,28 @@ public class Annotazione {
         this.valore.set(valore);
     }
 
-    public double getCenter() {
-        return center.get();
+    public double getX() {
+        return X.get();
     }
 
-    public SimpleDoubleProperty centerProperty() {
-        return center;
+    public SimpleDoubleProperty xProperty() {
+        return X;
     }
 
-    public void setCenter(double center) {
-        this.center.set(center);
+    public void setX(double x) {
+        this.X.set(x);
+    }
+
+    public double getY() {
+        return Y.get();
+    }
+
+    public SimpleDoubleProperty yProperty() {
+        return Y;
+    }
+
+    public void setY(double y) {
+        this.Y.set(y);
     }
 
     public double getWidth() {

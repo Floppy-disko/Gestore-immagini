@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 public class AnnotationCreationController implements Initializable {
 
     @FXML
-    private ChoiceBox<String> tagPicker;
+    private ChoiceBox<Tag> tagPicker;
     @FXML
     private TextField valueTextField;
     @FXML
@@ -25,14 +25,17 @@ public class AnnotationCreationController implements Initializable {
 
     private Model modello = Model.getModel();
 
+    private BiConsumer<Tag, String> add;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tagPicker.getItems().addAll(modello.getTags().getNomiRisorse());
+        tagPicker.getItems().addAll(modello.getTags().getRisorse());
     }
 
     @FXML
     private void addAnnotation(ActionEvent actionEvent) {
-        //immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10));
+        add.accept(tagPicker.getValue(), valueTextField.getText());
+        closeWindow(null);
     }
 
     @FXML
@@ -41,7 +44,7 @@ public class AnnotationCreationController implements Initializable {
         stage.close();
     }
 
-    public void addAnnotationMethod(BiConsumer<Tag, String> addAnnotation) {
-
+    public void addAnnotationMethod(BiConsumer<Tag, String> add) {
+        this.add=add;
     }
 }

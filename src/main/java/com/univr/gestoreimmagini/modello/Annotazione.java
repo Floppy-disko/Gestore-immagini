@@ -20,8 +20,12 @@ public class Annotazione {
 
     private ImmagineAnnotata immagineAnnotata;
 
-    public Annotazione(ImmagineAnnotata immagineAnnotata){
+    public Annotazione(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height){
         this.immagineAnnotata = immagineAnnotata;   //mantengo un riferimento a chi annoto
+        this.X.set(X);
+        this.Y.set(Y);
+        this.width.set(width);
+        this.height.set(height);
     }
 
     public int getIndexInList(){

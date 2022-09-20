@@ -81,6 +81,8 @@ public class WorkingImageController implements Initializable {
 
     ArrayList<Annotazione> annotationList = new ArrayList<>();
 
+    private double ratio;
+
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
     private SimpleObjectProperty<ImmagineAnnotata> immagineAnnotata = new SimpleObjectProperty<>(this, "immagineAnnotata");
@@ -236,13 +238,13 @@ public class WorkingImageController implements Initializable {
         zoomLevel.set(1);
         centerX.set(image.get().getWidth()/2);
         centerY.set(image.get().getHeight()/2);
+        ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
     }
 
     private ChangeListener<Rectangle2D> transformListener = new ChangeListener<Rectangle2D>() {
         @Override
         public void changed(ObservableValue<? extends Rectangle2D> observableValue, Rectangle2D oldvalue, Rectangle2D newvalue) {
             rectanglesContainer.getTransforms().clear();
-            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
             double translateX = -(centerX.get()-image.get().getWidth()/2)*ratio;
             double translateY = -(centerY.get()-image.get().getHeight()/2)*ratio;
             Translate translate = new Translate(translateX, translateY);
@@ -251,10 +253,10 @@ public class WorkingImageController implements Initializable {
             rectanglesContainer.getTransforms().add(scale); //devo mettere prima lo scale del translate sennò moltiplica anche lo spostamento
             rectanglesContainer.getTransforms().add(translate);
 
-            Rectangle limit = new Rectangle();
-            double width = viewPort.get().getWidth()*ratio;
+            Rectangle limit = new Rectangle(); //creo il rettangolo per clippare il rectanglesContainer
+            double width = viewPort.get().getWidth()*ratio;  //la larghezza di viewPort pesata con il rateo
             double height = viewPort.get().getHeight()*ratio;
-            double offsetX = centerX.get()*ratio-width/2;
+            double offsetX = centerX.get()*ratio-width/2;  //la posizione di center pesata meno metà della larghezza mi da la posizione del bordo del rettangolo
             double offsetY = centerY.get()*ratio-height/2;
             limit.setX(offsetX);
             limit.setY(offsetY);
@@ -270,7 +272,7 @@ public class WorkingImageController implements Initializable {
         public void onChanged(Change<? extends Annotazione> c) {
             while (c.next()) {
                 for (Annotazione additem : c.getAddedSubList()) {
-                    ResizableRectangle r = new ResizableRectangle(additem);
+                    ResizableRectangle r = new ResizableRectangle(additem, ratio);
                     rectanglesContainer.getChildren().add(r);
                     annotationList.add(additem);
                 }
@@ -288,7 +290,7 @@ public class WorkingImageController implements Initializable {
         rectanglesContainer.getChildren().clear(); //se immagineAnnotata cambia devo resettare i figli di rectanglesConteiner e ripopolarli
         for(Annotazione annotazione : immagineAnnotata.get().getAnnotazioni()){
             annotationList.add(annotazione);
-            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione));
+            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione, ratio));
         }
     }
 
@@ -440,6 +442,6 @@ public class WorkingImageController implements Initializable {
     }
 
     public void addRectangle(MouseEvent mouseEvent) {
-        immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get()));
+        immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10));
     }
 }

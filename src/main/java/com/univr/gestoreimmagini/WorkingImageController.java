@@ -238,12 +238,12 @@ public class WorkingImageController implements Initializable {
         zoomLevel.set(1);
         centerX.set(image.get().getWidth()/2);
         centerY.set(image.get().getHeight()/2);
-        ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
     }
 
     private ChangeListener<Rectangle2D> transformListener = new ChangeListener<Rectangle2D>() {
         @Override
         public void changed(ObservableValue<? extends Rectangle2D> observableValue, Rectangle2D oldvalue, Rectangle2D newvalue) {
+            ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
             rectanglesContainer.getTransforms().clear();
             double translateX = -(centerX.get()-image.get().getWidth()/2)*ratio;
             double translateY = -(centerY.get()-image.get().getHeight()/2)*ratio;
@@ -272,6 +272,7 @@ public class WorkingImageController implements Initializable {
         public void onChanged(Change<? extends Annotazione> c) {
             while (c.next()) {
                 for (Annotazione additem : c.getAddedSubList()) {
+                    ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
                     ResizableRectangle r = new ResizableRectangle(additem, ratio);
                     rectanglesContainer.getChildren().add(r);
                     annotationList.add(additem);
@@ -290,6 +291,7 @@ public class WorkingImageController implements Initializable {
         rectanglesContainer.getChildren().clear(); //se immagineAnnotata cambia devo resettare i figli di rectanglesConteiner e ripopolarli
         for(Annotazione annotazione : immagineAnnotata.get().getAnnotazioni()){
             annotationList.add(annotazione);
+            ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
             rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione, ratio));
         }
     }

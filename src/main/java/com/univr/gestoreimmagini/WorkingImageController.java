@@ -118,8 +118,8 @@ public class WorkingImageController implements Initializable {
             limit.setHeight(height);
 
             double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
-            limit.setX((zoomImage.getBoundsInParent().getWidth() - width)/2);
-            limit.setY((zoomImage.getBoundsInParent().getHeight() - height)/2);
+            limit.setX(((zoomImage.getBoundsInParent().getWidth() - width)/2) + (centerX.get()-image.get().getWidth()/2)*ratio);
+            limit.setY(((zoomImage.getBoundsInParent().getHeight() - height)/2) + (centerY.get()-image.get().getHeight()/2)*ratio);
 //            Rectangle limit2 = new Rectangle();
 //            limit2.setWidth(zoomImage.getBoundsInParent().getWidth());
 //            limit2.setHeight(zoomImage.getBoundsInParent().getHeight());
@@ -415,6 +415,7 @@ public class WorkingImageController implements Initializable {
     @FXML
     private void decreaseY(ActionEvent actionEvent) {
         Translate translate = new Translate(0, zoomImage.getBoundsInParent().getHeight() * movementPercentage);
+        rectanglesContainer.getTransforms().add(translate);
         centerY.set(centerY.get()-movementY());
         correctCenter();
     }

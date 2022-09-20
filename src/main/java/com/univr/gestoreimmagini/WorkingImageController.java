@@ -110,19 +110,6 @@ public class WorkingImageController implements Initializable {
         fullImage.imageProperty().bind(image);
         zoomImage.imageProperty().bind(image);
 
-//        rectanglesContainer.clipProperty().bind(Bindings.createObjectBinding(()->{
-//            Rectangle limit = new Rectangle();
-//            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
-//            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
-//            limit.setWidth(width);
-//            limit.setHeight(height);
-//
-//            double ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
-//            limit.setX(((zoomImage.getBoundsInParent().getWidth() - width)/2) + (centerX.get()-image.get().getWidth()/2)*ratio);
-//            limit.setY(((zoomImage.getBoundsInParent().getHeight() - height)/2) + (centerY.get()-image.get().getHeight()/2)*ratio);
-//            return limit;
-//        }, viewPort));  //tocca mettere questa al posto di zoomImage sennò sbagli larghezza immagine chissà perchè
-
         viewPort.addListener(transformListener);
 
         //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
@@ -265,14 +252,12 @@ public class WorkingImageController implements Initializable {
             rectanglesContainer.getTransforms().add(translate);
 
             Rectangle limit = new Rectangle();
-            double width = zoomImage.getBoundsInParent().getWidth() / zoomLevel.get();
-            double height = zoomImage.getBoundsInParent().getHeight() / zoomLevel.get();
-            double newWidth = image.get().getWidth() / zoomLevel.get();
-            double newHeight = image.get().getHeight() / zoomLevel.get();
-            double offsetX = centerX.get()-newWidth/2;
-            double offsetY = centerY.get()-newHeight/2;
-            limit.setX(offsetX*ratio);
-            limit.setY(offsetY*ratio);
+            double width = viewPort.get().getWidth()*ratio;
+            double height = viewPort.get().getHeight()*ratio;
+            double offsetX = centerX.get()*ratio-width/2;
+            double offsetY = centerY.get()*ratio-height/2;
+            limit.setX(offsetX);
+            limit.setY(offsetY);
             limit.setWidth(width);
             limit.setHeight(height);
 

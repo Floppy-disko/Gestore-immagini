@@ -1,6 +1,8 @@
 package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 
 public class Annotation {
@@ -30,6 +32,22 @@ public class Annotation {
 
         this.tag = tag;
         this.value = value;
+
+        this.X.addListener((c)-> {
+            immagineAnnotata.updateMemory();
+        });
+
+        this.Y.addListener((c)-> {
+            immagineAnnotata.updateMemory();
+        });
+
+        this.width.addListener((c)-> {
+            immagineAnnotata.updateMemory();
+        });
+
+        this.height.addListener((c)-> {
+            immagineAnnotata.updateMemory();
+        });
     }
 
     public int getIndexInList(){

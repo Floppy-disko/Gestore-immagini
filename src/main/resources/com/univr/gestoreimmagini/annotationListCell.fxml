@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="ListCell" prefHeight="38.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="38.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
     <graphic>
         <VBox fx:id="content">
             <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="319.0">
@@ -25,6 +25,7 @@
                         <HBox.margin>
                             <Insets left="10.0" />
                         </HBox.margin></Label>
+               <Label fx:id="number" text="0" />
                 </children>
             </HBox>
             <DialogPane fx:id="value" headerText="Descrizione" />

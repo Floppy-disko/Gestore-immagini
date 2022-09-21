@@ -1,8 +1,10 @@
 package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 
 public class Annotation {
@@ -18,6 +20,8 @@ public class Annotation {
     private SimpleDoubleProperty width = new SimpleDoubleProperty();
 
     private SimpleDoubleProperty height = new SimpleDoubleProperty();
+
+    private SimpleIntegerProperty number = new SimpleIntegerProperty();
 
     private ImmagineAnnotata immagineAnnotata;
 
@@ -48,9 +52,18 @@ public class Annotation {
         this.height.addListener((c)-> {
             immagineAnnotata.updateMemory();
         });
+
+
+
+        immagineAnnotata.getAnnotazioni().addListener((ListChangeListener<Annotation>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
+            while (c.next()) {
+                number.set(getIndexInList());
+            }
+
+        });
     }
 
-    public int getIndexInList(){
+    private int getIndexInList(){
         return immagineAnnotata.getAnnotazioni().indexOf(this);
     }
 
@@ -120,5 +133,17 @@ public class Annotation {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getNumber() {
+        return number.get();
+    }
+
+    public SimpleIntegerProperty numberProperty() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number.set(number);
     }
 }

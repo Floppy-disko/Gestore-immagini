@@ -43,7 +43,7 @@ public class ResizableRectangle extends Group {
 
         this.ratio=ratio;
 
-        numberLabel.textProperty().bind(Bindings.createStringBinding(()-> String.valueOf(annotation.getIndexInList())));
+        numberLabel.textProperty().bind(Bindings.createStringBinding(()-> String.valueOf(annotation.getNumber()), annotation.numberProperty()));
 
         centerCircle.layoutXProperty().bind(annotation.xProperty().multiply(ratio));
         centerCircle.layoutYProperty().bind(annotation.yProperty().multiply(ratio));

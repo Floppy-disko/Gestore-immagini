@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="38.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="ListCell" prefHeight="38.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <HBox fx:id="content" alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="319.0">
          <children>

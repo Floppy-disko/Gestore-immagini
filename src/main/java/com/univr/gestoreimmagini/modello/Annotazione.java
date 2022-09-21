@@ -19,6 +19,7 @@ public class Annotazione {
     private SimpleDoubleProperty height = new SimpleDoubleProperty();
 
     private ImmagineAnnotata immagineAnnotata;
+
     private String value;
 
     public Annotazione(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height, Tag tag, String value){
@@ -86,5 +87,21 @@ public class Annotazione {
 
     public void setHeight(double height) {
         this.height.set(height);
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

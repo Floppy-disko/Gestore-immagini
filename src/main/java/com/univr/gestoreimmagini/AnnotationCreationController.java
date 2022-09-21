@@ -20,8 +20,6 @@ public class AnnotationCreationController implements Initializable {
     private ChoiceBox<Tag> tagPicker;
     @FXML
     private TextField valueTextField;
-    @FXML
-    private Button closeButton;
 
     private Model modello = Model.getModel();
 
@@ -38,12 +36,11 @@ public class AnnotationCreationController implements Initializable {
             return;
 
         add.accept(tagPicker.getValue(), valueTextField.getText());
-        closeWindow(null);
+        closeWindow();
     }
 
-    @FXML
-    private void closeWindow(ActionEvent actionEvent) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
+    private void closeWindow() {
+        Stage stage = (Stage) tagPicker.getScene().getWindow();
         stage.close();
     }
 

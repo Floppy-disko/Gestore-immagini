@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:controller="com.univr.gestoreimmagini.AnnotationCreationController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="250.0" spacing="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="250.0" spacing="10.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.AnnotationCreationController">
    <children>
       <Label text="Scegli un tag" />
       <ChoiceBox fx:id="tagPicker" prefWidth="150.0" />
@@ -16,7 +16,6 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAnnotation" text="Aggiungi" />
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeWindow" text="Annulla" />
          </children>
       </HBox>
    </children>

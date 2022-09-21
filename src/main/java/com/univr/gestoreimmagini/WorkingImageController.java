@@ -21,6 +21,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +30,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,6 +72,8 @@ public class WorkingImageController implements Initializable {
     private Rectangle redRectangle;
     @FXML
     private Group rectanglesContainer;
+    @FXML
+    private ListView<Annotazione> annotationListView;
 
     private Model modello = Model.getModel();
 
@@ -182,6 +187,26 @@ public class WorkingImageController implements Initializable {
 
         selectedImageIndex.addListener(this::changed);
 
+        annotationListView.itemsProperty().bind(Bindings.createObjectBinding(()->
+                immagineAnnotata.get().getAnnotazioni(), immagineAnnotata));
+
+        //faccio celle della lista custom, la loro composizione è nella classe CustomCell
+        annotationListView.cellFactoryProperty().bind(Bindings.createObjectBinding(()-> (Callback<ListView<Annotazione>, ListCell<Annotazione>>) listView -> {
+            AnnotationListCell cell = new AnnotationListCell();
+            cell.setButtonOnAction((actionEvent)->
+                    immagineAnnotata.get().getAnnotazioni().remove(cell.getItem())); //quando premo il bottone elimina l'item della cella
+            return cell;
+        }, immagineAnnotata));
+
+//        annotationListView.setCellFactory(new Callback<ListView<Annotazione>, ListCell<Annotazione>>() {
+//            @Override
+//            public ListCell<Annotazione> call(ListView<Annotazione> listView) {
+//                AnnotationListCell cell = new AnnotationListCell();
+//                cell.setButtonOnAction((actionEvent)->
+//                    immagineAnnotata.get().getAnnotazioni().remove(cell.getItem())); //quando premo il bottone elimina l'item della cella
+//            return cell;
+//            }
+//        });
     }
 
     private void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {

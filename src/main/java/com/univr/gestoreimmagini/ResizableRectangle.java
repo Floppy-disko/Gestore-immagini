@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.dnd.DragSourceListener;
 import java.io.IOException;
 
 public class ResizableRectangle extends Group {
@@ -78,6 +79,7 @@ public class ResizableRectangle extends Group {
             annotation.setX(newX);
         if(maxY < annotation.getImage().getHeight() && minY>0)
             annotation.setY(newY);
+
     }
 
     private void modifySize(MouseEvent mouseEvent){

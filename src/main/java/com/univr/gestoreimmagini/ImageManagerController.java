@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -47,6 +48,9 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
     @FXML
     private StackPane imageDnD;
+
+    @FXML
+    private Button browse;
 
     private Model modello = Model.getModel();
 
@@ -86,6 +90,15 @@ public class ImageManagerController implements Initializable, AutoCloseable {
                     }
                 }
             }
+        });
+
+        FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("png", "*.png");
+        FileChooser.ExtensionFilter jpg = new FileChooser.ExtensionFilter("jpg", "*.jpg");
+        fc.getExtensionFilters().addAll(png,jpg);
+
+        browse.setOnAction(e->{
+            setImage(fc.showOpenDialog(imageTextField.getScene().getWindow()).getPath());
         });
 
         populateLists();
@@ -150,14 +163,20 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     @FXML
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
-        placedImageExtension = FilenameUtils.getExtension(files.get(0).getPath());
         System.out.printf("\nGot %s file", placedImageExtension);
 
         if(!(placedImageExtension.equalsIgnoreCase("png") || placedImageExtension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
             return;
 
+        setImage(files.get(0).getPath());
+    }
+
+    private void setImage(String path){
+
+        placedImageExtension = FilenameUtils.getExtension(path);
+
         Image image = null;
-        try(FileInputStream stream = new FileInputStream(files.get(0).getPath())) {
+        try(FileInputStream stream = new FileInputStream(path)) {
             image = new Image(stream);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -166,7 +185,6 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         placedImage.setImage(image);
         placedImageSet=true;
         imageDnD.getStyleClass().remove("imgDnD");  // Rimuove l'immagine di sfondo rimuovendo la classe che gliela assegna
-        event.consume();
     }
 
     @FXML

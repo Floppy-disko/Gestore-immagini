@@ -1,12 +1,8 @@
 package com.univr.gestoreimmagini.modello;
 
-import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
+public class TagContainer extends ResourcesContainer<Tag> {
 
-public class ContenitoreTag extends ContenitoreRisorse<Tag> {
-
-    protected ContenitoreTag() {
+    protected TagContainer() {
         super();
     }
 

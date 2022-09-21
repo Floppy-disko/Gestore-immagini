@@ -1,11 +1,8 @@
 package com.univr.gestoreimmagini;
 
 
-import com.univr.gestoreimmagini.modello.Annotazione;
-import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
+import com.univr.gestoreimmagini.modello.Annotation;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Translate;
 
 import java.io.IOException;
 
@@ -28,10 +24,10 @@ public class ResizableRectangle extends Group {
     @FXML
     private Label numberLabel;
 
-    private Annotazione annotazione;
+    private Annotation annotation;
     private double ratio;
 
-    public ResizableRectangle(Annotazione annotazione, double ratio){
+    public ResizableRectangle(Annotation annotation, double ratio){
         super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResizableRectangle.fxml"));
         fxmlLoader.setRoot(this);
@@ -43,26 +39,26 @@ public class ResizableRectangle extends Group {
             throw new RuntimeException(exception);
         }
 
-        this.annotazione = annotazione;
+        this.annotation = annotation;
 
         this.ratio=ratio;
 
-        numberLabel.textProperty().bind(Bindings.createStringBinding(()-> String.valueOf(annotazione.getIndexInList())));
+        numberLabel.textProperty().bind(Bindings.createStringBinding(()-> String.valueOf(annotation.getIndexInList())));
 
-        centerCircle.layoutXProperty().bind(annotazione.xProperty().multiply(ratio));
-        centerCircle.layoutYProperty().bind(annotazione.yProperty().multiply(ratio));
+        centerCircle.layoutXProperty().bind(annotation.xProperty().multiply(ratio));
+        centerCircle.layoutYProperty().bind(annotation.yProperty().multiply(ratio));
         cornerCircle.layoutXProperty().bind(Bindings.createDoubleBinding(()->{  //mantengo il cerchio in basso a sinistra
-            return (annotazione.getX()- annotazione.getWidth()/2)*ratio;
-        }, annotazione.xProperty(), annotazione.widthProperty()));
+            return (annotation.getX()- annotation.getWidth()/2)*ratio;
+        }, annotation.xProperty(), annotation.widthProperty()));
         cornerCircle.layoutYProperty().bind(Bindings.createDoubleBinding(()->{
-            return (annotazione.getY()- annotazione.getHeight()/2)*ratio;
-        }, annotazione.yProperty(), annotazione.heightProperty()));
+            return (annotation.getY()- annotation.getHeight()/2)*ratio;
+        }, annotation.yProperty(), annotation.heightProperty()));
 
         rectangle.layoutXProperty().bind(cornerCircle.layoutXProperty());
         rectangle.layoutYProperty().bind(cornerCircle.layoutYProperty());
 
-        rectangle.widthProperty().bind(annotazione.widthProperty().multiply(ratio));
-        rectangle.heightProperty().bind(annotazione.heightProperty().multiply(ratio));
+        rectangle.widthProperty().bind(annotation.widthProperty().multiply(ratio));
+        rectangle.heightProperty().bind(annotation.heightProperty().multiply(ratio));
 
         numberLabel.layoutXProperty().bind(rectangle.layoutXProperty().add(rectangle.widthProperty()));
         numberLabel.layoutYProperty().bind(rectangle.layoutYProperty());
@@ -71,32 +67,32 @@ public class ResizableRectangle extends Group {
         cornerCircle.setOnMouseDragged(this::modifySize);
     }
     private void modifyCenter(MouseEvent mouseEvent){
-        double newX = annotazione.getX() + mouseEvent.getX()*ratio;
-        double newY = annotazione.getY() + mouseEvent.getY()*ratio;
-        double maxX = newX+annotazione.getWidth()/2;
-        double minX = newX-annotazione.getWidth()/2;
-        double maxY = newY+annotazione.getHeight()/2;
-        double minY = newY-annotazione.getHeight()/2;
+        double newX = annotation.getX() + mouseEvent.getX()*ratio;
+        double newY = annotation.getY() + mouseEvent.getY()*ratio;
+        double maxX = newX+ annotation.getWidth()/2;
+        double minX = newX- annotation.getWidth()/2;
+        double maxY = newY+ annotation.getHeight()/2;
+        double minY = newY- annotation.getHeight()/2;
 
-        if(maxX < annotazione.getImage().getWidth() && minX>0)  //Controllo di non anadare oltre ai limiti dell'immagine
-            annotazione.setX(newX);
-        if(maxY < annotazione.getImage().getHeight() && minY>0)
-            annotazione.setY(newY);
+        if(maxX < annotation.getImage().getWidth() && minX>0)  //Controllo di non anadare oltre ai limiti dell'immagine
+            annotation.setX(newX);
+        if(maxY < annotation.getImage().getHeight() && minY>0)
+            annotation.setY(newY);
     }
 
     private void modifySize(MouseEvent mouseEvent){
 
-        double newWidth = annotazione.getWidth() - mouseEvent.getX()*ratio;
-        double newHeight = annotazione.getHeight() - mouseEvent.getY()*ratio;
+        double newWidth = annotation.getWidth() - mouseEvent.getX()*ratio;
+        double newHeight = annotation.getHeight() - mouseEvent.getY()*ratio;
 
-        double maxX = annotazione.getX()+newWidth/2;
-        double minX = annotazione.getX()-newWidth/2;
-        double maxY = annotazione.getY()+newHeight/2;
-        double minY = annotazione.getY()-newHeight/2;
+        double maxX = annotation.getX()+newWidth/2;
+        double minX = annotation.getX()-newWidth/2;
+        double maxY = annotation.getY()+newHeight/2;
+        double minY = annotation.getY()-newHeight/2;
 
-        if(newWidth>0 && maxX < annotazione.getImage().getWidth() && minX>0)  //controllo di non sbordare e di non restringerlo fino a 0
-            annotazione.setWidth(newWidth);
-        if(newHeight>0 && maxY < annotazione.getImage().getWidth() && minY>0)
-            annotazione.setHeight(newHeight);
+        if(newWidth>0 && maxX < annotation.getImage().getWidth() && minX>0)  //controllo di non sbordare e di non restringerlo fino a 0
+            annotation.setWidth(newWidth);
+        if(newHeight>0 && maxY < annotation.getImage().getWidth() && minY>0)
+            annotation.setHeight(newHeight);
     }
 }

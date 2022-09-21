@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-import org.apache.commons.io.FilenameUtils;
 
 public class ImmagineAnnotata {
 
@@ -14,12 +13,17 @@ public class ImmagineAnnotata {
     private String extension;
 
     //private ObservableList<Annotazione> annotazioni;
-    private ObservableList<Annotazione> annotazioni = FXCollections.observableArrayList();
+    private ObservableList<Annotation> annotazioni = FXCollections.observableArrayList();
 
-    public ImmagineAnnotata(Image image, String name, String extension) {
+    private AnnotatedImageContainer container;
+
+    private AnnotationDAOImpl dao;
+
+    public ImmagineAnnotata(AnnotatedImageContainer container, Image image, String name, String extension) {
         setImage(image);
         this.name = name;
         this.extension = extension;
+        this.container=container;
     }
 
     public SimpleObjectProperty<Image> imageProperty() {
@@ -46,11 +50,35 @@ public class ImmagineAnnotata {
         return extension;
     }
 
-    public ObservableList<Annotazione> getAnnotazioni() {
+    public ObservableList<Annotation> getAnnotazioni() {
         return annotazioni;
     }
 
-    public void setAnnotazioni(ObservableList<Annotazione> annotazioni) {
+    public void setAnnotazioni(ObservableList<Annotation> annotazioni) {
         this.annotazioni = annotazioni;
+    }
+
+    public void addAnnotation(Annotation annotation){
+        annotazioni.add(annotation);
+        updateMemory();
+    }
+
+    public void removeAnnotation(Annotation annotation){
+        annotazioni.remove(annotation);
+        updateMemory();
+    }
+
+    public void updateMemory(){
+        if(dao!=null)
+            dao.saveAnnotations(this);
+    }
+
+    public void populateAnnotations(String fileName){
+
+        if(annotazioni.isEmpty()==false)  //Se ho già popolato la lista non rileggere
+            return;
+
+        dao = new AnnotationDAOImpl(getClass().getResource("").getPath() + "/" +fileName);
+        annotazioni.addAll(dao.getAnnotations(this));
     }
 }

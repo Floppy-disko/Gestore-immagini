@@ -1,6 +1,6 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.Annotazione;
+import com.univr.gestoreimmagini.modello.Annotation;
 import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
@@ -73,7 +73,7 @@ public class WorkingImageController implements Initializable {
     @FXML
     private Group rectanglesContainer;
     @FXML
-    private ListView<Annotazione> annotationListView;
+    private ListView<Annotation> annotationListView;
 
     private Model modello = Model.getModel();
 
@@ -83,7 +83,7 @@ public class WorkingImageController implements Initializable {
 
     private static double movementPercentage = 0.10; //Ad ogni passo scorro il 10 percento dell'immagine
 
-    ArrayList<Annotazione> annotationList = new ArrayList<>();
+    ArrayList<Annotation> annotationList = new ArrayList<>();
 
     private double ratio;
 
@@ -191,10 +191,11 @@ public class WorkingImageController implements Initializable {
                 immagineAnnotata.get().getAnnotazioni(), immagineAnnotata));
 
         //faccio celle della lista custom, la loro composizione è nella classe CustomCell
-        annotationListView.cellFactoryProperty().bind(Bindings.createObjectBinding(()-> (Callback<ListView<Annotazione>, ListCell<Annotazione>>) listView -> {
+        annotationListView.cellFactoryProperty().bind(Bindings.createObjectBinding(()-> (Callback<ListView<Annotation>, ListCell<Annotation>>) listView -> {
             AnnotationListCell cell = new AnnotationListCell();
-            cell.setButtonOnAction((actionEvent)->
-                    immagineAnnotata.get().getAnnotazioni().remove(cell.getItem())); //quando premo il bottone elimina l'item della cella
+            cell.setButtonOnAction((actionEvent)->{
+                immagineAnnotata.get().removeAnnotation(cell.getItem());         //quando premo il bottone elimina l'item della cella
+            });
             return cell;
         }, immagineAnnotata));
 
@@ -291,18 +292,18 @@ public class WorkingImageController implements Initializable {
         }
     };
 
-    private ListChangeListener<Annotazione> annotationListener = new ListChangeListener<Annotazione>() {
+    private ListChangeListener<Annotation> annotationListener = new ListChangeListener<Annotation>() {
         @Override
-        public void onChanged(Change<? extends Annotazione> c) {
+        public void onChanged(Change<? extends Annotation> c) {
             while (c.next()) {
-                for (Annotazione additem : c.getAddedSubList()) {
+                for (Annotation additem : c.getAddedSubList()) {
                     ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
                     ResizableRectangle r = new ResizableRectangle(additem, ratio);
                     rectanglesContainer.getChildren().add(r);
                     annotationList.add(additem);
                 }
 
-                for(Annotazione remitem : c.getRemoved()){
+                for(Annotation remitem : c.getRemoved()){
                     rectanglesContainer.getChildren().remove(annotationList.indexOf(remitem));  //mantengo la lista solo per sapere l'index dell'element eliminato
                     annotationList.remove(remitem);
                 }
@@ -313,10 +314,10 @@ public class WorkingImageController implements Initializable {
     private void resetLists(){
         annotationList.clear(); //se immagineAnnotata è cambiata devi ripopolare la lista con le sue annotazioni
         rectanglesContainer.getChildren().clear(); //se immagineAnnotata cambia devo resettare i figli di rectanglesConteiner e ripopolarli
-        for(Annotazione annotazione : immagineAnnotata.get().getAnnotazioni()){
-            annotationList.add(annotazione);
+        for(Annotation annotation : immagineAnnotata.get().getAnnotazioni()){
+            annotationList.add(annotation);
             ratio = zoomImage.getBoundsInParent().getWidth() / image.get().getWidth();
-            rectanglesContainer.getChildren().add(new ResizableRectangle(annotazione, ratio));
+            rectanglesContainer.getChildren().add(new ResizableRectangle(annotation, ratio));
         }
     }
 
@@ -334,6 +335,7 @@ public class WorkingImageController implements Initializable {
 
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
+        immagineAnnotata.get().populateAnnotations("annotations");
 
 //        ResizableRectangle r1 = new ResizableRectangle();
 //        //r1.setTranslateX(0);
@@ -463,8 +465,6 @@ public class WorkingImageController implements Initializable {
         stage.setScene(scene);
         stage.show();
 
-        disableInteractions();
-
         if(modello.getImages().resourceFileExists(getSelectedImageIndex()) == false)
             modello.getImages().restoreImage(getSelectedImageIndex());
     }
@@ -492,8 +492,9 @@ public class WorkingImageController implements Initializable {
 
         AnnotationCreationController controller = loader.getController();
         controller.addAnnotationMethod((Tag tag, String value)-> {
-            Annotazione annotazione = new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10, tag, value);
-            immagineAnnotata.get().getAnnotazioni().add(annotazione);
+            Annotation annotation = new Annotation(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10, tag, value);
+            //immagineAnnotata.get().getAnnotazioni().add(annotazione);
+            immagineAnnotata.get().addAnnotation(annotation);
             enableInteractions();
         });
 

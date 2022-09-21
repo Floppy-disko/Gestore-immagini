@@ -1,6 +1,5 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.ContenitoreTag;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +11,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
 public class TagListCell extends ListCell<Tag> {
     @FXML

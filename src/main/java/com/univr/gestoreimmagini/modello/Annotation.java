@@ -1,10 +1,9 @@
 package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
-public class Annotazione {
+public class Annotation {
 
     private Model modello = Model.getModel();
 
@@ -22,7 +21,7 @@ public class Annotazione {
 
     private String value;
 
-    public Annotazione(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height, Tag tag, String value){
+    public Annotation(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height, Tag tag, String value){
         this.immagineAnnotata = immagineAnnotata;   //mantengo un riferimento a chi annoto
         this.X.set(X);
         this.Y.set(Y);

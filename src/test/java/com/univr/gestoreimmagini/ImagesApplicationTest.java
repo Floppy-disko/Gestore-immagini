@@ -1,6 +1,6 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.ContenitoreTag;
+import com.univr.gestoreimmagini.modello.TagContainer;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.collections.ObservableList;
@@ -45,7 +45,7 @@ class ImagesApplicationTest {
     @Test
     void testAddTag(FxRobot robot) {
         Model modello = Model.getModel();
-        ContenitoreTag tags = modello.getTags();
+        TagContainer tags = modello.getTags();
 
         robot.interact(()->{ //per modificare la scena devo per forza passare l'azione a robot.interact
             tags.removeRisorsa("Elemento"); //elimino "Elemento" (se esiste già) prima di aggiungerlo
@@ -67,7 +67,7 @@ class ImagesApplicationTest {
     @Test
     void testRemoveTag(FxRobot robot){
         Model modello = Model.getModel();
-        ContenitoreTag tags = modello.getTags();
+        TagContainer tags = modello.getTags();
 
         robot.interact(()->{ //per modificare la scena devo per forza passare l'azione a robot.interact
             tags.addRisorsa("Elemento2"); //elimino "Elemento" (se esiste già) prima di aggiungerlo

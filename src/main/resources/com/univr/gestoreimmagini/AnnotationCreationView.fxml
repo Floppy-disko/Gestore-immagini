@@ -11,7 +11,7 @@
    <children>
       <Label text="Scegli un tag" />
       <ChoiceBox fx:id="tagPicker" prefWidth="150.0" />
-      <Label text="Descrivi l'annotazione" />
+      <Label text="Descrivi l'annotation" />
       <TextField fx:id="valueTextField" prefHeight="108.0" prefWidth="246.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>

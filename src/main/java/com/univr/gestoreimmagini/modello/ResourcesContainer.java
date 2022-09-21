@@ -1,16 +1,13 @@
 package com.univr.gestoreimmagini.modello;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public abstract class ContenitoreRisorse<T> implements Serializable {
+public abstract class ResourcesContainer<T> implements Serializable {
 
     private final ObservableList<T> risorse = FXCollections.observableArrayList();
 
@@ -20,7 +17,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
     protected File namesFile;
     protected File resourcesDir;
 
-    protected ContenitoreRisorse(){
+    protected ResourcesContainer(){
 
     }
 
@@ -96,7 +93,7 @@ public abstract class ContenitoreRisorse<T> implements Serializable {
     }
 
     public void populateList(String fileName){
-        URL url = ContenitoreTag.class.getResource("");
+        URL url = TagContainer.class.getResource("");
         String path = url.getPath() + fileName;  //path della cartella tagss
         resourcesDir = new File(path);
 

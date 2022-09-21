@@ -1,7 +1,6 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.Annotazione;
-import com.univr.gestoreimmagini.modello.Tag;
+import com.univr.gestoreimmagini.modello.Annotation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class AnnotationListCell extends ListCell<Annotazione> {
+public class AnnotationListCell extends ListCell<Annotation> {
 
     @FXML
     private VBox content;
@@ -39,13 +38,13 @@ public class AnnotationListCell extends ListCell<Annotazione> {
     }
 
     @Override
-    protected void updateItem(Annotazione item, boolean empty) {
+    protected void updateItem(Annotation item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
             label.setText(item.getTag().toString());
             value.setContentText(item.getValue());
             button.setText("x");
-            setPrefHeight(content.getMinHeight());
+            setPrefHeight(content.getPrefHeight());
             //button.setId(item.toString() + "Button"); //setto un id al bottone così lo posso identificare
             button.getStyleClass().add("tagButton");
             setGraphic(content);

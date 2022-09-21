@@ -9,14 +9,15 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FilenameUtils;
 
 
-public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnnotata> {
+public class AnnotatedImageContainer extends ResourcesContainer<ImmagineAnnotata> {
 
-    protected ContenitoreImmaginiAnnotate() {
+    protected AnnotatedImageContainer() {
         super();
+        String path = getClass().getResource("").getPath() + "/annotations";
     }
 
     public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
+        addRisorsa(new ImmagineAnnotata(this, immagine, nome, extension));
     }
 
     public boolean resourceFileExists(int index){
@@ -48,6 +49,8 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
         File imageFile = new File(resourcesDir.getPath() + "/" + fullName);
 
+        getRisorse().remove(fullName);  //rimuovo l'immagine dagli oggetti prima di salvare il nuovo stato
+
         imageFile.delete();
 
         updateMemory();
@@ -71,7 +74,7 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
 
             try(FileInputStream stream = new FileInputStream(imagePath)) {
                 immagine = new Image(stream);
-                getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
+                getRisorse().add(new ImmagineAnnotata(this, immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
             } catch (FileNotFoundException e) {
                 System.err.printf("\nImage %s not found\n", fileFullName);
                 namesFileConsistent = false; //Non ho trovato un file riportato in namesFile
@@ -100,5 +103,12 @@ public class ContenitoreImmaginiAnnotate extends ContenitoreRisorse<ImmagineAnno
         }
 
         return false;
+    }
+
+    @Override
+    protected void updateMemory(){
+        super.updateMemory();
+        for(ImmagineAnnotata ia: getRisorse())
+            ia.updateMemory();
     }
 }

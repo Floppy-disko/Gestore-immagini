@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="javafx.scene.layout.VBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="375.0" styleClass=".imageBox" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="289.0" prefWidth="375.0" styleClass=".imageBox" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="350.0">
          <children>
@@ -28,7 +28,7 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-            <Label fx:id="nameLabel" contentDisplay="CENTER" prefHeight="26.0" prefWidth="123.0" text="Label" wrapText="true">
+            <Label fx:id="nameLabel" contentDisplay="CENTER" prefHeight="26.0" prefWidth="322.0" text="Label" wrapText="true">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

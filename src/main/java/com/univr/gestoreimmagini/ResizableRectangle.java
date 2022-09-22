@@ -61,8 +61,21 @@ public class ResizableRectangle extends Group {
         rectangle.widthProperty().bind(annotation.widthProperty().multiply(ratio));
         rectangle.heightProperty().bind(annotation.heightProperty().multiply(ratio));
 
-        numberLabel.layoutXProperty().bind(rectangle.layoutXProperty().add(rectangle.widthProperty()));
-        numberLabel.layoutYProperty().bind(rectangle.layoutYProperty());
+        numberLabel.layoutXProperty().bind(Bindings.createDoubleBinding(()-> {
+            double maxX = annotation.getX() + annotation.getWidth() + numberLabel.getWidth()/ratio;
+            if(maxX < annotation.getImage().getWidth())
+                return rectangle.getLayoutX() + rectangle.getWidth() + 2;
+            else
+                return rectangle.getLayoutX()  - numberLabel.getWidth() - 2;
+        }, rectangle.layoutXProperty(), rectangle.widthProperty()));
+
+        numberLabel.layoutYProperty().bind(Bindings.createDoubleBinding(()-> {
+            double maxY = annotation.getY() + (numberLabel.getHeight()+3)/ratio;
+            if(maxY < annotation.getImage().getHeight())
+                return rectangle.getLayoutY() + 2;
+            else
+                return rectangle.getLayoutY()  - numberLabel.getHeight() + 3;
+        }, rectangle.layoutYProperty(), rectangle.heightProperty()));
 
         centerCircle.setOnMouseDragged(this::modifyCenter);
         cornerCircle.setOnMouseDragged(this::modifySize);

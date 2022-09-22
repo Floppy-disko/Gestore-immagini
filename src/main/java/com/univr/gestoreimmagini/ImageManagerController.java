@@ -227,11 +227,13 @@ public class ImageManagerController implements Initializable, AutoCloseable {
             return;
 
         String name = imageTextField.getText();
-        imageTextField.clear();
+
         if(nameIsInvalid(name, "image"))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
         modello.getImages().addRisorsa(placedImage.getImage(), name, placedImageExtension);
+
+        imageTextField.clear();
 
         placedImageSet=false; //Comunico che non ho più immagini settate
         placedImage.setImage(null);

@@ -18,7 +18,7 @@
                         <font>
                             <Font name="System Bold" size="13.0" />
                         </font></Button>
-                    <Label fx:id="label" prefHeight="24.0" prefWidth="273.0" text="Label">
+                    <Label fx:id="label" prefHeight="24.0" prefWidth="255.0" text="Label">
                         <font>
                             <Font name="System Bold" size="16.0" />
                         </font>

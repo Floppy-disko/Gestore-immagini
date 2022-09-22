@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -475,7 +476,7 @@ public class WorkingImageController implements Initializable {
         if(modello.getTags().getRisorse().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(String.format("Errore tag"));
-            alert.setContentText("La lista tag è vuota quindi non è pèossibile inserire annotazioni");
+            alert.setContentText("La lista tag è vuota quindi non è possibile inserire annotazioni");
             alert.showAndWait();
             return;
         }
@@ -490,38 +491,19 @@ public class WorkingImageController implements Initializable {
         }
         Scene scene = new Scene(root, 280, 260);
         Stage secondStage = new Stage();
+        secondStage.initModality(Modality.APPLICATION_MODAL);
         secondStage.setTitle("Annotation");
         secondStage.setScene(scene);
         secondStage.show();
 
-        disableInteractions();
-
-        secondStage.setOnCloseRequest((windowEvent)-> { //riattivo i bottoni quando viene chiusa la nuova finestra
-            enableInteractions();
-        });
 
         AnnotationCreationController controller = loader.getController();
         controller.addAnnotationMethod((Tag tag, String value)-> {
             Annotation annotation = new Annotation(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10, tag, value);
             //immagineAnnotata.get().getAnnotazioni().add(annotazione);
             immagineAnnotata.get().addAnnotation(annotation);
-            enableInteractions();
         });
 
         //immagineAnnotata.get().getAnnotazioni().add(new Annotazione(immagineAnnotata.get(), centerX.get(), centerY.get(), viewPort.get().getWidth()/10, viewPort.get().getHeight()/10));
-    }
-
-    private void disableInteractions(){
-        zoomImage.setDisable(true);
-        rightButton.setDisable(true);
-        leftButton.setDisable(true);
-        button.setDisable(true);
-    }
-
-    private void enableInteractions() {
-        zoomImage.setDisable(false);
-        rightButton.setDisable(false);
-        leftButton.setDisable(false);
-        button.setDisable(false);
     }
 }

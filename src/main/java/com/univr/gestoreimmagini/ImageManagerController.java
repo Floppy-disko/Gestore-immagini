@@ -162,7 +162,12 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         if(modello.getTags().nomeInLista(name)) {  //Non puoi aggiungere due tag uguali
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(String.format("Errore nome %s", resourceType));
-            alert.setContentText("Non puoi aggiungere più tag con lo stesso nome");
+            alert.setContentText(String.format("Non puoi aggiungere più %s con lo stesso nome", resourceType));
+            alert.showAndWait();
+        } else if(name==null || name.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format("Errore nome %s", resourceType));
+            alert.setContentText(String.format("Non puoi aggiungere %s con nome vuoto", resourceType));
             alert.showAndWait();
         } else if(m.find()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -228,7 +233,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
         String name = imageTextField.getText();
 
-        if(nameIsInvalid(name, "image"))  //Non puoi asseganare lo stesso nome a due immagini diverse
+        if(nameIsInvalid(name, "immagini"))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
         modello.getImages().addRisorsa(placedImage.getImage(), name, placedImageExtension);

@@ -61,6 +61,10 @@ public class AnnotationDAOImpl implements AnnotationDAO {
         }
 
         for(AnnotationDTO a: loadFromMemory(annotationFile)){
+
+            if(modello.getTags().nomeInLista(a.tag)==false)
+                continue;
+
             Tag tag = modello.getTags().getRisorsa(a.tag);
 
             list.add(new Annotation(immagineAnnotata, a.X, a.Y, a.width, a.height, tag, a.value));

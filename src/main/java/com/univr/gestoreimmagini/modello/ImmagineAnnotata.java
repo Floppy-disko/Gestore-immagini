@@ -1,12 +1,15 @@
 package com.univr.gestoreimmagini.modello;
 
+import com.univr.gestoreimmagini.ResizableRectangle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 public class ImmagineAnnotata {
 
+    private Model modello = Model.getModel();
     private SimpleObjectProperty<Image> image = new SimpleObjectProperty<>(this, "image");
     private String name;
 
@@ -15,15 +18,24 @@ public class ImmagineAnnotata {
     //private ObservableList<Annotazione> annotazioni;
     private ObservableList<Annotation> annotazioni = FXCollections.observableArrayList();
 
-    private AnnotatedImageContainer container;
-
     private AnnotationDAOImpl dao;
 
-    public ImmagineAnnotata(AnnotatedImageContainer container, Image image, String name, String extension) {
+    public ImmagineAnnotata(Image image, String name, String extension) {
         setImage(image);
         this.name = name;
         this.extension = extension;
-        this.container=container;
+
+        modello.getTags().getRisorse().addListener(new ListChangeListener<Tag>(){
+            @Override
+            public void onChanged(Change<? extends Tag> c) {
+                while (c.next()) {
+                    for(Tag remitem : c.getRemoved()){
+                        annotazioni.remove(remitem);
+                        updateMemory();
+                    }
+                }
+            }
+        });
     }
 
     public SimpleObjectProperty<Image> imageProperty() {

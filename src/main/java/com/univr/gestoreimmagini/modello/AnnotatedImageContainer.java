@@ -17,7 +17,7 @@ public class AnnotatedImageContainer extends ResourcesContainer<ImmagineAnnotata
     }
 
     public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
-        addRisorsa(new ImmagineAnnotata(this, immagine, nome, extension));
+        addRisorsa(new ImmagineAnnotata(immagine, nome, extension));
     }
 
     public boolean resourceFileExists(int index){
@@ -74,7 +74,7 @@ public class AnnotatedImageContainer extends ResourcesContainer<ImmagineAnnotata
 
             try(FileInputStream stream = new FileInputStream(imagePath)) {
                 immagine = new Image(stream);
-                getRisorse().add(new ImmagineAnnotata(this, immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
+                getRisorse().add(new ImmagineAnnotata(immagine, name, extension)); //devo aggiornare le liste senza chiamare addRisorsa visto che essa chiama addToMemory
             } catch (FileNotFoundException e) {
                 System.err.printf("\nImage %s not found\n", fileFullName);
                 namesFileConsistent = false; //Non ho trovato un file riportato in namesFile

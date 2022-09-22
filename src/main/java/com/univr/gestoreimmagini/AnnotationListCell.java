@@ -24,7 +24,7 @@ public class AnnotationListCell extends ListCell<Annotation> {
     @FXML
     private Button button;
     @FXML
-    private DialogPane value;
+    private Label value;
     @FXML
     private Label number;
 
@@ -47,8 +47,9 @@ public class AnnotationListCell extends ListCell<Annotation> {
         super.updateItem(item, empty);
         if (item != null && !empty) { // <== test for null item and empty parameter
             label.setText(item.getTag().toString());
-            value.setContentText(item.getValue());
-            setPrefHeight(content.getPrefHeight());
+            value.setText(item.getValue());
+            //setPrefHeight(content.getMaxHeight());
+            //value.setPrefHeight(value.getMaxHeight());
             number.textProperty().bind(Bindings.createStringBinding(()->
                         String.valueOf(item.getNumber()), getItem().numberProperty()));
 

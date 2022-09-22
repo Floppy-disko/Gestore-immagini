@@ -2,14 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListCell?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="65.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
     <graphic>
         <VBox fx:id="content">
             <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="35.0" prefWidth="319.0">
@@ -34,7 +33,7 @@
                <Insets bottom="5.0" />
             </VBox.margin>
             </HBox>
-            <DialogPane fx:id="value" headerText="Descrizione:" />
+         <Label fx:id="value" wrapText="true" />
         </VBox>
     </graphic>
 </fx:root>

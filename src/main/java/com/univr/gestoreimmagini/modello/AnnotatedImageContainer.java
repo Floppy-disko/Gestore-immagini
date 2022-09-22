@@ -11,9 +11,9 @@ import org.apache.commons.io.FilenameUtils;
 
 public class AnnotatedImageContainer extends ResourcesContainer<ImmagineAnnotata> {
 
+    private String annotationsDir = getClass().getResource("").getPath() + "/annotations";
     protected AnnotatedImageContainer() {
         super();
-        String path = getClass().getResource("").getPath() + "/annotations";
     }
 
     public void addRisorsa(Image immagine, String nome, String extension){  //così posso creare un Tag usando solo la stringa del nome
@@ -48,10 +48,12 @@ public class AnnotatedImageContainer extends ResourcesContainer<ImmagineAnnotata
     protected void removeFromMemory(String fullName) {
 
         File imageFile = new File(resourcesDir.getPath() + "/" + fullName);
+        File annotationsFile = new File(annotationsDir + "/" + FilenameUtils.getBaseName(fullName) + ".dat");
 
         getRisorse().remove(fullName);  //rimuovo l'immagine dagli oggetti prima di salvare il nuovo stato
 
         imageFile.delete();
+        annotationsFile.delete();
 
         updateMemory();
     }

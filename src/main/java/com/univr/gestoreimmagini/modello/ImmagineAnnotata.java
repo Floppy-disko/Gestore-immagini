@@ -7,9 +7,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
+import java.io.File;
+
 public class ImmagineAnnotata {
 
     private Model modello = Model.getModel();
+
+    private String annotationsDir = getClass().getResource("").getPath() + "/annotations";
     private SimpleObjectProperty<Image> image = new SimpleObjectProperty<>(this, "image");
     private String name;
 
@@ -85,12 +89,20 @@ public class ImmagineAnnotata {
             dao.saveAnnotations(this);
     }
 
-    public void populateAnnotations(String fileName){
+    public void populateAnnotations(){
 
         if(annotazioni.isEmpty()==false)  //Se ho già popolato la lista non rileggere
             return;
 
-        dao = new AnnotationDAOImpl(getClass().getResource("").getPath() + "/" +fileName);
+        dao = new AnnotationDAOImpl(annotationsDir);
         annotazioni.addAll(dao.getAnnotations(this));
+    }
+
+    public String getAnnotationsDir() {
+        return annotationsDir;
+    }
+
+    public void setAnnotationsDir(String annotationsDir) {
+        this.annotationsDir = annotationsDir;
     }
 }

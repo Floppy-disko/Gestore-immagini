@@ -335,7 +335,7 @@ public class WorkingImageController implements Initializable {
 
     public void setSelectedImageIndex(int selectedImageIndex) {
         this.selectedImageIndex.set(selectedImageIndex);
-        immagineAnnotata.get().populateAnnotations("annotations");
+        immagineAnnotata.get().populateAnnotations();
 
 //        ResizableRectangle r1 = new ResizableRectangle();
 //        //r1.setTranslateX(0);

@@ -42,7 +42,7 @@
          <children>
                <ScrollPane fitToWidth="true" focusTraversable="false" prefHeight="493.0" prefWidth="818.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
                   <content>
-                     <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="714.0" prefWidth="801.0" />
+                     <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="669.0" prefWidth="789.0" />
                   </content>
                </ScrollPane>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">

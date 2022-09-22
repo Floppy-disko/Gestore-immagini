@@ -189,17 +189,17 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     @FXML
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
-        System.out.printf("\nGot %s file", placedImageExtension);
-
-        if(!(placedImageExtension.equalsIgnoreCase("png") || placedImageExtension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
-            return;
-
         setImage(files.get(0).getPath());
     }
 
     private void setImage(String path){
 
         placedImageExtension = FilenameUtils.getExtension(path);
+
+        if(!(placedImageExtension.equalsIgnoreCase("png") || placedImageExtension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
+            return;
+
+        System.out.printf("\nGot %s file", placedImageExtension);
 
         Image image = null;
         try(FileInputStream stream = new FileInputStream(path)) {

@@ -147,31 +147,37 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     private void addTag(Event event) {
         String nome = tagTextField.getText();
 
-        Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
-        Matcher m = p.matcher(nome);
-
-        if(modello.getTags().nomeInLista(nome)) {  //Non puoi aggiungere due tag uguali
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore nome tag");
-            alert.setContentText("Non puoi aggiungere più tag con lo stesso nome");
-            alert.showAndWait();
-            return;
-        } else if(m.find()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore nome tag");
-            alert.setContentText(String.format("Non puoi utilizzare il carattere: '%c'", nome.charAt(m.end()-1)));  //Scrivo che carattere ha scatenato l'errore
-            alert.showAndWait();
-            return;
-        } else if(nome.length()>20){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore nome tag");
-            alert.setContentText(String.format("I tag possono essere di massimo 20 caratteri (ne hai usati %d)", nome.length()));
-            alert.showAndWait();
+        if(nameIsInvalid(nome, "tag")){
             return;
         }
 
         modello.getTags().addRisorsa(nome);  //aggiungo il valore del textfield alla lista di tag nel modello
         tagTextField.clear();
+    }
+
+    private boolean nameIsInvalid(String name, String resourceType){
+        Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
+        Matcher m = p.matcher(name);
+
+        if(modello.getTags().nomeInLista(name)) {  //Non puoi aggiungere due tag uguali
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format("Errore nome %s", resourceType));
+            alert.setContentText("Non puoi aggiungere più tag con lo stesso nome");
+            alert.showAndWait();
+        } else if(m.find()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format("Errore nome %s", resourceType));
+            alert.setContentText(String.format("Non puoi utilizzare il carattere: '%c'", name.charAt(m.end()-1)));  //Scrivo che carattere ha scatenato l'errore
+            alert.showAndWait();
+        } else if(name.length()>20){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format("Errore nome %s", resourceType));
+            alert.setContentText(String.format("I %s possono essere di massimo 20 caratteri (ne hai usati %d)", resourceType, name.length()));
+            alert.showAndWait();
+        } else
+            return false; //se invece il nome è valido
+
+        return true;
     }
 
     private void removeTag(Tag t){

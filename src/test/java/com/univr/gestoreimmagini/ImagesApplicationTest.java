@@ -6,7 +6,9 @@ import com.univr.gestoreimmagini.modello.Tag;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +54,7 @@ class ImagesApplicationTest {
         });
         robot.clickOn("#tagTextField"); //posso cercare tramite fx:id
         robot.write("Elemento");
-        robot.clickOn("Aggiungi"); //o tramite il la proprietà text
+        robot.press(KeyCode.ENTER);  //premo invio dopo aver scritto
         ObservableList<Tag> itemsList = ((ListView)robot.lookup("#tagsList").query()).getItems(); //potrei controllare da modello ma preferisco controllare dalla view per essere sicuro che siano mostrati
 
         assertTrue(() -> {  //controllo che ora la view mostri l'item "Elemento"

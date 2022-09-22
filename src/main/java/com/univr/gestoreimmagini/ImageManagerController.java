@@ -98,7 +98,10 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         fc.getExtensionFilters().addAll(png,jpg);
 
         browse.setOnAction(e->{
-            setImage(fc.showOpenDialog(imageTextField.getScene().getWindow()).getPath());
+            File file = fc.showOpenDialog(imageTextField.getScene().getWindow());
+
+            if(file!=null)
+                setImage(file.getPath());
         });
 
         populateLists();

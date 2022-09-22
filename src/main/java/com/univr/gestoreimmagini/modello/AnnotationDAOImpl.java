@@ -81,12 +81,10 @@ public class AnnotationDAOImpl implements AnnotationDAO {
 
             FileInputStream fis = new FileInputStream(annotationFile);
 
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            try {
+            try(ObjectInputStream ois = new ObjectInputStream(fis)) {
                 list = (ArrayList<AnnotationDTO>) ois.readObject(); //aggiungo gli elementi copiati alla lista ausiliaria
-            } finally {
-                ois.close();
+            } catch(EOFException e) {
+
             }
 
         } catch (IOException e) {

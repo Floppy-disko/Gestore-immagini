@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="ListCell" prefHeight="38.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="38.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <HBox fx:id="content" alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="319.0">
          <children>
@@ -15,7 +15,7 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-            <Label fx:id="label" prefHeight="26.0" prefWidth="198.0" text="Label">
+            <Label fx:id="label" prefHeight="26.0" prefWidth="278.0" text="Label">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

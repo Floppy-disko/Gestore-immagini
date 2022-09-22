@@ -28,6 +28,8 @@ import java.io.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ImageManagerController implements Initializable, AutoCloseable {
 
@@ -144,11 +146,32 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     @FXML
     private void addTag(Event event) {
         String nome = tagTextField.getText();
-        tagTextField.clear();
-        if(modello.getTags().nomeInLista(nome))  //Non puoi aggiungere due tag uguali
+
+        Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
+        Matcher m = p.matcher(nome);
+
+        if(modello.getTags().nomeInLista(nome)) {  //Non puoi aggiungere due tag uguali
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore nome tag");
+            alert.setContentText("Non puoi aggiungere più tag con lo stesso nome");
+            alert.showAndWait();
             return;
+        } else if(m.find()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore nome tag");
+            alert.setContentText(String.format("Non puoi utilizzare il carattere: '%c'", nome.charAt(m.end()-1)));  //Scrivo che carattere ha scatenato l'errore
+            alert.showAndWait();
+            return;
+        } else if(nome.length()>20){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore nome tag");
+            alert.setContentText(String.format("I tag possono essere di massimo 20 caratteri (ne hai usati %d)", nome.length()));
+            alert.showAndWait();
+            return;
+        }
 
         modello.getTags().addRisorsa(nome);  //aggiungo il valore del textfield alla lista di tag nel modello
+        tagTextField.clear();
     }
 
     private void removeTag(Tag t){

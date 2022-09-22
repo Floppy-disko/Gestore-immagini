@@ -478,7 +478,7 @@ public class WorkingImageController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(root, 250, 200);
+        Scene scene = new Scene(root, 280, 260);
         Stage secondStage = new Stage();
         secondStage.setTitle("Annotation");
         secondStage.setScene(scene);

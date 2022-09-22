@@ -40,8 +40,6 @@ public class AnnotationListCell extends ListCell<Annotation> {
             throw new RuntimeException(exception);
         }
 
-        button.setText("x");
-
     }
 
     @Override

@@ -1,0 +1,40 @@
+.root {
+    -fx-background-color: orange;
+}
+
+TextField {
+    -fx-border-color: black;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 4;
+    -fx-background-insets: 1.2;
+}
+
+Button {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+    -fx-cursor: HAND;
+}
+
+Button:hover {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.choice-box{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 1.5;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+    -fx-font-weight: bold;
+    -fx-cursor: HAND;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 146;
+}
+
+

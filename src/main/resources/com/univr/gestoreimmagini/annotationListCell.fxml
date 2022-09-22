@@ -9,26 +9,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="38.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="65.0" prefWidth="335.0" type="ListCell" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
     <graphic>
         <VBox fx:id="content">
-            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="319.0">
+            <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="35.0" prefWidth="319.0">
                 <children>
-                    <Button fx:id="button" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="rimuovi">
+                    <Button fx:id="button" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="rimuovi">
                         <font>
                             <Font name="System Bold" size="13.0" />
                         </font></Button>
-                    <Label fx:id="label" prefHeight="26.0" prefWidth="198.0" text="Label">
+                    <Label fx:id="label" prefHeight="24.0" prefWidth="273.0" text="Label">
                         <font>
                             <Font name="System Bold" size="16.0" />
                         </font>
                         <HBox.margin>
                             <Insets left="10.0" />
                         </HBox.margin></Label>
-               <Label fx:id="number" text="0" />
+               <Label fx:id="number" alignment="CENTER" prefHeight="20.0" prefWidth="30.0" text="0">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
                 </children>
+            <VBox.margin>
+               <Insets bottom="5.0" />
+            </VBox.margin>
             </HBox>
-            <DialogPane fx:id="value" headerText="Descrizione" />
+            <DialogPane fx:id="value" headerText="Descrizione:" />
         </VBox>
     </graphic>
 </fx:root>

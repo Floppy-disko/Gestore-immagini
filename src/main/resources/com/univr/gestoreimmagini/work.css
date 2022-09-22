@@ -173,6 +173,12 @@ Button {
     -fx-background-color: green;
 }
 
+#numberLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: green;
+}
+
 DialogPane {
     -fx-font-weight: bold;
 }

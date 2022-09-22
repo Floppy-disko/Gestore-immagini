@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,6 +30,15 @@ public class AnnotationCreationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tagPicker.getItems().addAll(modello.getTags().getRisorse());
+    }
+
+    @FXML
+    private void keyListener(KeyEvent keyEvent){
+        if(keyEvent.getCode() == KeyCode.ENTER) {
+            if(valueTextField.equals(keyEvent.getSource()))
+                addAnnotation(null);
+            keyEvent.consume();
+        }
     }
 
     @FXML

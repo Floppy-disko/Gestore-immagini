@@ -26,7 +26,7 @@
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin></Label>
-      <TextField fx:id="valueTextField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="249.0" />
+      <TextField fx:id="valueTextField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyListener" prefHeight="93.0" prefWidth="249.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAnnotation" text="Aggiungi" textAlignment="CENTER">

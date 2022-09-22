@@ -94,7 +94,7 @@ public class ResizableRectangle extends Group {
 
         if(newWidth>0 && maxX < annotation.getImage().getWidth() && minX>0)  //controllo di non sbordare e di non restringerlo fino a 0
             annotation.setWidth(newWidth);
-        if(newHeight>0 && maxY < annotation.getImage().getWidth() && minY>0)
+        if(newHeight>0 && maxY < annotation.getImage().getHeight() && minY>0)
             annotation.setHeight(newHeight);
     }
 }

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.*;
 
 public abstract class ResourcesContainer<T> implements Serializable {
@@ -98,7 +99,11 @@ public abstract class ResourcesContainer<T> implements Serializable {
         resourcesDir = new File(path);
 
         if(!resourcesDir.exists()) { //se la cartella non esiste lo creo
-            resourcesDir.mkdir();
+            try{
+                Files.createDirectory(resourcesDir.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         path = path + "/" + fileName + ".dat";  //path del file su cui salvare il tag
@@ -108,7 +113,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
             try {
                 namesFile.createNewFile();
             } catch (IOException e) {
-                System.err.println("Impossibile creare file tag");
+                System.err.println("Impossibile creare file risorse");
             }
 
         }

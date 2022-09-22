@@ -20,6 +20,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -470,6 +471,15 @@ public class WorkingImageController implements Initializable {
     }
 
     public void startAnnotation(MouseEvent mouseEvent) {
+
+        if(modello.getTags().getRisorse().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format("Errore tag"));
+            alert.setContentText("La lista tag è vuota quindi non è pèossibile inserire annotazioni");
+            alert.showAndWait();
+            return;
+        }
+
         Parent root = null;
         FXMLLoader loader = null;
         try {

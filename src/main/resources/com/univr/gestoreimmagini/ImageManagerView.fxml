@@ -47,7 +47,7 @@
                </ScrollPane>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
                <children>
-                     <StackPane fx:id="imageDnD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDropped="#placeImage" onDragOver="#acceptImage" prefHeight="265.0" prefWidth="300.0" styleClass="imgDnD">
+                     <StackPane fx:id="imageDnD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDropped="#placeImage" onDragOver="#acceptImage" onMouseClicked="#browseFiles" prefHeight="265.0" prefWidth="300.0" styleClass="imgDnD">
                         <children>
                            <ImageView fx:id="placedImage" fitHeight="250.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
                               <cursor>
@@ -55,6 +55,9 @@
                               </cursor>
                            </ImageView>
                         </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                      </StackPane>
                      <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0" spacing="5.0">
                         <children>
@@ -79,7 +82,7 @@
                               <Insets bottom="3.0" />
                            </VBox.margin>
                                  </Button>
-                        <Button fx:id="browse" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Naviga">
+                        <Button fx:id="browse" alignment="CENTER" mnemonicParsing="false" onAction="#browseFiles" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Naviga">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

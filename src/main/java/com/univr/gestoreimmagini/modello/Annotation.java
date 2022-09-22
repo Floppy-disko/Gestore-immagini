@@ -57,7 +57,7 @@ public class Annotation {
 
         immagineAnnotata.getAnnotazioni().addListener((ListChangeListener<Annotation>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
             while (c.next()) {
-                number.set(getIndexInList());
+                number.set(getIndexInList() + 1);
             }
 
         });

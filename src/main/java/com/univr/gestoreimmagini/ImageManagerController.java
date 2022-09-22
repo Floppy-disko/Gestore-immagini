@@ -62,6 +62,8 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
     private int selectedImageIndex;
 
+    FileChooser fc;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
         tagsList.setItems(modello.getTags().getRisorse()); //linka la lista di tag nella view alla lista di tag nel modello
@@ -94,17 +96,11 @@ public class ImageManagerController implements Initializable, AutoCloseable {
             }
         });
 
-        FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("png", "*.png");
+        fc = new FileChooser();
         FileChooser.ExtensionFilter jpg = new FileChooser.ExtensionFilter("jpg", "*.jpg");
-        fc.getExtensionFilters().addAll(png,jpg);
-
-        browse.setOnAction(e->{
-            File file = fc.showOpenDialog(imageTextField.getScene().getWindow());
-
-            if(file!=null)
-                setImage(file.getPath());
-        });
+        FileChooser.ExtensionFilter jpeg = new FileChooser.ExtensionFilter("jpeg", "*.jpeg");
+        FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("png", "*.png");
+        fc.getExtensionFilters().addAll(png,jpg,jpeg);
 
         populateLists();
     }
@@ -207,7 +203,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
         placedImageExtension = FilenameUtils.getExtension(path);
 
-        if(!(placedImageExtension.equalsIgnoreCase("png") || placedImageExtension.equalsIgnoreCase("jpg")))  //se il file non ha le estensioni supportate non piazzarlo
+        if(!placedImageExtension.matches("(?i)jpg|jpeg|png"))
             return;
 
         System.out.printf("\nGot %s file", placedImageExtension);
@@ -283,5 +279,13 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     public void close() throws Exception {
         System.out.println("close");
         modello.updateMemory();
+    }
+
+    @FXML
+    private void browseFiles(Event event) {
+        File file = fc.showOpenDialog(imageTextField.getScene().getWindow());
+
+        if(file!=null)
+            setImage(file.getPath());
     }
 }

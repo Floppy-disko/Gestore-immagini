@@ -1,7 +1,5 @@
 package com.univr.gestoreimmagini.modello;
 
-import javafx.beans.property.SimpleDoubleProperty;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +41,8 @@ public class AnnotationDAOImpl implements AnnotationDAO {
     }
 
     @Override
-    public ArrayList<Annotation> getAnnotations(ImmagineAnnotata immagineAnnotata) {
-        String path = resourcesDir + "/" + immagineAnnotata.getName() + ".dat";  //path del file su cui salvare il tag
+    public ArrayList<Annotation> getAnnotations(AnnotatedImage annotatedImage) {
+        String path = resourcesDir + "/" + annotatedImage.getName() + ".dat";  //path del file su cui salvare il tag
         File annotationFile = new File(path);
 
         ArrayList<Annotation> list = new ArrayList<>();
@@ -67,7 +65,7 @@ public class AnnotationDAOImpl implements AnnotationDAO {
 
             Tag tag = modello.getTags().getRisorsa(a.tag);
 
-            list.add(new Annotation(immagineAnnotata, a.X, a.Y, a.width, a.height, tag, a.value));
+            list.add(new Annotation(annotatedImage, a.X, a.Y, a.width, a.height, tag, a.value));
         }
 
         return list;
@@ -104,12 +102,12 @@ public class AnnotationDAOImpl implements AnnotationDAO {
     }
 
     @Override
-    public void saveAnnotations(ImmagineAnnotata immagineAnnotata) {
+    public void saveAnnotations(AnnotatedImage annotatedImage) {
 
-        String path = resourcesDir + "/" + immagineAnnotata.getName() + ".dat";  //path del file su cui salvare il tag
+        String path = resourcesDir + "/" + annotatedImage.getName() + ".dat";  //path del file su cui salvare il tag
         File annotationFile = new File(path);
 
-        ArrayList<AnnotationDTO> serializableList = fromAnnotation(immagineAnnotata.getAnnotazioni());
+        ArrayList<AnnotationDTO> serializableList = fromAnnotation(annotatedImage.getAnnotazioni());
 
         try{
             FileOutputStream fos = new FileOutputStream(annotationFile);

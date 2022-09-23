@@ -2,8 +2,6 @@ package com.univr.gestoreimmagini.modello;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 
@@ -23,12 +21,12 @@ public class Annotation {
 
     private SimpleIntegerProperty number = new SimpleIntegerProperty();
 
-    private ImmagineAnnotata immagineAnnotata;
+    private AnnotatedImage annotatedImage;
 
     private String value;
 
-    public Annotation(ImmagineAnnotata immagineAnnotata, double X, double Y, double width, double height, Tag tag, String value){
-        this.immagineAnnotata = immagineAnnotata;   //mantengo un riferimento a chi annoto
+    public Annotation(AnnotatedImage annotatedImage, double X, double Y, double width, double height, Tag tag, String value){
+        this.annotatedImage = annotatedImage;   //mantengo un riferimento a chi annoto
         this.X.set(X);
         this.Y.set(Y);
         this.width.set(width);
@@ -38,24 +36,24 @@ public class Annotation {
         this.value = value;
 
         this.X.addListener((c)-> {
-            immagineAnnotata.updateMemory();
+            annotatedImage.updateMemory();
         });
 
         this.Y.addListener((c)-> {
-            immagineAnnotata.updateMemory();
+            annotatedImage.updateMemory();
         });
 
         this.width.addListener((c)-> {
-            immagineAnnotata.updateMemory();
+            annotatedImage.updateMemory();
         });
 
         this.height.addListener((c)-> {
-            immagineAnnotata.updateMemory();
+            annotatedImage.updateMemory();
         });
 
 
 
-        immagineAnnotata.getAnnotazioni().addListener((ListChangeListener<Annotation>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
+        annotatedImage.getAnnotazioni().addListener((ListChangeListener<Annotation>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
             while (c.next()) {
                 number.set(getIndexInList() + 1);
             }
@@ -64,11 +62,11 @@ public class Annotation {
     }
 
     private int getIndexInList(){
-        return immagineAnnotata.getAnnotazioni().indexOf(this);
+        return annotatedImage.getAnnotazioni().indexOf(this);
     }
 
     public Image getImage(){
-        return immagineAnnotata.getImage();
+        return annotatedImage.getImage();
     }
 
     public double getX() {

@@ -1,7 +1,7 @@
 package com.univr.gestoreimmagini;
 
 import com.univr.gestoreimmagini.modello.Annotation;
-import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
+import com.univr.gestoreimmagini.modello.AnnotatedImage;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
 import javafx.beans.binding.Bindings;
@@ -91,7 +91,7 @@ public class WorkingImageController implements Initializable {
 
     private SimpleObjectProperty<Rectangle2D> viewPort = new SimpleObjectProperty<>(this, "viewPort");
 
-    private SimpleObjectProperty<ImmagineAnnotata> immagineAnnotata = new SimpleObjectProperty<>(this, "immagineAnnotata");
+    private SimpleObjectProperty<AnnotatedImage> immagineAnnotata = new SimpleObjectProperty<>(this, "immagineAnnotata");
 
     private SimpleObjectProperty<Image> image = new SimpleObjectProperty<>(this, "image");
 
@@ -122,9 +122,9 @@ public class WorkingImageController implements Initializable {
 
         //immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
         immagineAnnotata.get().getAnnotazioni().addListener(annotationListener);
-        immagineAnnotata.addListener(new ChangeListener<ImmagineAnnotata>() {
+        immagineAnnotata.addListener(new ChangeListener<AnnotatedImage>() {
             @Override
-            public void changed(ObservableValue<? extends ImmagineAnnotata> observableValue, ImmagineAnnotata oldValue, ImmagineAnnotata newValue) {
+            public void changed(ObservableValue<? extends AnnotatedImage> observableValue, AnnotatedImage oldValue, AnnotatedImage newValue) {
                 resetLists();
                 oldValue.getAnnotazioni().removeListener(annotationListener);
                 newValue.getAnnotazioni().addListener(annotationListener);

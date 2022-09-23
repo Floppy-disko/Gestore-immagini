@@ -99,11 +99,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
         resourcesDir = new File(path);
 
         if(!resourcesDir.exists()) { //se la cartella non esiste lo creo
-            try{
-                Files.createDirectory(resourcesDir.toPath());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            resourcesDir.mkdir();
         }
 
         path = path + "/" + fileName + ".dat";  //path del file su cui salvare il tag

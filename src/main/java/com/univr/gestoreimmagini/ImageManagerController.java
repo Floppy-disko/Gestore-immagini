@@ -1,9 +1,8 @@
 package com.univr.gestoreimmagini;
 
-import com.univr.gestoreimmagini.modello.ImmagineAnnotata;
+import com.univr.gestoreimmagini.modello.AnnotatedImage;
 import com.univr.gestoreimmagini.modello.Model;
 import com.univr.gestoreimmagini.modello.Tag;
-import javafx.animation.Transition;
 import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,7 +20,6 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Duration;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
@@ -77,7 +75,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
             }
         });
 
-        modello.getImages().getRisorse().addListener((ListChangeListener<ImmagineAnnotata>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
+        modello.getImages().getRisorse().addListener((ListChangeListener<AnnotatedImage>) c -> {  //binding tra la lista di immagini nel modello e i figli di ImageGrid
             while (c.next()) {
                 if (c.wasPermutated()) {
                     for (int i = c.getFrom(); i < c.getTo(); ++i) {
@@ -86,10 +84,10 @@ public class ImageManagerController implements Initializable, AutoCloseable {
                 } else if (c.wasUpdated()) {
                     //update item
                 } else {
-                    for (ImmagineAnnotata remitem : c.getRemoved()) {
+                    for (AnnotatedImage remitem : c.getRemoved()) {
                         imageGrid.getChildren().remove(imageGrid.lookup("#" + remitem.getName() + "Image"));
                     }
-                    for (ImmagineAnnotata additem : c.getAddedSubList()) {
+                    for (AnnotatedImage additem : c.getAddedSubList()) {
                         displayImage(additem);
                     }
                 }
@@ -110,18 +108,18 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         modello.getImages().populateList("images");
     }
 
-    private void displayImage(ImmagineAnnotata immagineAnnotata){
+    private void displayImage(AnnotatedImage annotatedImage){
         ImageBox imageBox = new ImageBox();
-        imageBox.setDisplayedImage(immagineAnnotata.getImage());
-        imageBox.setNameLabelText(immagineAnnotata.getName());
+        imageBox.setDisplayedImage(annotatedImage.getImage());
+        imageBox.setNameLabelText(annotatedImage.getName());
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
-            modello.getImages().removeRisorsa(immagineAnnotata); //sarebbe il metodo removeImage
+            modello.getImages().removeRisorsa(annotatedImage); //sarebbe il metodo removeImage
         });
         imageBox.setImageOnClick((mouseEvent) -> {
-            selectedImageIndex = modello.getImages().getRisorse().indexOf(immagineAnnotata);
+            selectedImageIndex = modello.getImages().getRisorse().indexOf(annotatedImage);
             switchToWorkingImageView(mouseEvent);
         });
-        imageBox.setId(immagineAnnotata.getName() + "Image");
+        imageBox.setId(annotatedImage.getName() + "Image");
         imageGrid.getChildren().add(imageBox);
     }
 

@@ -153,7 +153,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
         Matcher m = p.matcher(name);
 
-        if(modello.getTags().nomeInLista(name)) {  //Non puoi aggiungere due tag uguali
+        if(((resourceType.equals("tag"))?modello.getTags():modello.getImages()).nomeInLista(name)) {  //Non puoi aggiungere due tag uguali
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(String.format("Errore nome %s", resourceType));
             alert.setContentText(String.format("Non puoi aggiungere più %s con lo stesso nome", resourceType));

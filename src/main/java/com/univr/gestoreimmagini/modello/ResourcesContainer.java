@@ -94,7 +94,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
     }
 
     public void populateList(String fileName){
-        URL url = TagContainer.class.getResource("");
+        URL url = getClass().getResource("");
         String path = url.getPath() + fileName;  //path della cartella tagss
         resourcesDir = new File(path);
 

@@ -79,6 +79,10 @@ public class ResizableRectangle extends Group {
 
         centerCircle.setOnMouseDragged(this::modifyCenter);
         cornerCircle.setOnMouseDragged(this::modifySize);
+
+        rectangle.setOnMouseClicked((e)->{
+            this.toBack();
+        });
     }
     private void modifyCenter(MouseEvent mouseEvent){
         double newX = annotation.getX() + mouseEvent.getX()/ratio;

@@ -81,8 +81,8 @@ public class ResizableRectangle extends Group {
         cornerCircle.setOnMouseDragged(this::modifySize);
     }
     private void modifyCenter(MouseEvent mouseEvent){
-        double newX = annotation.getX() + mouseEvent.getX()*ratio;
-        double newY = annotation.getY() + mouseEvent.getY()*ratio;
+        double newX = annotation.getX() + mouseEvent.getX()/ratio;
+        double newY = annotation.getY() + mouseEvent.getY()/ratio;
         double maxX = newX+ annotation.getWidth()/2;
         double minX = newX- annotation.getWidth()/2;
         double maxY = newY+ annotation.getHeight()/2;
@@ -97,8 +97,8 @@ public class ResizableRectangle extends Group {
 
     private void modifySize(MouseEvent mouseEvent){
 
-        double newWidth = annotation.getWidth() - mouseEvent.getX()*ratio;
-        double newHeight = annotation.getHeight() - mouseEvent.getY()*ratio;
+        double newWidth = annotation.getWidth() - mouseEvent.getX()/ratio;
+        double newHeight = annotation.getHeight() - mouseEvent.getY()/ratio;
 
         double maxX = annotation.getX()+newWidth/2;
         double minX = annotation.getX()-newWidth/2;

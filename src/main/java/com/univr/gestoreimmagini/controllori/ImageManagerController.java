@@ -143,7 +143,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
     private void addTag(Event event) {
         String nome = tagTextField.getText();
 
-        if(nameIsInvalid(nome, "tag")){
+        if(isNameInvalid(nome, "tag")){
             return;
         }
 
@@ -151,7 +151,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         tagTextField.clear();
     }
 
-    private boolean nameIsInvalid(String name, String resourceType){
+    private boolean isNameInvalid(String name, String resourceType){
         Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
         Matcher m = p.matcher(name);
 
@@ -229,7 +229,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
         String name = imageTextField.getText();
 
-        if(nameIsInvalid(name, "immagini"))  //Non puoi asseganare lo stesso nome a due immagini diverse
+        if(isNameInvalid(name, "immagini"))  //Non puoi asseganare lo stesso nome a due immagini diverse
             return;
 
         modello.getImages().addRisorsa(placedImage.getImage(), name, placedImageExtension);

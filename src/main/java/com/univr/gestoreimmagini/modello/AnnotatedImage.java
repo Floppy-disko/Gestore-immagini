@@ -37,6 +37,8 @@ public class AnnotatedImage {
                 }
             }
         });
+
+        dao = new AnnotationDAOImpl(annotationsDir);
     }
 
     public SimpleObjectProperty<Image> imageProperty() {
@@ -91,7 +93,6 @@ public class AnnotatedImage {
         if(annotazioni.isEmpty()==false)  //Se ho già popolato la lista non rileggere
             return;
 
-        dao = new AnnotationDAOImpl(annotationsDir);
         annotazioni.addAll(dao.getAnnotations(this));
     }
 

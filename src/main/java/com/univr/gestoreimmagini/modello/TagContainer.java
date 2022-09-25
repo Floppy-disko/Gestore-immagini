@@ -17,17 +17,16 @@ public class TagContainer extends ResourcesContainer<Tag> {
 
     @Override
     protected void removeFromMemory(String nome) {
-        updateMemory(); //aggiungere e cancellare dalla memoria significa sovrascrivere tags.dat
+        updateMemory();     // Aggiungere e cancellare dalla memoria significa sovrascrivere tags.dat
     }
 
     /**
      * Sovrascrive tags.dat con la lista ausiliaria contenente i nomi dei tags
      */
-
     @Override
     protected void loadFromMemory(){
-        super.loadFromMemory();  //riempie la lista ausiliaria
-        for(String nome: getNomiRisorse())  //creo un tag nella lista principale per ogni nome letto da memoria
+        super.loadFromMemory();                 // Riempie la lista ausiliaria
+        for(String nome: getNomiRisorse())      // Creo un tag nella lista principale per ogni nome letto da memoria
             getRisorse().add(new Tag(nome));
     }
 }

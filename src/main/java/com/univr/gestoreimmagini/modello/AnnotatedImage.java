@@ -21,11 +21,13 @@ public class AnnotatedImage {
 
     private AnnotationDAOImpl dao;
 
+
     public AnnotatedImage(Image image, String name, String extension) {
         setImage(image);
         this.name = name;
         this.extension = extension;
 
+        // Ascolta quando viene rimosso un tag: rimuove tutte le annotazioni con quel tag
         modello.getTags().getRisorse().addListener(new ListChangeListener<Tag>(){
             @Override
             public void onChanged(Change<? extends Tag> c) {
@@ -84,13 +86,13 @@ public class AnnotatedImage {
     }
 
     public void updateMemory(){
-        if(dao!=null)
+        if(dao != null)
             dao.saveAnnotations(this);
     }
 
     public void populateAnnotations(){
 
-        if(annotazioni.isEmpty()==false)  //Se ho già popolato la lista non rileggere
+        if(annotazioni.isEmpty() == false)      // Se la lista è già popolata, allora non rilegge
             return;
 
         annotazioni.addAll(dao.getAnnotations(this));

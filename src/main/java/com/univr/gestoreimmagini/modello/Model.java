@@ -2,10 +2,10 @@ package com.univr.gestoreimmagini.modello;
 
 public class Model {
 
-    private final static Model modello = new Model(); //contiene l'unica istanza del singleton
-    private final TagContainer tags;
+    private final static Model modello = new Model();       // Contiene l'unica istanza del singleton pattern
+    private final TagContainer tags;                        // Riguarda i tag
 
-    private final AnnotatedImageContainer images;
+    private final AnnotatedImageContainer images;           // Riguarda le immagini
 
     private Model() {
         tags = new TagContainer();

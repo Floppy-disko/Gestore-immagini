@@ -12,16 +12,22 @@ public abstract class ResourcesContainer<T> implements Serializable {
 
     private final ObservableList<T> risorse = FXCollections.observableArrayList();
 
-    //lista ausiliaria che tiene solo i nomi, utile perchè serializzabile e più rapida per la ricerca di duplicati tra i tag
+    // Lista ausiliaria che tiene solo i nomi, utile perché serializzabile e più rapida per la ricerca di duplicati tra i tag
     private final ArrayList<String> nomiRisorse = new ArrayList<>();  //ATTENZIONE: ogni volta in cui modifichi una delle due liste devi modificare anche l'altra per evitare inconsistenze
 
-    protected File namesFile;
-    protected File resourcesDir;
+    protected File namesFile;       // Nome del file
+    protected File resourcesDir;    // Directory che contiene le risorse
 
     protected ResourcesContainer(){
 
     }
 
+    /**
+    * Ritorna la risorsa all'indice passato
+    *
+    * @param index indice
+    * @return risorsa
+    * */
     public T getRisorsa(int index){
         return risorse.get(index);
     }
@@ -54,21 +60,22 @@ public abstract class ResourcesContainer<T> implements Serializable {
 
     /**
      * Cerca per nome se una risorsa è contenuta e se la trova la elimina
+     *
      * @param nome
      * @return 1 se trova la risorsa con quel nome, 0 se non la trova
      */
     public int removeRisorsa(String nome){
-
         T r = getRisorsa(nome);
         if(r!=null){
             removeRisorsa(r);
             return 1;
         }
-
         return 0;
     }
+
+
     public void removeRisorsa(T r){
-        nomiRisorse.remove(r.toString());  //rimuovi l'entry allo stesso index di r
+        nomiRisorse.remove(r.toString());       // Rimuovi l'entry allo stesso index di r
         risorse.remove(r);
         removeFromMemory(r.toString());
     }
@@ -80,10 +87,12 @@ public abstract class ResourcesContainer<T> implements Serializable {
         return nomiRisorse;
     }
 
-    public int getIndex(String nome){
-        return nomiRisorse.indexOf(nome);
-    }
-
+    /**
+    * Verifica che esiste una risorsa con il nome indicato
+    *
+    * @param nome nome risorsa
+    * @return true se esiste
+    * */
     public boolean nomeInLista(String nome){
         for(String nomeRisorsa : nomiRisorse){   //cerca se c'è una risorsa con lo stesso nome
             if(nomeRisorsa.equals(nome))
@@ -93,19 +102,20 @@ public abstract class ResourcesContainer<T> implements Serializable {
         return false;
     }
 
+
     public void populateList(String fileName){
         URL url = getClass().getResource("");
-        String path = url.getPath() + fileName;  //path della cartella tagss
+        String path = url.getPath() + fileName;         // Path della cartella tagss
         resourcesDir = new File(path);
 
-        if(!resourcesDir.exists()) { //se la cartella non esiste lo creo
+        if(!resourcesDir.exists()) {                    // Se la cartella non esiste lo creo
             resourcesDir.mkdir();
         }
 
-        path = path + "/" + fileName + ".dat";  //path del file su cui salvare il tag
+        path = path + "/" + fileName + ".dat";          // Path del file su cui salvare il tag
         namesFile = new File(path);
 
-        if(!namesFile.exists()) { //se il file non esiste lo creo
+        if(!namesFile.exists()) {                       // Se il file non esiste lo creo
             try {
                 namesFile.createNewFile();
             } catch (IOException e) {
@@ -117,10 +127,13 @@ public abstract class ResourcesContainer<T> implements Serializable {
         getNomiRisorse().clear();
         getRisorse().clear();
 
-        if(namesFile.length()>0)  //controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
+        if(namesFile.length() > 0)                        // Controllo che il file non sia vuoto e se non lo è provo a caricare la lista di tag e che la lista di tag non si agià stata inizializzata
             loadFromMemory();
     }
 
+    /**
+    * Si salvano gli oggetti delle risorse nei file .dat
+    * */
     protected void updateMemory(){
         try{
             FileOutputStream fos = new FileOutputStream(namesFile);
@@ -128,7 +141,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             try{
-                oos.writeObject(getNomiRisorse());  //salvo in memoria la lista ausiliaria
+                oos.writeObject(getNomiRisorse());      // Salvo in memoria la lista ausiliaria
             } finally {
                 oos.flush();
                 oos.close();
@@ -143,6 +156,9 @@ public abstract class ResourcesContainer<T> implements Serializable {
 
     protected abstract void removeFromMemory(String nome);
 
+    /**
+    * Legge le risorse dalla memoria leggendo l'oggetto memorizzato nel file .dat
+    * */
     protected void loadFromMemory(){
         try{
 
@@ -151,7 +167,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             try {
-                getNomiRisorse().addAll((ArrayList<String>) ois.readObject()); //aggiungo gli elementi copiati alla lista ausiliaria
+                getNomiRisorse().addAll((ArrayList<String>) ois.readObject());      // Si aggiunge gli elementi copiati alla lista ausiliaria
             } finally {
                 ois.close();
             }
@@ -162,7 +178,7 @@ public abstract class ResourcesContainer<T> implements Serializable {
             e.printStackTrace();
         } catch (Exception e) {
             try {
-                new PrintWriter(namesFile).close(); //Se c'è un eccezzione che non è IO o ClassNotFound prbabimente il file è illeggibile quindi pulisci il file
+                new PrintWriter(namesFile).close();                                // Se c'è un eccezione che non è IO o ClassNotFound prbabimente il file è illeggibile quindi pulisci il file
 
             } catch(FileNotFoundException e2) {
                 System.err.printf("File %s non trovato", namesFile);

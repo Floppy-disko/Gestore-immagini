@@ -11,6 +11,7 @@ import java.io.IOException;
 public class ImagesApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // Si carica il file FXML principale all'avvio
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("controllori/ImageManagerView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("Image Manager");

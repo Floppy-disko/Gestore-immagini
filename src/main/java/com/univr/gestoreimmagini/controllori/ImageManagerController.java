@@ -64,7 +64,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
     FileChooser fc;
 
-    /*
+    /**
     * Vede i corrispettivi nel FXML (fx:id)
     * Imposta gli elementi della lista tag e le immagini
     * */
@@ -111,7 +111,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         populateLists();    // Lancia la lettura della memoria per tag e immagini
     }
 
-    /*
+    /**
     * Lancio generico di lettura per tag e immagini
     * */
     private void populateLists() {
@@ -119,7 +119,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         modello.getImages().populateList("images");
     }
 
-    /*
+    /**
     * Serve per visualizzare le immagini nel riquadro
     *
     * @param annotatedImage immagine salvata nel modello
@@ -139,7 +139,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         imageGrid.getChildren().add(imageBox);
     }
 
-    /*
+    /**
     * Abilita la pressione del tasto Inivio per i bottoni di aggiunta
     * */
     @FXML
@@ -156,7 +156,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         }
     }
 
-    /*
+    /**
     * Aggiunta del tag
     * */
     @FXML
@@ -171,7 +171,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         tagTextField.clear();
     }
 
-    /*
+    /**
     * Verifica la validità del nome inserito
     *
     * @param name nome da controllare
@@ -207,7 +207,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         return true;
     }
 
-    /*
+    /**
     * Rimozione del tag selezionato dalla lista
     * */
     private void removeTag(Tag t){
@@ -222,7 +222,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         event.consume();
     }
 
-    /*
+    /**
     * Preleva solo la prima immagine posta sul riquadro
     * */
     @FXML
@@ -231,7 +231,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         setImage(files.get(0).getPath());
     }
 
-    /*
+    /**
     * Verifica la validità dell'estesione dell'immagine e salva l'immagine se valida
     *
     * @param path percorso dell'immagine importata
@@ -257,14 +257,14 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         imageDnD.getStyleClass().remove("imgDnD");    // Rimuove l'immagine di sfondo rimuovendo la classe che gliela assegna
     }
 
-    /*
-    *
+    /**
+    * Quando si preme il bottone d'aggiunta effettua le verifiche di settaggio
+    * e controlla che il nome sia valido. Infine aggiunge l'immagine nelle risorse
+    * e ripristina i valori iniziali dei riquadri
     * */
     @FXML
     private void addImage(Event event){
-        //System.out.println(imageDnD.getImage());
-        //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
-        if(placedImageSet == false)  //Salvo solo se l'immagine è stata settata
+        if(placedImageSet == false)                     // Salvo solo se l'immagine è stata settata
             return;
 
         String name = imageTextField.getText();
@@ -276,25 +276,29 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
         imageTextField.clear();
 
-        placedImageSet=false; //Comunico che non ho più immagini settate
+        placedImageSet = false;                         //Comunico che non ho più immagini settate
         placedImage.setImage(null);
-        imageDnD.getStyleClass().add("imgDnD");     // Riassegna la classe per lo sfondo dell'immagine
-        imageTextField.getParent().requestFocus();  // Sposta il focus dal text field
+        imageDnD.getStyleClass().add("imgDnD");         // Riassegna la classe per lo sfondo dell'immagine
+        imageTextField.getParent().requestFocus();      // Sposta il focus dal text field
     }
 
+    /**
+    * Cambia la scena del programma nel Working Image View
+    * */
     private void switchToWorkingImageView(MouseEvent mouseEvent) {
 
         Parent root = null;
         FXMLLoader loader = null;
         try {
+            // Seleziona il file FXML della Work Image View
             loader = new FXMLLoader(getClass().getResource("WorkingImageView.fxml"));
             root = loader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        WorkingImageController controller = loader.getController();
-        controller.setSelectedImageIndex(selectedImageIndex); //Comunico al secondo controller che immagine è stata selezionata
+        WorkingImageController controller = loader.getController();     // Salvo l'istanza del controller
+        controller.setSelectedImageIndex(selectedImageIndex);           // Comunico al secondo controller che immagine è stata selezionata
 
         Scene scene = new Scene(root, 1280, 900);
         Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
@@ -302,11 +306,11 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         stage.setScene(scene);
         stage.show();
 
+        // Se per un qualsiasi motivo l'immagine non esiste, allora la si ricrea prendendola dal modello
         if(modello.getImages().resourceFileExists(selectedImageIndex) == false)
             modello.getImages().restoreImage(selectedImageIndex);
 
         System.out.println(selectedImageIndex + String.valueOf(modello.getImages().resourceFileExists(selectedImageIndex)));
-
 
         try {
             close();
@@ -315,17 +319,23 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         }
     }
 
+    /**
+    * Si salvano tutte le risorse per il cambio di scena
+    * */
     @Override
     public void close() throws Exception {
         System.out.println("close");
         modello.updateMemory();
     }
 
+    /**
+    * Gestisce la ricerca dei file mediante il bottone naviga
+    * */
     @FXML
     private void browseFiles(Event event) {
         File file = fc.showOpenDialog(imageTextField.getScene().getWindow());
 
-        if(file!=null)
+        if(file != null)
             setImage(file.getPath());
     }
 }

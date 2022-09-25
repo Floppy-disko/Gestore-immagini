@@ -64,15 +64,20 @@ public class ImageManagerController implements Initializable, AutoCloseable {
 
     FileChooser fc;
 
+    /*
+    * Vede i corrispettivi nel FXML (fx:id)
+    * Imposta gli elementi della lista tag e le immagini
+    * */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {  //lancia all'avvio
-        tagsList.setItems(modello.getTags().getRisorse()); //linka la lista di tag nella view alla lista di tag nel modello
-        //modello.getTags().addRisorsa(new Tag("Test"));
-        tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {  //faccio celle della lista custom, la loro composizione è nella classe CustomCell
+    public void initialize(URL url, ResourceBundle resourceBundle) {                //lancia all'avvio
+        tagsList.setItems(modello.getTags().getRisorse());                          //linka la lista di tag nella view alla lista di tag nel modello
+
+        // Modifica la tipologia di cella che si vede nella lista osservabile
+        tagsList.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {      // Faccio celle della lista custom, la loro composizione è nella classe CustomCell
             @Override
             public ListCell<Tag> call(ListView<Tag> listView) {
                 TagListCell cell = new TagListCell();
-                cell.setButtonOnAction((actionEvent)->removeTag(cell.getItem())); //quando premo il bottone elimina l'item della cella
+                cell.setButtonOnAction((actionEvent)->removeTag(cell.getItem()));   // Quando premo il bottone elimina l'item della cella
                 return cell;
             }
         });
@@ -96,26 +101,35 @@ public class ImageManagerController implements Initializable, AutoCloseable {
             }
         });
 
+        // Bottone naviga
         fc = new FileChooser();
         FileChooser.ExtensionFilter jpg = new FileChooser.ExtensionFilter("jpg", "*.jpg");
         FileChooser.ExtensionFilter jpeg = new FileChooser.ExtensionFilter("jpeg", "*.jpeg");
         FileChooser.ExtensionFilter png = new FileChooser.ExtensionFilter("png", "*.png");
-        fc.getExtensionFilters().addAll(png,jpg,jpeg);
+        fc.getExtensionFilters().addAll(png,jpg,jpeg);  // Si filtrano solo queste estensioni
 
-        populateLists();
+        populateLists();    // Lancia la lettura della memoria per tag e immagini
     }
 
+    /*
+    * Lancio generico di lettura per tag e immagini
+    * */
     private void populateLists() {
         modello.getTags().populateList("tags");
         modello.getImages().populateList("images");
     }
 
+    /*
+    * Serve per visualizzare le immagini nel riquadro
+    *
+    * @param annotatedImage immagine salvata nel modello
+    * */
     private void displayImage(AnnotatedImage annotatedImage){
-        ImageBox imageBox = new ImageBox();
+        ImageBox imageBox = new ImageBox();                         // Immagine + Label + Bottone
         imageBox.setDisplayedImage(annotatedImage.getImage());
         imageBox.setNameLabelText(annotatedImage.getName());
         imageBox.setRemoveButtonOnAction((actionEvent) -> {
-            modello.getImages().removeRisorsa(annotatedImage); //sarebbe il metodo removeImage
+            modello.getImages().removeRisorsa(annotatedImage);      //sarebbe il metodo removeImage
         });
         imageBox.setImageOnClick((mouseEvent) -> {
             selectedImageIndex = modello.getImages().getRisorse().indexOf(annotatedImage);
@@ -125,6 +139,9 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         imageGrid.getChildren().add(imageBox);
     }
 
+    /*
+    * Abilita la pressione del tasto Inivio per i bottoni di aggiunta
+    * */
     @FXML
     private void keyListener(KeyEvent keyEvent){
         if(keyEvent.getCode() == KeyCode.ENTER) {
@@ -139,6 +156,9 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         }
     }
 
+    /*
+    * Aggiunta del tag
+    * */
     @FXML
     private void addTag(Event event) {
         String nome = tagTextField.getText();
@@ -151,6 +171,12 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         tagTextField.clear();
     }
 
+    /*
+    * Verifica la validità del nome inserito
+    *
+    * @param name nome da controllare
+    * @return false se il nome è invalido
+    * */
     private boolean isNameInvalid(String name, String resourceType){
         Pattern p = Pattern.compile("[^A-Za-z0-9-_]");
         Matcher m = p.matcher(name);
@@ -160,7 +186,7 @@ public class ImageManagerController implements Initializable, AutoCloseable {
             alert.setTitle(String.format("Errore nome %s", resourceType));
             alert.setContentText(String.format("Non puoi aggiungere più %s con lo stesso nome", resourceType));
             alert.showAndWait();
-        } else if(name==null || name.isEmpty()){
+        } else if(name == null || name.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(String.format("Errore nome %s", resourceType));
             alert.setContentText(String.format("Non puoi aggiungere %s con nome vuoto", resourceType));
@@ -181,6 +207,9 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         return true;
     }
 
+    /*
+    * Rimozione del tag selezionato dalla lista
+    * */
     private void removeTag(Tag t){
         modello.getTags().removeRisorsa(t);
     }
@@ -193,12 +222,20 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         event.consume();
     }
 
+    /*
+    * Preleva solo la prima immagine posta sul riquadro
+    * */
     @FXML
     private void placeImage(DragEvent event) {
         List<File> files = event.getDragboard().getFiles();
         setImage(files.get(0).getPath());
     }
 
+    /*
+    * Verifica la validità dell'estesione dell'immagine e salva l'immagine se valida
+    *
+    * @param path percorso dell'immagine importata
+    * */
     private void setImage(String path){
 
         placedImageExtension = FilenameUtils.getExtension(path);
@@ -214,17 +251,20 @@ public class ImageManagerController implements Initializable, AutoCloseable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //System.out.println(FilenameUtils.getExtension(image.getUrl()));
+
         placedImage.setImage(image);
-        placedImageSet=true;
-        imageDnD.getStyleClass().remove("imgDnD");  // Rimuove l'immagine di sfondo rimuovendo la classe che gliela assegna
+        placedImageSet = true;                          // L'immagine è piazzata
+        imageDnD.getStyleClass().remove("imgDnD");    // Rimuove l'immagine di sfondo rimuovendo la classe che gliela assegna
     }
 
+    /*
+    *
+    * */
     @FXML
     private void addImage(Event event){
         //System.out.println(imageDnD.getImage());
         //getClass().getClassLoader().getResourceAsStream("Simo.jpg");
-        if(placedImageSet==false)  //Salvo solo se l'immagine è stata settata
+        if(placedImageSet == false)  //Salvo solo se l'immagine è stata settata
             return;
 
         String name = imageTextField.getText();

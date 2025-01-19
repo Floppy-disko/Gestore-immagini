@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!--<VBox alignment="CENTER" fillWidth="false" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.controllori.ImageManagerController">-->
+<!--    <padding>-->
+<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />-->
+<!--    </padding>-->
+<!--</VBox>-->
+<!--<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.controllori.ImageManagerController">-->
+<!--      <padding>-->
+<!--           <Insets bottom="200.0" left="20.0" right="20.0" top="20.0" />-->
+<!--      </padding>-->
+<!--      <children>-->
+<!--      </children>-->
+<!--   </AnchorPane>-->
+
+<GridPane alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.gestoreimmagini.controllori.ImageManagerController">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="922.6000366210938" minWidth="10.0" prefWidth="418.66668701171875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="701.066650390625" minWidth="10.0" prefWidth="380.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="448.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="367.46669921875" minHeight="10.0" prefHeight="359.9999938964844" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="433.3333221435547" minHeight="10.0" prefHeight="300.80000610351567" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+               <ScrollPane fitToWidth="true" focusTraversable="false" prefHeight="493.0" prefWidth="818.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                  <content>
+                     <TilePane fx:id="imageGrid" alignment="CENTER" focusTraversable="true" prefHeight="669.0" prefWidth="789.0" />
+                  </content>
+               </ScrollPane>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="2">
+               <children>
+                     <StackPane fx:id="imageDnD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDropped="#placeImage" onDragOver="#acceptImage" onMouseClicked="#browseFiles" prefHeight="265.0" prefWidth="300.0" styleClass="imgDnD">
+                        <children>
+                           <ImageView fx:id="placedImage" fitHeight="250.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
+                              <cursor>
+                                 <Cursor fx:constant="DEFAULT" />
+                              </cursor>
+                           </ImageView>
+                        </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                     </StackPane>
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0" spacing="5.0">
+                        <children>
+                           <TextField fx:id="imageTextField" onKeyPressed="#keyListener" prefHeight="30.0" prefWidth="224.0" promptText="Inserisci nome immagine">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                           </TextField>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="86.0">
+                     <children>
+                                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#addImage" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
+                                    <cursor>
+                                       <Cursor fx:constant="DEFAULT" />
+                                    </cursor>
+                                    <font>
+                                       <Font name="System Bold" size="12.0" />
+                                    </font>
+                           <VBox.margin>
+                              <Insets bottom="3.0" />
+                           </VBox.margin>
+                                 </Button>
+                        <Button fx:id="browse" alignment="CENTER" mnemonicParsing="false" onAction="#browseFiles" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Naviga">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+                        </children>
+                     </HBox>
+               </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="89.0" prefWidth="159.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                     <ListView fx:id="tagsList" focusTraversable="false" prefHeight="284.0" prefWidth="367.0">
+                        <cursor>
+                           <Cursor fx:constant="DEFAULT" />
+                        </cursor>
+                     </ListView>
+                     <HBox alignment="CENTER" prefHeight="32.0" prefWidth="367.0" spacing="5.0">
+                        <children>
+                           <TextField fx:id="tagTextField" onKeyPressed="#keyListener" prefHeight="28.0" prefWidth="282.0" promptText="Aggiungi un tag">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                           </TextField>
+                           <Button alignment="CENTER" mnemonicParsing="false" onAction="#addTag" prefHeight="26.0" prefWidth="82.0" styleClass="aggiungi" text="Aggiungi" textAlignment="CENTER">
+                              <cursor>
+                                 <Cursor fx:constant="DEFAULT" />
+                              </cursor>
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </HBox>
+               </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+            </VBox>
+         </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+      </GridPane>

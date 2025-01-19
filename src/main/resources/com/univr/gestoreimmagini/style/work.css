@@ -1,0 +1,184 @@
+.workImage{
+    -fx-background-color: orange;
+    -fx-hgap: 100%;
+    -fx-vgap: 100%;
+}
+
+
+.contenitore {
+    -fx-background-color: rgb(212, 214, 213);
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+
+#slideshow, ListView {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+Button {
+    -fx-cursor: HAND;
+}
+
+.scorri {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+#destra {
+    -fx-background-image: url("../immagini/scorri.png");
+    -fx-background-size: 28 28;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+#sinistra {
+    -fx-background-image: url("../immagini/scorri.png");
+    -fx-background-size: 28 28;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-rotate: 180;
+}
+
+.scorri:hover {
+    -fx-background-color: yellow;
+}
+
+#up {
+    -fx-background-image: url("../immagini/freccia1.png");
+    -fx-background-size: 40 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+}
+
+#up:pressed {
+    -fx-background-image: url("../immagini/freccia2.png");
+}
+
+#down {
+    -fx-background-image: url("../immagini/freccia1.png");
+    -fx-background-size: 40 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+    -fx-rotate: 180;
+}
+
+#down:pressed {
+    -fx-background-image: url("../immagini/freccia2.png");
+}
+
+#left {
+    -fx-background-image: url("../immagini/freccia1.png");
+    -fx-background-size: 36 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+    -fx-rotate: -90;
+}
+
+#left:pressed {
+    -fx-background-image: url("../immagini/freccia2.png");
+}
+
+#right {
+    -fx-background-image: url("../immagini/freccia1.png");
+    -fx-background-size: 36 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+    -fx-background-color: none;
+    -fx-rotate: 90;
+}
+
+#right:pressed {
+    -fx-background-image: url("../immagini/freccia2.png");
+}
+
+.zoom {
+    -fx-background-color: rgb(212, 214, 213);
+}
+
+#zoomin {
+    -fx-background-image: url("../immagini/zoomin.png");
+    -fx-background-size: 30 29;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+#zoomin:hover {
+    -fx-background-color: yellow;
+}
+
+#zoomout {
+    -fx-background-image: url("../immagini/zoomout.png");
+    -fx-background-size: 30 29;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+#zoomout:hover {
+    -fx-background-color: yellow;
+}
+
+
+#indietro {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-position: relative;
+    -fx-border-width: 2;
+    -fx-background-insets: 1;
+    -fx-border-radius: 4;
+}
+
+#indietro:hover {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.laterali {
+    -fx-opacity: 0.5;
+}
+
+.rimuovi {
+    -fx-background-image: url("../immagini/x1.png");
+    -fx-background-size: 25 25;
+    -fx-background-color: none;
+    -fx-background-insets: 0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+.rimuovi:hover {
+    -fx-background-image: url("../immagini/x2.png");
+    -fx-background-size: 25 25;
+    -fx-background-color: none;
+    -fx-background-insets: 0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center, center;
+}
+
+#number {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: green;
+}
+
+#numberLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: green;
+}
+
+DialogPane {
+    -fx-font-weight: bold;
+}
